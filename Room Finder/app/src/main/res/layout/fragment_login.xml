@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="loginViewModel"
+            type="com.pht.roomfinder.login.LoginViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="@color/app_color"
+            app:boxStrokeWidth="2dp"
+            app:cursorColor="@color/app_color"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/app_color"
+            app:hintTextColor="@color/app_color"
+            app:startIconDrawable="@drawable/username_icon"
+            app:startIconTint="@color/app_color"
+            app:errorEnabled="true"
+            app:error="@{loginViewModel.errorUsername}">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/username"
+                android:inputType="text"
+                android:padding="15dp"
+                android:text="@={loginViewModel.username}"
+                android:textColor="@color/black" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="@color/app_color"
+            app:boxStrokeWidth="2dp"
+            app:cursorColor="@color/app_color"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/app_color"
+            app:hintTextColor="@color/app_color"
+            app:startIconDrawable="@drawable/password_icon"
+            app:startIconTint="@color/app_color"
+            app:errorEnabled="true"
+            app:error="@{loginViewModel.errorPassword}">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:padding="15dp"
+                android:text="@={loginViewModel.password}"
+                android:textColor="@color/black" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:text="@{loginViewModel.errorMessage}"
+            android:textColor="@color/red"
+            android:textSize="15sp"
+            android:visibility="@{loginViewModel.showError ? View.VISIBLE : View.INVISIBLE}" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/custom_button_full"
+            android:text="@string/login"
+            android:onClick="@{() -> loginViewModel.login()}"
+            android:textColor="@color/white" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/custom_button_outline"
+            android:text="@string/register"
+            android:textColor="@color/app_color" />
+
+    </LinearLayout>
+
+</layout>
