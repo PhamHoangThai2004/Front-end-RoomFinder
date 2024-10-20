@@ -25,6 +25,10 @@ class HomeActivity : AppCompatActivity() {
 
         textView = findViewById(R.id.textView)
 
+        val intent = intent
+        val accountID = intent.getIntExtra("accountID", 0)
+        textView.text = accountID.toString()
+
         val loadingDialog: Dialog = Dialog(this).apply {
             setContentView(R.layout.dialog_loading)
         }

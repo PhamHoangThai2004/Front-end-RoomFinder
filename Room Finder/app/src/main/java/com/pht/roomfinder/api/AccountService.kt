@@ -7,7 +7,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
 
-interface LoginService {
+interface AccountService {
 
     companion object {
 
@@ -16,15 +16,19 @@ interface LoginService {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val loginService: LoginService = retrofit.create(LoginService::class.java)
+        val accountService: AccountService = retrofit.create(AccountService::class.java)
     }
 
     @FormUrlEncoded
     @POST("login.php")
-    suspend fun login(@Field ("username") username: String, @Field ("password") password: String): LoginResponse
+    suspend fun login(@Field ("username") username: String, @Field ("password") password: String): AccountResponse
 
     @FormUrlEncoded
     @POST("check_token.php")
     suspend fun checkToken(@Field ("token") token: String): TokenResponse
+
+    @FormUrlEncoded
+    @POST("register.php")
+    suspend fun register(@Field ("username") username: String, @Field ("password") password: String): AccountResponse
 
 }

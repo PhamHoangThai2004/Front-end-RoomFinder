@@ -12,4 +12,8 @@ class Account(
     fun checkPassword() : Boolean {
         return password.length >= 8
     }
+
+    fun checkRepeatPassword(repeatPassword : String) : Boolean {
+        return password == repeatPassword
+    }
 }

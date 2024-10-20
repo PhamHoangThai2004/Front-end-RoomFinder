@@ -7,9 +7,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.pht.roomfinder.login.LoginFragment
+import androidx.lifecycle.ViewModelProvider
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var authViewModel: AuthViewModel
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +22,26 @@ class MainActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+        authViewModel = ViewModelProvider(this)[AuthViewModel::class.java]
+
+
+        authViewModel.moveFragment.observe(this) {
+            authViewModel.errorUsername.value = null
+            authViewModel.errorPassword.value = null
+            authViewModel.errorMessage.value = null
+            authViewModel.errorRepeat.value = null
+            authViewModel.showError.value = false
+
+            authViewModel.username.value = null
+            authViewModel.password.value = null
+            authViewModel.repeatPassword.value = null
+
+            if (it) {
+                supportFragmentManager.beginTransaction().replace(R.id.frame_Layout, LoginFragment()).commit()
+            } else {
+                supportFragmentManager.beginTransaction().replace(R.id.frame_Layout, RegisterFragment()).commit()
+            }
         }
 
         supportFragmentManager.beginTransaction().replace(R.id.frame_Layout, LoginFragment()).commit()
