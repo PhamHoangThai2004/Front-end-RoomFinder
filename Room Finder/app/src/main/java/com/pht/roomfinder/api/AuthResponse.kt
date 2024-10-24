@@ -1,7 +1,8 @@
 package com.pht.roomfinder.api
 
-data class AccountResponse(
+class AuthResponse(
     val status: Boolean,
     val message: String,
-    val token: String
+    val token: String,
+    val data: TokenData
 )

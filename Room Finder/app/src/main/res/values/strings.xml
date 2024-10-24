@@ -1,10 +1,15 @@
 <resources>
     <string name="app_name">Room Finder</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="username">Tài khoản</string>
+    <string name="email">Email</string>
     <string name="password">Mật khẩu</string>
     <string name="login">Đăng nhập</string>
     <string name="register">Đăng ký</string>
-    <string name="loading">Loading ...</string>
+    <string name="loading">Loading …</string>
     <string name="repeat_password">Nhắc lại mật khẩu</string>
+    <string name="forget_password">Quên mật khẩu</string>
+    <string name="otp">Mã OTP</string>
+    <string name="enter_code">Nhập mã</string>
+    <string name="confirm">Xác nhận</string>
+    <string name="cancel">Hủy</string>
 </resources>

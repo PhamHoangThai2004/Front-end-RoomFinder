@@ -27,13 +27,13 @@ class MainActivity : AppCompatActivity() {
 
 
         authViewModel.moveFragment.observe(this) {
-            authViewModel.errorUsername.value = null
+            authViewModel.errorEmail.value = null
             authViewModel.errorPassword.value = null
             authViewModel.errorMessage.value = null
             authViewModel.errorRepeat.value = null
             authViewModel.showError.value = false
 
-            authViewModel.username.value = null
+            authViewModel.email.value = null
             authViewModel.password.value = null
             authViewModel.repeatPassword.value = null
 

@@ -34,16 +34,16 @@
             app:startIconDrawable="@drawable/username_icon"
             app:startIconTint="@color/app_color"
             app:errorEnabled="true"
-            app:error="@{authViewModel.errorUsername}">
+            app:error="@{authViewModel.errorEmail}">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:hint="@string/username"
-                android:inputType="text"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
                 android:padding="15dp"
-                android:text="@={authViewModel.username}"
+                android:text="@={authViewModel.email}"
                 android:textColor="@color/black" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -99,7 +99,7 @@
             app:endIconMode="password_toggle"
             app:endIconTint="@color/app_color"
             app:hintTextColor="@color/app_color"
-            app:startIconDrawable="@drawable/password_icon"
+            app:startIconDrawable="@drawable/password_repeat_icon"
             app:startIconTint="@color/app_color"
             app:errorEnabled="true"
             app:error="@{authViewModel.errorRepeat}">
