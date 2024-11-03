@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".user.home.HomeFragment">
+
+    <data>
+
+        <variable
+            name="userViewModel"
+            type="com.pht.roomfinder.viewmodel.UserViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/home_background"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:paddingStart="20dp"
+            android:paddingTop="50dp"
+            android:paddingEnd="20dp"
+            tools:ignore="UselessParent">
+
+            <TextView
+                android:id="@+id/text_View_Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{userViewModel.user.name}"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:ignore="RelativeOverlap" />
+
+            <TextView
+                android:id="@+id/text_View_PhoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_View_Name"
+                android:layout_marginTop="10dp"
+                android:text='@{"Liên hệ: " + userViewModel.user.phoneNumber}'
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/custom_transparent"
+                android:importantForAccessibility="no"
+                android:padding="10dp"
+                android:src="@drawable/notification_icon"
+                app:tint="@color/white" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_View_PhoneNumber"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/custom_edit_text"
+                android:drawableEnd="@drawable/search_icon"
+                android:drawableTint="@color/gray"
+                android:hint="@string/search"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:maxLines="1"
+                android:padding="15dp"
+                android:textCursorDrawable="@drawable/custom_cursor"
+                tools:ignore="LabelFor,TextFields" />
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/custom_shape_background" />
+
+    </LinearLayout>
+
+</layout>
