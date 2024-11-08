@@ -1,8 +1,7 @@
 package com.pht.roomfinder.services
 
-class AuthResponse(
+class PostListResponse (
     val status: Boolean,
     val message: String,
-    val token: String,
-    val data: TokenData
+    val data: List<ListGroupData>
 )

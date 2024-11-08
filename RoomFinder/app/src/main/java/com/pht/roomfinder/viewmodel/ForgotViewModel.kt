@@ -91,7 +91,7 @@ class ForgotViewModel (private val authRepository: AuthRepository) : ViewModel()
             if (result.isSuccess) {
                 val authResponse = result.getOrNull()
                 authResponse?.let {
-                    if (it.status) { errorMessage.value = null
+                    if (it.status) {    errorMessage.value = null
                     } else errorMessage.value = it.message
                 }
             }

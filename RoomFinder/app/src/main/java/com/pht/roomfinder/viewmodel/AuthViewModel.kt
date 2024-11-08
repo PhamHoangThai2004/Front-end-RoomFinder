@@ -14,6 +14,8 @@ import com.pht.roomfinder.model.User
 import com.pht.roomfinder.repositories.AuthRepository
 import com.pht.roomfinder.services.UserService
 import com.pht.roomfinder.user.UserActivity
+import com.pht.roomfinder.utils.Const
+import com.pht.roomfinder.utils.DataLocal
 import kotlinx.coroutines.launch
 
 @Suppress("NAME_SHADOWING")
@@ -23,8 +25,6 @@ class AuthViewModel(application: Application, private val authRepository: AuthRe
     val errorName = MutableLiveData<String>()
     val errorPhone = MutableLiveData<String>()
     val errorMessage = MutableLiveData<String>()
-
-//    val showError = MutableLiveData<Boolean>()
 
     val email = MutableLiveData<String>()
     val password = MutableLiveData<String>()
@@ -36,8 +36,6 @@ class AuthViewModel(application: Application, private val authRepository: AuthRe
     val otpStatus = MutableLiveData<Boolean>()
     val errorOTP = MutableLiveData<String>()
     val dialogStatus = MutableLiveData<Boolean>()
-
-    private val sharedPreferences = application.getSharedPreferences("data", Application.MODE_PRIVATE)
 
     fun moveLogin() { move.value = 0 }
 
@@ -84,7 +82,7 @@ class AuthViewModel(application: Application, private val authRepository: AuthRe
                 val authResponse = result.getOrNull()
                authResponse?.let {
                    if (it.status) {
-                       sharedPreferences.edit().putString("token", it.token).apply()
+                       DataLocal.getInstance().putString(Const.TOKEN, it.token)
                        directLogin(it.token)
                    }
                    else {
@@ -158,7 +156,7 @@ class AuthViewModel(application: Application, private val authRepository: AuthRe
                 val authResponse = result.getOrNull()
                 authResponse?.let {
                     if (it.status) {
-                        sharedPreferences.edit().putString("token", it.token).apply()
+                        DataLocal.getInstance().putString(Const.TOKEN, it.token)
                         directLogin(it.token)
                     } else errorOTP.value = it.message
                 }

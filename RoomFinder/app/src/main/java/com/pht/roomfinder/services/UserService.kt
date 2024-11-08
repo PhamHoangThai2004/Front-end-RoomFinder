@@ -1,6 +1,6 @@
 package com.pht.roomfinder.services
 
-import com.pht.roomfinder.Const
+import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.model.User
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -8,6 +8,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 
@@ -25,9 +27,8 @@ interface UserService {
     @POST("login.php")
     suspend fun login(@Body user: User): Response<AuthResponse>
 
-    @FormUrlEncoded
-    @POST("check-token.php")
-    suspend fun checkToken(@Field ("token") token: String): Response<AuthResponse>
+    @GET("check-token.php")
+    suspend fun checkToken(@Header("Authorization") token: String): Response<AuthResponse>
 
     @POST("register.php")
     suspend fun register(@Body user: User): Response<AuthResponse>

@@ -1,4 +1,4 @@
-package com.pht.roomfinder
+package com.pht.roomfinder.utils
 
 import android.app.Dialog
 import android.content.Context
@@ -11,6 +11,8 @@ import android.view.WindowManager
 class Const {
     companion object {
         const val HTTP_API = "http://192.168.102.4/roomfinder/"
+
+        const val TOKEN = "token"
 
         fun setDialog(layout: Int, context: Context) : Dialog {
             val dialog = Dialog(context)

@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import com.pht.roomfinder.Const
+import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.R
 import com.pht.roomfinder.databinding.ActivityForgotBinding
 import com.pht.roomfinder.repositories.AuthRepository

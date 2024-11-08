@@ -5,14 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.pht.roomfinder.R
 import com.pht.roomfinder.databinding.FragmentHomeBinding
 import com.pht.roomfinder.user.UserActivity
+import com.pht.roomfinder.viewmodel.HomeViewModel
 import com.pht.roomfinder.viewmodel.UserViewModel
 
 class HomeFragment : Fragment() {
     private lateinit var bin: FragmentHomeBinding
     private lateinit var userViewModel: UserViewModel
+    private lateinit var  homeViewModel: HomeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -20,6 +23,8 @@ class HomeFragment : Fragment() {
     ): View {
 
         userViewModel = (activity as UserActivity).userViewModel
+        homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
+
         bin = FragmentHomeBinding.inflate(inflater, container, false)
         bin.lifecycleOwner = viewLifecycleOwner
         bin.userViewModel = userViewModel

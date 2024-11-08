@@ -24,7 +24,7 @@ class UserActivity : AppCompatActivity() {
     lateinit var userViewModel: UserViewModel
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    @SuppressLint("SourceLockedOrientationActivity")
+    @SuppressLint("SourceLockedOrientationActivity", "ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT

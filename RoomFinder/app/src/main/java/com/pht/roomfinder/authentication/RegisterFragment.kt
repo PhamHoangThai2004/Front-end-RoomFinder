@@ -13,7 +13,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.EditText
 import android.widget.TextView
-import com.pht.roomfinder.Const
+import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.MainActivity
 import com.pht.roomfinder.R
 import com.pht.roomfinder.databinding.FragmentRegisterBinding

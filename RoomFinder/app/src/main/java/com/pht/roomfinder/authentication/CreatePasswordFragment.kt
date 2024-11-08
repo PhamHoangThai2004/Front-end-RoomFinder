@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
-import com.pht.roomfinder.Const
+import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.R
 import com.pht.roomfinder.databinding.FragmentCreatePasswordBinding
 import com.pht.roomfinder.viewmodel.ForgotViewModel

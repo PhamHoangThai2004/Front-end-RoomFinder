@@ -12,7 +12,7 @@ class Post (
     val price: Double?,
     val acreage: Double?,
     val address: String?,
-    val tym: Int,
+    val tym: Int?,
     val bonus: String?,
     val createdAt: Timestamp?,
     val expireAt: Timestamp?,
