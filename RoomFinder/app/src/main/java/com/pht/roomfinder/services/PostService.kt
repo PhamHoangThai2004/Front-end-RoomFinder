@@ -1,6 +1,5 @@
 package com.pht.roomfinder.services
 
-import com.pht.roomfinder.utils.App
 import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.utils.DataLocal
 import okhttp3.Interceptor
@@ -9,6 +8,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface PostService {
 
@@ -34,6 +34,10 @@ interface PostService {
         val postService: PostService = retrofit.create(PostService::class.java)
     }
 
-    @GET("list-home.php")
-    suspend fun listHome(): Response<PostListResponse>
+    @GET("list-group.php")
+    suspend fun listGroup(): Response<PostListResponse>
+
+    @GET("list-search.php")
+    suspend fun listSearch(@Query("keySearch") keySearch: String): Response<SearchResponse>
+
 }

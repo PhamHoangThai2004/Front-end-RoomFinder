@@ -3,10 +3,10 @@ package com.pht.roomfinder.authentication
 import android.app.Application
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.pht.roomfinder.MainActivity
 import com.pht.roomfinder.databinding.FragmentLoginBinding
 import com.pht.roomfinder.utils.Const
@@ -38,7 +38,9 @@ class LoginFragment : Fragment() {
 
     private fun directLogin() {
         val token = DataLocal.getInstance().getString(Const.TOKEN)
-        if(token != null) { authViewModel.directLogin(token) }
+        if (token != null) {
+            authViewModel.directLogin(token)
+        }
     }
 
     private fun loginSuccess() {

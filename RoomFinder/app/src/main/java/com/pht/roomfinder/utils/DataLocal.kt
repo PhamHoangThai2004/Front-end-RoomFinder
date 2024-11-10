@@ -12,10 +12,11 @@ class DataLocal private constructor() {
 
         fun init(context: Context) {
             if (instance == null) instance = DataLocal()
-            instance?.sharedPreferences = context.getSharedPreferences(STORAGE_LOCATION, Context.MODE_PRIVATE)
+            instance?.sharedPreferences =
+                context.getSharedPreferences(STORAGE_LOCATION, Context.MODE_PRIVATE)
         }
 
-        fun getInstance() : DataLocal{
+        fun getInstance(): DataLocal {
             if (instance == null) {
                 instance = DataLocal()
             }
@@ -27,7 +28,7 @@ class DataLocal private constructor() {
         sharedPreferences.edit().putString(key, value).apply()
     }
 
-    fun getString(key: String) : String? {
+    fun getString(key: String): String? {
         return sharedPreferences.getString(key, null)
     }
 }

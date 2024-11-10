@@ -12,14 +12,14 @@ import androidx.lifecycle.viewModelScope
 import com.pht.roomfinder.model.Role
 import com.pht.roomfinder.model.User
 import com.pht.roomfinder.repositories.AuthRepository
-import com.pht.roomfinder.services.UserService
 import com.pht.roomfinder.user.UserActivity
 import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.utils.DataLocal
 import kotlinx.coroutines.launch
 
 @Suppress("NAME_SHADOWING")
-class AuthViewModel(application: Application, private val authRepository: AuthRepository) : AndroidViewModel(application) {
+class AuthViewModel(application: Application, private val authRepository: AuthRepository) :
+    AndroidViewModel(application) {
     val errorEmail = MutableLiveData<String>()
     val errorPassword = MutableLiveData<String>()
     val errorName = MutableLiveData<String>()
@@ -37,39 +37,61 @@ class AuthViewModel(application: Application, private val authRepository: AuthRe
     val errorOTP = MutableLiveData<String>()
     val dialogStatus = MutableLiveData<Boolean>()
 
-    fun moveLogin() { move.value = 0 }
+    fun moveLogin() {
+        move.value = 0
+    }
 
-    fun moveRegister() { move.value = 1 }
+    fun moveRegister() {
+        move.value = 1
+    }
 
-    fun moveForgotPassword() { move.value = 3 }
+    fun moveForgotPassword() {
+        move.value = 3
+    }
 
     fun login() {
-        val user = User(null, null, email.value.toString().trim() ,
-            password.value.toString().trim() , null, null, null)
+        val user = User(
+            null, null, email.value.toString().trim(),
+            password.value.toString().trim(), null, null, null
+        )
 
         if (checkValid(user)) loginAccount(user)
     }
 
     fun register() {
-        val user = User(null, Role(-1, "User"), email.value.toString().trim() , password.value.toString().trim(),
-            name.value.toString().trim(), phoneNumber.value.toString().trim(), null)
+        val user = User(
+            null, Role(-1, "User"), email.value.toString().trim(), password.value.toString().trim(),
+            name.value.toString().trim(), phoneNumber.value.toString().trim(), null
+        )
 
         if (checkValid(user)) registerAccount(user)
     }
 
     private fun checkValid(user: User): Boolean {
-        errorEmail.value = if (user.checkEmail()) { null }
-        else { "Email không đúng định dạng" }
+        errorEmail.value = if (user.checkEmail()) {
+            null
+        } else {
+            "Email không đúng định dạng"
+        }
 
-        errorPassword.value = if (user.checkPassword()) { null }
-        else { "Mật khẩu phải có tối thiểu 8 ký tự" }
+        errorPassword.value = if (user.checkPassword()) {
+            null
+        } else {
+            "Mật khẩu phải có tối thiểu 8 ký tự"
+        }
 
-        if(move.value == 1) {
-            errorPhone.value = if (user.checkPhoneNumber()) { null }
-            else { "Số điện thoại không đúng định dạng" }
+        if (move.value == 1) {
+            errorPhone.value = if (user.checkPhoneNumber()) {
+                null
+            } else {
+                "Số điện thoại không đúng định dạng"
+            }
 
-            errorName.value = if (user.checkName()) { null }
-            else { "Tên phải có ít nhất 2 ký tự" }
+            errorName.value = if (user.checkName()) {
+                null
+            } else {
+                "Tên phải có ít nhất 2 ký tự"
+            }
         }
         return errorEmail.value.isNullOrEmpty() && errorPassword.value.isNullOrEmpty()
                 && errorPhone.value.isNullOrEmpty() && errorName.value.isNullOrEmpty()
@@ -80,15 +102,14 @@ class AuthViewModel(application: Application, private val authRepository: AuthRe
             val result = authRepository.login(user)
             if (result.isSuccess) {
                 val authResponse = result.getOrNull()
-               authResponse?.let {
-                   if (it.status) {
-                       DataLocal.getInstance().putString(Const.TOKEN, it.token)
-                       directLogin(it.token)
-                   }
-                   else {
-                       errorMessage.value = it.message
-                   }
-               }
+                authResponse?.let {
+                    if (it.status) {
+                        DataLocal.getInstance().putString(Const.TOKEN, it.token)
+                        directLogin(it.token)
+                    } else {
+                        errorMessage.value = it.message
+                    }
+                }
             } else {
                 val error = result.exceptionOrNull()
                 Log.d("BBB", "loginAccount: ${error?.message}")
@@ -137,10 +158,12 @@ class AuthViewModel(application: Application, private val authRepository: AuthRe
     }
 
     private fun checkRole(user: User) {
-        if(user.role?.roleName == "User") {
+        if (user.role?.roleName == "User") {
             val intent = Intent(getApplication(), UserActivity::class.java)
-            val user = User(user.userId, user.role, user.email,
-                null, user.name, user.phoneNumber, null)
+            val user = User(
+                user.userId, user.role, user.email,
+                null, user.name, user.phoneNumber, null
+            )
             val bundle = Bundle()
             bundle.putSerializable("user", user)
             intent.putExtras(bundle)
@@ -165,14 +188,19 @@ class AuthViewModel(application: Application, private val authRepository: AuthRe
     }
 
     fun resendOTP() {
-        val user = User(-1, Role(-1, "User"), email.value.toString().trim(), password.value.toString().trim(),
-            name.value.toString().trim(), phoneNumber.value.toString().trim(), null)
+        val user = User(
+            -1, Role(-1, "User"), email.value.toString().trim(), password.value.toString().trim(),
+            name.value.toString().trim(), phoneNumber.value.toString().trim(), null
+        )
         registerAccount(user)
     }
 }
 
 @Suppress("UNCHECKED_CAST")
-class AuthViewModelFactory(private val application: Application, private val authRepository: AuthRepository) : ViewModelProvider.Factory {
+class AuthViewModelFactory(
+    private val application: Application,
+    private val authRepository: AuthRepository
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AuthViewModel::class.java)) {
             return AuthViewModel(application, authRepository) as T

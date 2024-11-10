@@ -16,11 +16,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.R
 import com.pht.roomfinder.databinding.ActivityForgotBinding
 import com.pht.roomfinder.repositories.AuthRepository
 import com.pht.roomfinder.services.UserService
+import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.viewmodel.ForgotViewModel
 import com.pht.roomfinder.viewmodel.ForgotViewModelFactory
 
@@ -42,23 +42,30 @@ class ForgotActivity : AppCompatActivity() {
         }
 
         val authRepository = AuthRepository(UserService.accountService)
-        forgotViewModel = ViewModelProvider(this, ForgotViewModelFactory(authRepository))[ForgotViewModel::class.java]
+        forgotViewModel = ViewModelProvider(
+            this,
+            ForgotViewModelFactory(authRepository)
+        )[ForgotViewModel::class.java]
         bin.forgotViewModel = forgotViewModel
         bin.lifecycleOwner = this
 
-        supportFragmentManager.beginTransaction().replace(R.id.frame_Layout, ConfirmEmailFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.frame_Layout, ConfirmEmailFragment())
+            .commit()
 
         val dialog = Const.setDialog(R.layout.dialog_loading, this)
         val dialogOTP = openOTPDialog()
 
         forgotViewModel.dialogStatus.observe(this) {
-            if(it) dialog.show()
+            if (it) dialog.show()
             else dialog.dismiss()
         }
 
         forgotViewModel.otpStatus.observe(this) {
-            if(it) { dialogOTP.show() }
-            else { dialogOTP.dismiss() }
+            if (it) {
+                dialogOTP.show()
+            } else {
+                dialogOTP.dismiss()
+            }
         }
 
         move()
@@ -71,21 +78,34 @@ class ForgotActivity : AppCompatActivity() {
             forgotViewModel.errorMessage.value = null
 
             when (it) {
-                0 -> { finish() }
-                1 -> { supportFragmentManager.beginTransaction().replace(R.id.frame_Layout, ConfirmEmailFragment()).commit() }
-                else -> { supportFragmentManager.beginTransaction().replace(R.id.frame_Layout, CreatePasswordFragment()).commit() }
+                0 -> {
+                    finish()
+                }
+
+                1 -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.frame_Layout, ConfirmEmailFragment()).commit()
+                }
+
+                else -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.frame_Layout, CreatePasswordFragment()).commit()
+                }
             }
         }
     }
 
-    private fun openOTPDialog() : Dialog {
+    private fun openOTPDialog(): Dialog {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_check_otp)
         dialog.setCancelable(false)
 
-        val window: Window?= dialog.window
-        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        val window: Window? = dialog.window
+        window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val windowAttribute = window?.attributes
@@ -112,7 +132,7 @@ class ForgotActivity : AppCompatActivity() {
         }
 
         forgotViewModel.errorOTP.observe(this) {
-            if(it != null) {
+            if (it != null) {
                 textViewErrorOTP.text = it
             }
         }

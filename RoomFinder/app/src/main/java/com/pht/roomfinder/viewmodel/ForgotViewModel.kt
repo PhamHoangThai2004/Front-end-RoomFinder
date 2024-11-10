@@ -1,6 +1,5 @@
 package com.pht.roomfinder.viewmodel
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -9,7 +8,7 @@ import com.pht.roomfinder.model.User
 import com.pht.roomfinder.repositories.AuthRepository
 import kotlinx.coroutines.launch
 
-class ForgotViewModel (private val authRepository: AuthRepository) : ViewModel() {
+class ForgotViewModel(private val authRepository: AuthRepository) : ViewModel() {
     val email = MutableLiveData<String>()
     val password = MutableLiveData<String>()
 
@@ -29,10 +28,13 @@ class ForgotViewModel (private val authRepository: AuthRepository) : ViewModel()
     fun confirmEmail() {
         val user = User(null, null, email.value.toString().trim(), null, null, null, null)
 
-        errorEmail.value = if (user.checkEmail()) { null }
-        else { "Email không đúng định dạng" }
+        errorEmail.value = if (user.checkEmail()) {
+            null
+        } else {
+            "Email không đúng định dạng"
+        }
 
-        if(errorEmail.value == null) {
+        if (errorEmail.value == null) {
             sendEmail(email.value.toString().trim())
         }
     }
@@ -74,13 +76,18 @@ class ForgotViewModel (private val authRepository: AuthRepository) : ViewModel()
     }
 
     fun changePassword() {
-        val user = User(null, null, email.value.toString().trim(),
-            password.value.toString().trim(), null, null, null)
+        val user = User(
+            null, null, email.value.toString().trim(),
+            password.value.toString().trim(), null, null, null
+        )
 
-        errorPassword.value = if (user.checkPassword()) { null }
-        else { "Mật khẩu phải có ít nhất 8 ký tự" }
+        errorPassword.value = if (user.checkPassword()) {
+            null
+        } else {
+            "Mật khẩu phải có ít nhất 8 ký tự"
+        }
 
-        if(errorPassword.value == null) {
+        if (errorPassword.value == null) {
             createPassword(email.value.toString().trim(), password.value.toString().trim())
         }
     }
@@ -91,7 +98,8 @@ class ForgotViewModel (private val authRepository: AuthRepository) : ViewModel()
             if (result.isSuccess) {
                 val authResponse = result.getOrNull()
                 authResponse?.let {
-                    if (it.status) {    errorMessage.value = null
+                    if (it.status) {
+                        errorMessage.value = null
                     } else errorMessage.value = it.message
                 }
             }
@@ -110,7 +118,8 @@ class ForgotViewModel (private val authRepository: AuthRepository) : ViewModel()
 }
 
 @Suppress("UNCHECKED_CAST")
-class ForgotViewModelFactory(private val authRepository: AuthRepository) : ViewModelProvider.Factory {
+class ForgotViewModelFactory(private val authRepository: AuthRepository) :
+    ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ForgotViewModel::class.java)) {
             return ForgotViewModel(authRepository) as T

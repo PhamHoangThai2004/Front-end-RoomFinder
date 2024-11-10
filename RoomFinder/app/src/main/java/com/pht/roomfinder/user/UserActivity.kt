@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -55,14 +54,17 @@ class UserActivity : AppCompatActivity() {
                     viewPager.setCurrentItem(0, true)
                     true
                 }
+
                 (R.id.menu_post) -> {
                     viewPager.setCurrentItem(1, true)
                     true
                 }
+
                 (R.id.menu_favorite) -> {
                     viewPager.setCurrentItem(2, true)
                     true
                 }
+
                 else -> {
                     viewPager.setCurrentItem(3, true)
                     true

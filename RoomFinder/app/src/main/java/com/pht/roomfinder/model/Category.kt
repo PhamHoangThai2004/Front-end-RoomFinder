@@ -1,6 +1,6 @@
 package com.pht.roomfinder.model
 
-class Category (
+class Category(
     val categoryID: Int?,
     val categoryName: String?
 )

@@ -2,6 +2,7 @@ package com.pht.roomfinder.model
 
 import java.io.Serializable
 
-class Role (
+class Role(
     val roleID: Int,
-    val roleName: String) : Serializable
+    val roleName: String
+) : Serializable

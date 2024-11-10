@@ -14,14 +14,17 @@ class Const {
 
         const val TOKEN = "token"
 
-        fun setDialog(layout: Int, context: Context) : Dialog {
+        fun setDialog(layout: Int, context: Context): Dialog {
             val dialog = Dialog(context)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog.setContentView(layout)
             dialog.setCancelable(false)
 
             val window: Window? = dialog.window
-            window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+            window?.setLayout(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT
+            )
             window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
             val windowAttribute = window?.attributes

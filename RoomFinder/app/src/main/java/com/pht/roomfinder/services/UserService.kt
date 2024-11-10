@@ -1,7 +1,7 @@
 package com.pht.roomfinder.services
 
-import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.model.User
+import com.pht.roomfinder.utils.Const
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -35,18 +35,27 @@ interface UserService {
 
     @FormUrlEncoded
     @POST("check-otp.php")
-    suspend fun checkOTP(@Field ("email") email: String, @Field ("otp") otp: String): Response<AuthResponse>
+    suspend fun checkOTP(
+        @Field("email") email: String,
+        @Field("otp") otp: String
+    ): Response<AuthResponse>
 
     @FormUrlEncoded
     @POST("forgot-password.php")
-    suspend fun forgotPassword(@Field ("email") email: String): Response<AuthResponse>
+    suspend fun forgotPassword(@Field("email") email: String): Response<AuthResponse>
 
     @FormUrlEncoded
     @POST("confirm-email.php")
-    suspend fun confirmEmail(@Field ("email") email: String, @Field ("otp") otp: String): Response<AuthResponse>
+    suspend fun confirmEmail(
+        @Field("email") email: String,
+        @Field("otp") otp: String
+    ): Response<AuthResponse>
 
     @FormUrlEncoded
     @POST("create-password.php")
-    suspend fun createPassword(@Field ("email") email: String, @Field ("newPassword") newPassword: String): Response<AuthResponse>
+    suspend fun createPassword(
+        @Field("email") email: String,
+        @Field("newPassword") newPassword: String
+    ): Response<AuthResponse>
 
 }

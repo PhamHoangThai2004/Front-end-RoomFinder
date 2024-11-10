@@ -2,7 +2,7 @@ package com.pht.roomfinder.model
 
 import java.sql.Timestamp
 
-class Post (
+class Post(
     val postID: Int?,
     val user: User?,
     val category: Category?,

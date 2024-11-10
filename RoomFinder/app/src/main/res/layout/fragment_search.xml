@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".user.home.SearchFragment">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="homeViewModel"
+            type="com.pht.roomfinder.viewmodel.HomeViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/custom_transparent"
+            android:importantForAccessibility="no"
+            android:onClick="@{() -> homeViewModel.popBack()}"
+            android:padding="3dp"
+            android:src="@drawable/arrow_back_icon"
+            app:tint="@color/black" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_View_Search_List"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:visibility="@{homeViewModel.isNull() == false ? View.VISIBLE : View.GONE}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text='@{homeViewModel.tmpSearch != null ? "Không tìm thấy kết quả cho \"" + homeViewModel.tmpSearch + "\"" : "Không tìm thấy kết quả"}'
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:visibility="@{homeViewModel.isNull() == true ? View.VISIBLE : View.GONE}" />
+
+    </LinearLayout>
+
+</layout>

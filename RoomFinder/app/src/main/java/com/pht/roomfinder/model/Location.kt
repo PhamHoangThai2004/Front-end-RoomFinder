@@ -1,6 +1,6 @@
 package com.pht.roomfinder.model
 
-class Location (
+class Location(
     val locationID: Int?,
     val description: String?,
     val longitude: Double?,

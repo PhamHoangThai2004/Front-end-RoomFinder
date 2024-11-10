@@ -30,10 +30,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         val authRepository = AuthRepository(UserService.accountService)
-        authViewModel = ViewModelProvider(this,
-            AuthViewModelFactory(application, authRepository))[AuthViewModel::class.java]
+        authViewModel = ViewModelProvider(
+            this,
+            AuthViewModelFactory(application, authRepository)
+        )[AuthViewModel::class.java]
 
-        supportFragmentManager.beginTransaction().replace(R.id.frame_Layout, LoginFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.frame_Layout, LoginFragment())
+            .commit()
 
         move()
 
@@ -53,13 +56,24 @@ class MainActivity : AppCompatActivity() {
             authViewModel.phoneNumber.value = null
 
             when (it) {
-                0 -> { supportFragmentManager.beginTransaction().replace(R.id.frame_Layout, LoginFragment()).commit() }
-                1 -> { supportFragmentManager.beginTransaction().replace(R.id.frame_Layout, RegisterFragment()).commit() }
+                0 -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.frame_Layout, LoginFragment()).commit()
+                }
+
+                1 -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.frame_Layout, RegisterFragment()).commit()
+                }
+
                 2 -> {
                     startActivity(Intent(this, UserActivity::class.java))
                     finish()
                 }
-                else -> { startActivity(Intent(this, ForgotActivity::class.java)) }
+
+                else -> {
+                    startActivity(Intent(this, ForgotActivity::class.java))
+                }
             }
         }
     }

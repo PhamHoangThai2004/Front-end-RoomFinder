@@ -1,6 +1,5 @@
 package com.pht.roomfinder.repositories
 
-import android.util.Log
 import com.pht.roomfinder.model.User
 import com.pht.roomfinder.services.AuthResponse
 import com.pht.roomfinder.services.UserService
@@ -34,10 +33,15 @@ class AuthRepository(private val userService: UserService) {
                 if (response.isSuccessful) {
                     Result.success(response.body()!!)
                 } else {
-                    Result.failure(Exception("Check token failed: ${response.errorBody()?.string()}"))
+                    Result.failure(
+                        Exception(
+                            "Check token failed: ${
+                                response.errorBody()?.string()
+                            }"
+                        )
+                    )
                 }
-            }
-            catch (e: Exception) {
+            } catch (e: Exception) {
                 Result.failure(e)
             }
         }
@@ -84,7 +88,8 @@ class AuthRepository(private val userService: UserService) {
                     Result.success(response.body()!!)
                 } else
                     Result.failure(
-                        Exception("Forgot password failed: ${response.errorBody()?.string()}"))
+                        Exception("Forgot password failed: ${response.errorBody()?.string()}")
+                    )
             } catch (e: Exception) {
                 Result.failure(e)
             }
@@ -100,7 +105,8 @@ class AuthRepository(private val userService: UserService) {
 
                 } else {
                     Result.failure(
-                        Exception("Confirm email failed: ${response.errorBody()?.string()}"))
+                        Exception("Confirm email failed: ${response.errorBody()?.string()}")
+                    )
                 }
                 Result.success(response.body()!!)
             } catch (e: Exception) {

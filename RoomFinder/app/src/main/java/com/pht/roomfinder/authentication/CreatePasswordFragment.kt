@@ -1,14 +1,14 @@
 package com.pht.roomfinder.authentication
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.R
 import com.pht.roomfinder.databinding.FragmentCreatePasswordBinding
+import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.viewmodel.ForgotViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

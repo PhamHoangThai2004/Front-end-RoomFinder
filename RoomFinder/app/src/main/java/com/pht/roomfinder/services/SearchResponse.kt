@@ -1,7 +1,9 @@
 package com.pht.roomfinder.services
 
-class PostListResponse(
+import com.pht.roomfinder.model.Post
+
+class SearchResponse(
     val status: Boolean,
     val message: String,
-    val data: List<ListGroupData>
+    val data: List<Post>
 )

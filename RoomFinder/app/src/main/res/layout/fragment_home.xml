@@ -9,6 +9,10 @@
         <variable
             name="userViewModel"
             type="com.pht.roomfinder.viewmodel.UserViewModel" />
+
+        <variable
+            name="homeViewModel"
+            type="com.pht.roomfinder.viewmodel.HomeViewModel" />
     </data>
 
     <LinearLayout
@@ -51,6 +55,7 @@
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/custom_transparent"
                 android:importantForAccessibility="no"
+                android:onClick="@{() -> homeViewModel.search()}"
                 android:padding="10dp"
                 android:src="@drawable/notification_icon"
                 app:tint="@color/white" />
@@ -68,7 +73,9 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:padding="15dp"
+                android:text="@={homeViewModel.keySearch}"
                 android:textCursorDrawable="@drawable/custom_cursor"
+                app:onDrawableEndClick="@{() -> homeViewModel.search()}"
                 tools:ignore="LabelFor,TextFields" />
 
         </RelativeLayout>
