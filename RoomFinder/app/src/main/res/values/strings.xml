@@ -1,4 +1,5 @@
 <resources>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_name">Room Finder</string>
     <string name="email">Email</string>
     <string name="password">Mật khẩu</string>
@@ -14,7 +15,6 @@
     <string name="send_back">Gửi lại mã OTP</string>
     <string name="confirm_email">Xác nhận Email</string>
     <string name="new_password">Mật khẩu mới</string>
-    <string name="change_password">Đổi mật khẩu</string>
     <string name="success">Thành công!</string>
     <string name="welcome">WELCOME!</string>
     <string name="create_password">Tạo mật khẩu mới</string>
@@ -23,6 +23,15 @@
     <string name="search">Tìm kiếm …</string>
     <string name="favorite">Yêu thích</string>
     <string name="profile">Hồ sơ</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="change_password">Đổi mật khẩu</string>
+    <string name="information_account">Thông tin tài khoản</string>
+    <string name="my_post">Bài đăng của tôi</string>
+    <string name="language">Ngôn ngữ</string>
+    <string name="location">Thiết lập vị trí</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="contact_support">Liên hệ - Hỗ trợ</string>
+    <string name="theme">Giao diện</string>
+    <string name="save_account">Lưu tài khoản</string>
+    <string name="vietnamese">Tiếng Việt</string>
+    <string name="english">English</string>
 </resources>
