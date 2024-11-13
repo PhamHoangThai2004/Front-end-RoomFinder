@@ -4,6 +4,7 @@
     tools:context=".user.home.ListFragment">
 
     <data>
+
         <variable
             name="homeViewModel"
             type="com.pht.roomfinder.viewmodel.HomeViewModel" />
@@ -12,6 +13,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/custom_shape_background"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView

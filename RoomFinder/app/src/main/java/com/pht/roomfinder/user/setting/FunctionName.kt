@@ -1,4 +1,4 @@
-package com.pht.roomfinder.user.profile
+package com.pht.roomfinder.user.setting
 
 class FunctionName(
     val name: Int,

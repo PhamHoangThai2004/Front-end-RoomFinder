@@ -13,6 +13,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.EditText
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.MainActivity
 import com.pht.roomfinder.R
@@ -27,7 +28,7 @@ class RegisterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        authViewModel = (activity as MainActivity).authViewModel
+        authViewModel = ViewModelProvider(requireActivity())[AuthViewModel::class.java]
         bin = FragmentRegisterBinding.inflate(inflater, container, false)
         bin.lifecycleOwner = viewLifecycleOwner
         bin.authViewModel = authViewModel

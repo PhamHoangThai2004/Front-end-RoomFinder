@@ -31,7 +31,7 @@
             android:background="@color/white"
             app:itemIconTint="@color/custom_navigation_color"
             app:itemTextColor="@color/custom_navigation_color"
-            app:menu="@menu/bottom_menu" />
+            app:menu="@menu/bottom_navigation_menu" />
 
     </androidx.cardview.widget.CardView>
 

@@ -13,7 +13,7 @@ import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pht.roomfinder.R
-import com.pht.roomfinder.adapters.UserAdapter
+import com.pht.roomfinder.adapters.BottomNavigationAdapter
 import com.pht.roomfinder.model.User
 import com.pht.roomfinder.viewmodel.UserViewModel
 
@@ -44,7 +44,7 @@ class UserActivity : AppCompatActivity() {
 
         userViewModel.user.value = user
 
-        viewPager.adapter = UserAdapter(this)
+        viewPager.adapter = BottomNavigationAdapter(this)
         viewPager.setCurrentItem(0, false)
 
 
@@ -80,7 +80,7 @@ class UserActivity : AppCompatActivity() {
                     0 -> bottomNavigationView.menu.findItem(R.id.menu_home).setChecked(true)
                     1 -> bottomNavigationView.menu.findItem(R.id.menu_post).setChecked(true)
                     2 -> bottomNavigationView.menu.findItem(R.id.menu_favorite).setChecked(true)
-                    else -> bottomNavigationView.menu.findItem(R.id.menu_profile).setChecked(true)
+                    else -> bottomNavigationView.menu.findItem(R.id.menu_setting).setChecked(true)
                 }
             }
         })

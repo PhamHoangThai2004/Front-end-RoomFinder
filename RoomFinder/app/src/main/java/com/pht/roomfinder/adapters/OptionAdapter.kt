@@ -9,9 +9,9 @@ import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pht.roomfinder.R
-import com.pht.roomfinder.user.profile.FunctionName
+import com.pht.roomfinder.user.setting.FunctionName
 
-class ProfileAdapter (val list: List<FunctionName>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class OptionAdapter (val list: List<FunctionName>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val TYPE_SWITCH = 0

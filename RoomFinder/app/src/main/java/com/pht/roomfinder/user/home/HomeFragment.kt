@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
 import com.pht.roomfinder.R
 import com.pht.roomfinder.databinding.FragmentHomeBinding
 import com.pht.roomfinder.viewmodel.HomeViewModel
@@ -28,20 +29,22 @@ class HomeFragment : Fragment() {
         bin.userViewModel = userViewModel
         bin.homeViewModel = homeViewModel
 
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.frame_Layout, ListFragment()).commit()
-
-        homeViewModel.listSearch.observe(viewLifecycleOwner) {
-            val fragment = SearchFragment()
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.frame_Layout, fragment).addToBackStack(null).commit()
-        }
-
-        homeViewModel.status.observe(viewLifecycleOwner) {
-            if (!it) requireActivity().onBackPressedDispatcher.onBackPressed()
-        }
-
         return bin.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val navHostFragment =
+            childFragmentManager.findFragmentById(R.id.fragment_Container_View) as NavHostFragment
+        val controller = navHostFragment.navController
+        with(bin) {
+            homeViewModel!!.status.observe(viewLifecycleOwner) {
+                if (it) controller.navigate(R.id.searchFragment)
+            }
+            homeViewModel!!.status.observe(viewLifecycleOwner) {
+                if (!it) controller.navigate(R.id.listFragment)
+            }
+        }
     }
 
 

@@ -6,9 +6,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.pht.roomfinder.user.favorite.FavoriteFragment
 import com.pht.roomfinder.user.home.HomeFragment
 import com.pht.roomfinder.user.post.PostFragment
-import com.pht.roomfinder.user.profile.ProfileFragment
+import com.pht.roomfinder.user.setting.SettingFragment
 
-class UserAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+class BottomNavigationAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
     override fun getItemCount() = 4
 
     override fun createFragment(position: Int): Fragment {
@@ -16,7 +16,7 @@ class UserAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fra
             0 -> HomeFragment()
             1 -> PostFragment()
             2 -> FavoriteFragment()
-            else -> ProfileFragment()
+            else -> SettingFragment()
         }
     }
 

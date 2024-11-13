@@ -80,11 +80,14 @@
 
         </RelativeLayout>
 
-        <FrameLayout
-            android:id="@+id/frame_Layout"
+        <fragment
+            android:id="@+id/fragment_Container_View"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/custom_shape_background" />
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/navigation_home"
+            tools:ignore="FragmentTagUsage" />
 
     </LinearLayout>
 

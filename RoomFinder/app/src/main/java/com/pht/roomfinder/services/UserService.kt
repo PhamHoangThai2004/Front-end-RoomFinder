@@ -21,7 +21,7 @@ interface UserService {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val accountService: UserService = retrofit.create(UserService::class.java)
+        val userService: UserService = retrofit.create(UserService::class.java)
     }
 
     @POST("login.php")

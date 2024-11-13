@@ -8,18 +8,11 @@
     tools:context=".MainActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerInParent="true"
         android:layout_marginTop="40dp"
         android:importantForAccessibility="no"
         android:src="@drawable/app_logo" />
-
-    <FrameLayout
-        android:id="@+id/frame_Layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="200dp" />
 
 </RelativeLayout>

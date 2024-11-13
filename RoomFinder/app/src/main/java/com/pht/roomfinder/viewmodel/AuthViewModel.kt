@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -12,19 +11,20 @@ import androidx.lifecycle.viewModelScope
 import com.pht.roomfinder.model.Role
 import com.pht.roomfinder.model.User
 import com.pht.roomfinder.repositories.AuthRepository
+import com.pht.roomfinder.services.UserService
 import com.pht.roomfinder.user.UserActivity
+import com.pht.roomfinder.utils.App
 import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.utils.DataLocal
 import kotlinx.coroutines.launch
 
 @Suppress("NAME_SHADOWING")
-class AuthViewModel(application: Application, private val authRepository: AuthRepository) :
-    AndroidViewModel(application) {
+class AuthViewModel() : ViewModel() {
     val errorEmail = MutableLiveData<String>()
     val errorPassword = MutableLiveData<String>()
     val errorName = MutableLiveData<String>()
     val errorPhone = MutableLiveData<String>()
-    val errorMessage = MutableLiveData<String>()
+    val errorMessage = MutableLiveData<String?>()
 
     val email = MutableLiveData<String>()
     val password = MutableLiveData<String>()
@@ -32,10 +32,12 @@ class AuthViewModel(application: Application, private val authRepository: AuthRe
     val name = MutableLiveData<String>()
 
     val move = MutableLiveData<Int>()
-    val intentEvent = MutableLiveData<Intent>()
+    val intentEvent = MutableLiveData<Intent?>()
     val otpStatus = MutableLiveData<Boolean>()
     val errorOTP = MutableLiveData<String>()
     val dialogStatus = MutableLiveData<Boolean>()
+
+    private val authRepository = AuthRepository(UserService.userService)
 
     fun moveLogin() {
         move.value = 0
@@ -99,13 +101,15 @@ class AuthViewModel(application: Application, private val authRepository: AuthRe
 
     private fun loginAccount(user: User) {
         viewModelScope.launch {
+            dialogStatus.value = true
             val result = authRepository.login(user)
+            dialogStatus.value = false
             if (result.isSuccess) {
                 val authResponse = result.getOrNull()
                 authResponse?.let {
                     if (it.status) {
                         DataLocal.getInstance().putString(Const.TOKEN, it.token)
-                        directLogin(it.token)
+                        loginByToken(it.token)
                     } else {
                         errorMessage.value = it.message
                     }
@@ -143,23 +147,21 @@ class AuthViewModel(application: Application, private val authRepository: AuthRe
         }
     }
 
-    fun directLogin(token: String) {
+    fun loginByToken(token: String) {
         viewModelScope.launch {
             val result = authRepository.checkToken(token)
             if (result.isSuccess) {
                 val authResponse = result.getOrNull()
                 authResponse?.let {
-                    if (it.status) {
-                        checkRole(it.data.user)
-                    }
+                    if (it.status) checkRole(it.data.user)
                 }
-            }
+            } else intentEvent.postValue(null)
         }
     }
 
     private fun checkRole(user: User) {
         if (user.role?.roleName == "User") {
-            val intent = Intent(getApplication(), UserActivity::class.java)
+            val intent = Intent(App.getContext(), UserActivity::class.java)
             val user = User(
                 user.userId, user.role, user.email,
                 null, user.name, user.phoneNumber, null
@@ -180,7 +182,7 @@ class AuthViewModel(application: Application, private val authRepository: AuthRe
                 authResponse?.let {
                     if (it.status) {
                         DataLocal.getInstance().putString(Const.TOKEN, it.token)
-                        directLogin(it.token)
+                        loginByToken(it.token)
                     } else errorOTP.value = it.message
                 }
             }
@@ -196,15 +198,15 @@ class AuthViewModel(application: Application, private val authRepository: AuthRe
     }
 }
 
-@Suppress("UNCHECKED_CAST")
-class AuthViewModelFactory(
-    private val application: Application,
-    private val authRepository: AuthRepository
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(AuthViewModel::class.java)) {
-            return AuthViewModel(application, authRepository) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}
+//@Suppress("UNCHECKED_CAST")
+//class AuthViewModelFactory(
+//    private val application: Application,
+//    private val authRepository: AuthRepository
+//) : ViewModelProvider.Factory {
+//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//        if (modelClass.isAssignableFrom(AuthViewModel::class.java)) {
+//            return AuthViewModel(application, authRepository) as T
+//        }
+//        throw IllegalArgumentException("Unknown ViewModel class")
+//    }
+//}

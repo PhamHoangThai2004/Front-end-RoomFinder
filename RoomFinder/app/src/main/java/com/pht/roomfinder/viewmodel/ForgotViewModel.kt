@@ -14,16 +14,14 @@ class ForgotViewModel(private val authRepository: AuthRepository) : ViewModel() 
 
     val errorEmail = MutableLiveData<String>()
     val errorPassword = MutableLiveData<String>()
-    val errorMessage = MutableLiveData<String>()
+    val errorMessage = MutableLiveData<String?>()
     val errorOTP = MutableLiveData<String>()
+    val success = MutableLiveData<Boolean>()
 
     val move = MutableLiveData<Int>()
     val dialogStatus = MutableLiveData<Boolean>()
     val otpStatus = MutableLiveData<Boolean>()
 
-    init {
-        move.value = 1
-    }
 
     fun confirmEmail() {
         val user = User(null, null, email.value.toString().trim(), null, null, null, null)
@@ -99,7 +97,7 @@ class ForgotViewModel(private val authRepository: AuthRepository) : ViewModel() 
                 val authResponse = result.getOrNull()
                 authResponse?.let {
                     if (it.status) {
-                        errorMessage.value = null
+                        success.value = true
                     } else errorMessage.value = it.message
                 }
             }
@@ -111,8 +109,8 @@ class ForgotViewModel(private val authRepository: AuthRepository) : ViewModel() 
     }
 
     fun move() {
-        val a: Int = move.value ?: 0
-        move.value = a - 1
+        if (move.value == 1 || move.value == null) move.value = 0
+        else if (move.value == 2) move.value = 1
     }
 
 }

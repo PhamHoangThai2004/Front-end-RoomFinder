@@ -29,15 +29,14 @@ class CreatePasswordFragment : Fragment() {
 
         val dialog = Const.setDialog(R.layout.dialog_checkmark, requireContext())
 
-        forgotViewModel.errorMessage.observe(viewLifecycleOwner) {
-            if (it == null) {
+        forgotViewModel.success.observe(viewLifecycleOwner) {
+            if (it) {
                 viewLifecycleOwner.lifecycleScope.launch {
                     dialog.show()
                     delay(2000)
                     dialog.dismiss()
                     forgotViewModel.move.value = 0
                 }
-
             }
         }
 

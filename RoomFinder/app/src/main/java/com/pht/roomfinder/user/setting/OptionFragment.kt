@@ -1,22 +1,22 @@
-package com.pht.roomfinder.user.profile
+package com.pht.roomfinder.user.setting
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pht.roomfinder.R
-import com.pht.roomfinder.adapters.ProfileAdapter
-import com.pht.roomfinder.adapters.ProfileAdapter.Companion.TYPE_IMAGE_VIEW
-import com.pht.roomfinder.adapters.ProfileAdapter.Companion.TYPE_SWITCH
-import com.pht.roomfinder.adapters.ProfileAdapter.Companion.TYPE_TEXT_VIEW
-import com.pht.roomfinder.databinding.FragmentProfileBinding
+import com.pht.roomfinder.adapters.OptionAdapter
+import com.pht.roomfinder.adapters.OptionAdapter.Companion.TYPE_IMAGE_VIEW
+import com.pht.roomfinder.adapters.OptionAdapter.Companion.TYPE_SWITCH
+import com.pht.roomfinder.adapters.OptionAdapter.Companion.TYPE_TEXT_VIEW
+import com.pht.roomfinder.databinding.FragmentOptionBinding
 import com.pht.roomfinder.viewmodel.UserViewModel
 
-class ProfileFragment : Fragment() {
-    private lateinit var bin: FragmentProfileBinding
+class OptionFragment : Fragment() {
+    private lateinit var bin: FragmentOptionBinding
     private lateinit var userViewModel: UserViewModel
 
     override fun onCreateView(
@@ -26,11 +26,11 @@ class ProfileFragment : Fragment() {
 
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
 
-        bin = FragmentProfileBinding.inflate(inflater, container, false)
+        bin = FragmentOptionBinding.inflate(inflater, container, false)
         bin.lifecycleOwner = viewLifecycleOwner
         bin.userViewModel = userViewModel
 
-        val adapter = ProfileAdapter(setList())
+        val adapter = OptionAdapter(setList())
         bin.recyclerViewProfile.adapter = adapter
         bin.recyclerViewProfile.layoutManager = LinearLayoutManager(requireContext())
 
@@ -56,5 +56,4 @@ class ProfileFragment : Fragment() {
         )
         return list
     }
-
 }

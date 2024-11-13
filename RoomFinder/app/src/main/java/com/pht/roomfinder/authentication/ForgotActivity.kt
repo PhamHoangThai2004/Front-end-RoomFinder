@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.pht.roomfinder.R
 import com.pht.roomfinder.databinding.ActivityForgotBinding
 import com.pht.roomfinder.repositories.AuthRepository
@@ -41,16 +42,13 @@ class ForgotActivity : AppCompatActivity() {
             insets
         }
 
-        val authRepository = AuthRepository(UserService.accountService)
+        val authRepository = AuthRepository(UserService.userService)
         forgotViewModel = ViewModelProvider(
             this,
             ForgotViewModelFactory(authRepository)
         )[ForgotViewModel::class.java]
         bin.forgotViewModel = forgotViewModel
         bin.lifecycleOwner = this
-
-        supportFragmentManager.beginTransaction().replace(R.id.frame_Layout, ConfirmEmailFragment())
-            .commit()
 
         val dialog = Const.setDialog(R.layout.dialog_loading, this)
         val dialogOTP = openOTPDialog()
@@ -83,13 +81,11 @@ class ForgotActivity : AppCompatActivity() {
                 }
 
                 1 -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.frame_Layout, ConfirmEmailFragment()).commit()
+                    findNavController(R.id.fragment_Container_View).navigate(R.id.create_password_to_confirm_email)
                 }
 
                 else -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.frame_Layout, CreatePasswordFragment()).commit()
+                    findNavController(R.id.fragment_Container_View).navigate(R.id.confirm_email_to_create_password)
                 }
             }
         }

@@ -34,12 +34,15 @@
             android:importantForAccessibility="no"
             android:src="@drawable/app_logo"/>
 
-        <FrameLayout
-            android:id="@+id/frame_Layout"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_Container_View"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="200dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/navigation_forgot"/>
 
     </RelativeLayout>
 

@@ -16,9 +16,11 @@ class HomeViewModel : ViewModel() {
 
     val status = MutableLiveData<Boolean>()
     val isNull = MutableLiveData<Boolean>()
+    val isLoad = MutableLiveData<Boolean>()
 
     val listGroupData = MutableLiveData<List<ListGroupData>>()
     val listSearch = MutableLiveData<List<Post>>()
+
 
     private val postRepository = PostRepository(PostService.postService)
 
@@ -45,7 +47,6 @@ class HomeViewModel : ViewModel() {
                 postListResponse?.let {
                     listGroupData.value = it.data
                 }
-                Log.d("BBB", "Call api getlist thành công")
             } else {
                 val error = result.exceptionOrNull()
                 Log.d("BBB", "getListGroupData: ${error?.message}")
@@ -55,13 +56,15 @@ class HomeViewModel : ViewModel() {
 
     private fun getListSearch(keySearch: String) {
         viewModelScope.launch {
+            isLoad.value = true
             val result = postRepository.getListSearch(keySearch)
+            isLoad.value = false
             if (result.isSuccess) {
                 val searchResponse = result.getOrNull()
                 searchResponse?.let {
                     listSearch.value = it.data
+                    status.value = true
                 }
-                Log.d("BBB", "Call api search thành công")
             } else {
                 val error = result.exceptionOrNull()
                 Log.d("BBB", "getListSearch: ${error?.message}")

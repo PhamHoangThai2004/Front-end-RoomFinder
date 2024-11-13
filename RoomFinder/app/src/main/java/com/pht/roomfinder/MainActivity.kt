@@ -1,27 +1,27 @@
 package com.pht.roomfinder
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import com.pht.roomfinder.authentication.ForgotActivity
-import com.pht.roomfinder.authentication.LoginFragment
-import com.pht.roomfinder.authentication.RegisterFragment
-import com.pht.roomfinder.repositories.AuthRepository
-import com.pht.roomfinder.services.UserService
-import com.pht.roomfinder.user.UserActivity
+import com.pht.roomfinder.authentication.AuthActivity
+import com.pht.roomfinder.utils.Const
+import com.pht.roomfinder.utils.DataLocal
 import com.pht.roomfinder.viewmodel.AuthViewModel
-import com.pht.roomfinder.viewmodel.AuthViewModelFactory
 
 class MainActivity : AppCompatActivity() {
     lateinit var authViewModel: AuthViewModel
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -29,52 +29,31 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val authRepository = AuthRepository(UserService.accountService)
-        authViewModel = ViewModelProvider(
-            this,
-            AuthViewModelFactory(application, authRepository)
-        )[AuthViewModel::class.java]
+        authViewModel = ViewModelProvider(this)[AuthViewModel::class.java]
 
-        supportFragmentManager.beginTransaction().replace(R.id.frame_Layout, LoginFragment())
-            .commit()
+        loginByToken()
 
-        move()
+        replaceActivity()
 
     }
 
-    private fun move() {
-        authViewModel.move.observe(this) {
-            authViewModel.errorEmail.value = null
-            authViewModel.errorPassword.value = null
-            authViewModel.errorMessage.value = null
-            authViewModel.errorName.value = null
-            authViewModel.errorPhone.value = null
+    private fun loginByToken() {
+        val token = DataLocal.getInstance().getString(Const.TOKEN)
+        if (token != null) {
+            authViewModel.loginByToken(token)
+        }
+    }
 
-            authViewModel.email.value = null
-            authViewModel.password.value = null
-            authViewModel.name.value = null
-            authViewModel.phoneNumber.value = null
-
-            when (it) {
-                0 -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.frame_Layout, LoginFragment()).commit()
-                }
-
-                1 -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.frame_Layout, RegisterFragment()).commit()
-                }
-
-                2 -> {
-                    startActivity(Intent(this, UserActivity::class.java))
-                    finish()
-                }
-
-                else -> {
-                    startActivity(Intent(this, ForgotActivity::class.java))
-                }
+    private fun replaceActivity() {
+        authViewModel.intentEvent.observe(this) {
+            if (it != null) {
+                startActivity(authViewModel.intentEvent.value)
+                finish()
+            } else {
+                startActivity(Intent(this, AuthActivity::class.java))
+                finish()
             }
+
         }
     }
 
