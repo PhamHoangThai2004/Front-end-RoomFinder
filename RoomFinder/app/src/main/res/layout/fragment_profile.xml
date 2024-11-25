@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".user.setting.SettingFragment">
 
     <data>
+
+        <import type="android.view.View" />
 
         <variable
             name="userViewModel"
@@ -15,20 +18,124 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="@string/profile"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:layout_height="wrap_content">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_View_Profile"
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/custom_transparent"
+                android:importantForAccessibility="no"
+                android:onClick="@{() -> userViewModel.popBack()}"
+                android:padding="7dp"
+                android:src="@drawable/arrow_back_icon"
+                app:tint="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:padding="5dp"
+                android:text="@string/profile"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_edit_text_line"
+                android:enabled="false"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress"
+                android:text="@={userViewModel.user.email}"
+                android:textColor="@color/black"
+                android:textCursorDrawable="@drawable/custom_cursor"
+                tools:ignore="LabelFor" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_edit_text_line"
+                android:enabled="@{userViewModel.isUpgrade()}"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:text="@={userViewModel.name}"
+                android:textColor="@color/black"
+                android:textCursorDrawable="@drawable/custom_cursor"
+                tools:ignore="LabelFor" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_edit_text_line"
+                android:enabled="@{userViewModel.isUpgrade()}"
+                android:importantForAutofill="no"
+                android:inputType="phone"
+                android:text="@={userViewModel.phoneNumber}"
+                android:textColor="@color/black"
+                android:textCursorDrawable="@drawable/custom_cursor"
+                tools:ignore="LabelFor" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_button_full"
+                android:onClick="@{() -> userViewModel.setUpgrade(true)}"
+                android:text="@string/change_infor"
+                android:textColor="@color/white"
+                android:visibility="@{userViewModel.isUpgrade() ? View.GONE : View.VISIBLE}" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal"
+            android:visibility="@{userViewModel.isUpgrade() ? View.VISIBLE : View.GONE}"
+            android:weightSum="10">
+
+            <Button
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:background="@drawable/custom_button_full"
+                android:onClick="@{() -> userViewModel.checkInformation()}"
+                android:text="@string/upgrade"
+                android:textColor="@color/white"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_weight="5"
+                android:background="@drawable/custom_button_outline"
+                android:onClick="@{() -> userViewModel.setUpgrade(false)}"
+                android:text="@string/cancel"
+                android:textColor="@color/app_color"
+                tools:ignore="ButtonStyle" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

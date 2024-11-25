@@ -132,4 +132,41 @@ class AuthRepository(private val userService: UserService) {
         }
     }
 
+    suspend fun changeInformation(token: String, user: User): Result<AuthResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response: Response<AuthResponse> = userService.changeInformation(token, user)
+                if (response.isSuccessful) {
+                    Result.success(response.body()!!)
+                } else
+                    Result.failure(
+                        Exception("Change information failed: ${response.errorBody()?.string()}")
+                    )
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
+    suspend fun changePassword(
+        token: String,
+        oldPassword: String,
+        newPassword: String
+    ): Result<AuthResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response: Response<AuthResponse> =
+                    userService.changePassword(token, oldPassword, newPassword)
+                if (response.isSuccessful) {
+                    Result.success(response.body()!!)
+                } else
+                    Result.failure(
+                        Exception("Change password failed: ${response.errorBody()?.string()}")
+                    )
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
 }

@@ -74,7 +74,8 @@
             android:background="@drawable/custom_button_full"
             android:text="@string/confirm"
             android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="ButtonStyle" />
 
         <Button
             android:id="@+id/button_Cancel"
@@ -84,7 +85,8 @@
             android:background="@drawable/custom_button_outline"
             android:text="@string/cancel"
             android:textColor="@color/app_color"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="ButtonStyle" />
 
     </LinearLayout>
 

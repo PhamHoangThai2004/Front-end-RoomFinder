@@ -9,9 +9,14 @@ import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pht.roomfinder.R
-import com.pht.roomfinder.user.setting.FunctionName
+import com.pht.roomfinder.listen.OnItemClickListener
+import com.pht.roomfinder.utils.FunctionName
+import com.pht.roomfinder.utils.ItemImage
+import com.pht.roomfinder.utils.ItemSwitch
+import com.pht.roomfinder.utils.ItemText
 
 class OptionAdapter (val list: List<FunctionName>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var onItemClickListener: OnItemClickListener? = null
 
     companion object {
         const val TYPE_SWITCH = 0
@@ -59,18 +64,28 @@ class OptionAdapter (val list: List<FunctionName>) : RecyclerView.Adapter<Recycl
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is SwitchViewHolder -> {
-                val functionName = list[position]
+                val functionName = list[position] as ItemSwitch
                 holder.textView.text = holder.itemView.context.getString(functionName.name)
+                holder.switch.isChecked = functionName.isChecked
+                holder.switch.setOnCheckedChangeListener { _, isChecked ->
+                    onItemClickListener?.onSwitchChange(isChecked, position)
+                }
             }
             is ImageViewHolder -> {
-                val functionName = list[position]
+                val functionName = list[position] as ItemImage
                 holder.textView.text = holder.itemView.context.getString(functionName.name)
-                holder.imageView.setImageResource(functionName.icon!!)
+                holder.imageView.setImageResource(functionName.icon)
+                holder.itemView.setOnClickListener {
+                    onItemClickListener?.onImageClick(position)
+                }
             }
             is TextViewHolder -> {
-                val functionName = list[position]
+                val functionName = list[position] as ItemText
                 holder.textView.text = holder.itemView.context.getString(functionName.name)
-                holder.textViewLabel.text = holder.itemView.context.getString(functionName.text!!)
+                holder.textViewLabel.text = holder.itemView.context.getString(functionName.text)
+                holder.itemView.setOnClickListener {
+                    onItemClickListener?.onTextClick(position)
+                }
             }
         }
     }

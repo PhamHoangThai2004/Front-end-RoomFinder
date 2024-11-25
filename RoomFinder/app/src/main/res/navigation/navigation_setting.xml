@@ -10,4 +10,17 @@
         android:label="@string/setting"
         android:theme="@style/Theme.RoomFinder"/>
 
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.pht.roomfinder.user.setting.ProfileFragment"
+        android:label="@string/profile"
+        android:theme="@style/Theme.RoomFinder"/>
+
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.pht.roomfinder.user.setting.ChangePasswordFragment"
+        android:label="@string/change_password"
+        android:theme="@style/Theme.RoomFinder"/>
+
+
 </navigation>

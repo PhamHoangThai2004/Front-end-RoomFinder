@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -16,6 +17,8 @@ import com.pht.roomfinder.R
 import com.pht.roomfinder.adapters.BottomNavigationAdapter
 import com.pht.roomfinder.model.User
 import com.pht.roomfinder.viewmodel.UserViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class UserActivity : AppCompatActivity() {
     private lateinit var viewPager: ViewPager2
@@ -44,6 +47,16 @@ class UserActivity : AppCompatActivity() {
 
         userViewModel.user.value = user
 
+        setBottomNavigation()
+
+        userViewModel.isShowBottomNavigation.observe(this) {
+            if (it) showBottomNavigation(true)
+            else showBottomNavigation(false)
+        }
+
+    }
+
+    private fun setBottomNavigation() {
         viewPager.adapter = BottomNavigationAdapter(this)
         viewPager.setCurrentItem(0, false)
 
@@ -84,7 +97,14 @@ class UserActivity : AppCompatActivity() {
                 }
             }
         })
+    }
 
+    private fun showBottomNavigation(isShow: Boolean) {
+        lifecycleScope.launch {
+            delay(10)
+            if (isShow) bottomNavigationView.visibility = BottomNavigationView.VISIBLE
+            else bottomNavigationView.visibility = BottomNavigationView.GONE
+        }
     }
 
 }

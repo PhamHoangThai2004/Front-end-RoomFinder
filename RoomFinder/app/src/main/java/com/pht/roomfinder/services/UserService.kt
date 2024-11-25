@@ -11,6 +11,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 
 interface UserService {
@@ -55,6 +56,20 @@ interface UserService {
     @POST("create-password.php")
     suspend fun createPassword(
         @Field("email") email: String,
+        @Field("newPassword") newPassword: String
+    ): Response<AuthResponse>
+
+    @PUT("change-infor.php")
+    suspend fun changeInformation(
+        @Header("Authorization") token: String,
+        @Body user: User
+    ): Response<AuthResponse>
+
+    @FormUrlEncoded
+    @POST("change-password.php")
+    suspend fun changePassword(
+        @Header("Authorization") token: String,
+        @Field("oldPassword") oldPassword: String,
         @Field("newPassword") newPassword: String
     ): Response<AuthResponse>
 

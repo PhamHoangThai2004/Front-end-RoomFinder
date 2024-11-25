@@ -29,4 +29,8 @@ class User(
     fun checkName(): Boolean {
         return (name ?: "").length >= 2
     }
+
+    override fun toString(): String {
+        return "User(userId=$userId, role=$role, email=$email, password=$password, name=$name, phoneNumber=$phoneNumber, createAt=$createAt)"
+    }
 }

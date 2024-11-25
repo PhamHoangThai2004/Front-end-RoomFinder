@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.pht.roomfinder.databinding.FragmentProfileBinding
+import com.pht.roomfinder.databinding.FragmentChangePasswordBinding
 import com.pht.roomfinder.viewmodel.UserViewModel
 
-class ProfileFragment : Fragment() {
-    private lateinit var bin: FragmentProfileBinding
+class ChangePasswordFragment : Fragment() {
+    private lateinit var bin: FragmentChangePasswordBinding
     private lateinit var userViewModel: UserViewModel
 
     override fun onCreateView(
@@ -20,10 +20,9 @@ class ProfileFragment : Fragment() {
     ): View {
 
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
-
-        bin = FragmentProfileBinding.inflate(inflater, container, false)
-        bin.lifecycleOwner = viewLifecycleOwner
+        bin = FragmentChangePasswordBinding.inflate(inflater, container, false)
         bin.userViewModel = userViewModel
+        bin.lifecycleOwner = this
 
         userViewModel.isToast.observe(viewLifecycleOwner) {
             if (it) {
@@ -37,6 +36,5 @@ class ProfileFragment : Fragment() {
 
         return bin.root
     }
-
 
 }

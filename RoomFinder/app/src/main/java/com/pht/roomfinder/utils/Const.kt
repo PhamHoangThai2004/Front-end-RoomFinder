@@ -13,6 +13,10 @@ class Const {
         const val HTTP_API = "http://192.168.102.4/roomfinder/"
 
         const val TOKEN = "token"
+        const val PASSWORD = "password"
+        const val EMAIL = "email"
+        const val SAVE_ACCOUNT = "saveAccount"
+
 
         fun setDialog(layout: Int, context: Context): Dialog {
             val dialog = Dialog(context)

@@ -40,6 +40,8 @@
                 android:layout_marginBottom="40dp"
                 android:text='@{post.title != null ? post.title : "Chưa có tiêu đề"}'
                 android:textColor="@color/white"
+                android:maxLines="1"
+                android:ellipsize="marquee"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 tools:ignore="SmallSp" />

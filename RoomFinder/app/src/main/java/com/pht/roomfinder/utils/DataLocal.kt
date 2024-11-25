@@ -28,7 +28,12 @@ class DataLocal private constructor() {
         sharedPreferences.edit().putString(key, value).apply()
     }
 
-    fun getString(key: String): String? {
-        return sharedPreferences.getString(key, null)
+    fun getString(key: String) = sharedPreferences.getString(key, null)
+
+    fun putBoolean(key: String, value: Boolean) {
+        sharedPreferences.edit().putBoolean(key, value).apply()
     }
+
+    fun getBoolean(key: String) = sharedPreferences.getBoolean(key, false)
+
 }

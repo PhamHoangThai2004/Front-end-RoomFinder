@@ -24,9 +24,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:padding="8dp"
-        android:switchMinWidth="60dp"
-        android:switchPadding="10dp"
         android:thumb="@drawable/custom_thumb"
         android:track="@drawable/custom_track"
         tools:ignore="UseSwitchCompatOrMaterialXml" />

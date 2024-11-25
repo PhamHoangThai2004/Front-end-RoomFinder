@@ -1,12 +1,10 @@
 package com.pht.roomfinder.viewmodel
 
-import android.app.Application
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.pht.roomfinder.model.Role
 import com.pht.roomfinder.model.User
@@ -36,6 +34,11 @@ class AuthViewModel() : ViewModel() {
     val otpStatus = MutableLiveData<Boolean>()
     val errorOTP = MutableLiveData<String>()
     val dialogStatus = MutableLiveData<Boolean>()
+
+    init {
+        email.value = DataLocal.getInstance().getString(Const.EMAIL)
+        password.value = DataLocal.getInstance().getString(Const.PASSWORD)
+    }
 
     private val authRepository = AuthRepository(UserService.userService)
 
@@ -110,13 +113,15 @@ class AuthViewModel() : ViewModel() {
                     if (it.status) {
                         DataLocal.getInstance().putString(Const.TOKEN, it.token)
                         loginByToken(it.token)
+                        DataLocal.getInstance()
+                            .putString(Const.PASSWORD, password.value.toString().trim())
+                        errorMessage.value = null
                     } else {
                         errorMessage.value = it.message
                     }
                 }
             } else {
                 val error = result.exceptionOrNull()
-                Log.d("BBB", "loginAccount: ${error?.message}")
                 errorMessage.value = "Có lỗi xảy ra"
             }
 

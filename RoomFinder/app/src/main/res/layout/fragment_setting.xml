@@ -4,7 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".user.setting.SettingFragment">
 
-    <data/>
+    <data>
+        <variable
+            name="userViewModel"
+            type="com.pht.roomfinder.viewmodel.UserViewModel" />
+    </data>
 
 
     <LinearLayout
