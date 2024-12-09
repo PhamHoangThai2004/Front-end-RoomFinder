@@ -1,4 +1,4 @@
-package com.pht.roomfinder.services
+package com.pht.roomfinder.response
 
 import com.pht.roomfinder.model.Post
 

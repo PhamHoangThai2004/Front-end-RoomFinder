@@ -1,6 +1,4 @@
-package com.pht.roomfinder.services
-
-import com.pht.roomfinder.model.User
+package com.pht.roomfinder.response
 
 class AuthResponse(
     val status: Boolean,

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".user.post.FilterFragment">
+
+    <data>
+
+        <variable
+            name="postViewModel"
+            type="com.pht.roomfinder.viewmodel.PostViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:text="@string/filter"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/image_Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:importantForAccessibility="no"
+                android:padding="8dp"
+                android:src="@drawable/close_icon" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/category"
+            android:textSize="25sp" />
+
+
+        <Spinner
+            android:id="@+id/spinner_Category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/custom_edit_text_line" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/area"
+            android:textSize="25sp" />
+
+        <Spinner
+            android:id="@+id/spinner_Province"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/custom_edit_text_line"
+            android:entries="@array/province_names" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/price_range"
+            android:textSize="25sp" />
+
+        <Spinner
+            android:id="@+id/spinner_Price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/custom_edit_text_line"
+            android:entries="@array/price_range" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/acreage_range"
+            android:textSize="25sp" />
+
+        <Spinner
+            android:id="@+id/spinner_Acreage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/custom_edit_text_line"
+            android:entries="@array/acreage_range" />
+
+    </LinearLayout>
+
+</layout>

@@ -1,4 +1,4 @@
-package com.pht.roomfinder.services
+package com.pht.roomfinder.response
 
 class PostListResponse(
     val status: Boolean,

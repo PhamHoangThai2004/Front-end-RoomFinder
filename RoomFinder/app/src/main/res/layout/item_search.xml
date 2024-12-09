@@ -11,13 +11,16 @@
     </data>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/custom_shape_dialog"
+        android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="150dp"
-            android:layout_height="200dp"
+            android:layout_width="170dp"
+            android:layout_height="130dp"
             android:layout_margin="5dp"
             app:cardCornerRadius="20dp">
 
@@ -34,60 +37,58 @@
         </androidx.cardview.widget.CardView>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="5dp"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:padding="2dp"
                 android:text='@{post.title != null ? post.title : "Chưa có tiêu đề"}'
                 android:textColor="@color/blue"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10sp"
-                android:padding="2dp"
-                android:maxLines="3"
+                android:layout_marginTop="5dp"
                 android:ellipsize="end"
-                android:text='@{post.description != null ? post.description : "Chưa có mô tả"}'
+                android:maxLines="3"
+                android:padding="2dp"
+                android:text='@{post.price != null ? String.valueOf(post.price) + " triệu/tháng" : "Không rõ giá"}'
                 android:textColor="@color/black"
-                android:textSize="17sp" />
+                android:textSize="15sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="2dp"
+                    android:ellipsize="end"
                     android:maxEms="5"
                     android:maxLines="1"
-                    android:ellipsize="end"
+                    android:padding="2dp"
                     android:text='@{post.address != null ? post.address : "Chưa có địa chỉ"}'
                     android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:padding="2dp"
-                    android:text='@{post.price != null ? String.valueOf(post.price) + " triệu/tháng" : "Không rõ giá"}'
+                    android:text='@{post.acreage != null ? String.valueOf(post.acreage) + " m\u00B2" : "Chưa có diện tích"}'
                     android:textColor="@color/red"
-                    android:textSize="15sp" />
+                    android:textSize="13sp" />
 
             </LinearLayout>
 

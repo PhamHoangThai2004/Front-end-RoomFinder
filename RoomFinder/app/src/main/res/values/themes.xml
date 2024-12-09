@@ -6,4 +6,5 @@
     </style>
 
     <style name="Theme.RoomFinder" parent="Base.Theme.RoomFinder" />
+    <style name="MaterialTheme" parent="Theme.MaterialComponents.Light.NoActionBar"/>
 </resources>

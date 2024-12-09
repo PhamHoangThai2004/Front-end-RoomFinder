@@ -1,6 +1,7 @@
 package com.pht.roomfinder.services
 
 import com.pht.roomfinder.model.User
+import com.pht.roomfinder.response.AuthResponse
 import com.pht.roomfinder.utils.Const
 import retrofit2.Response
 import retrofit2.Retrofit

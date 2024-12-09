@@ -16,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pht.roomfinder.R
 import com.pht.roomfinder.adapters.BottomNavigationAdapter
 import com.pht.roomfinder.model.User
+import com.pht.roomfinder.viewmodel.PostViewModel
 import com.pht.roomfinder.viewmodel.UserViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -44,7 +45,6 @@ class UserActivity : AppCompatActivity() {
         val user: User? = intent.getSerializableExtra("user", User::class.java)
 
         userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
-
         userViewModel.user.value = user
 
         setBottomNavigation()

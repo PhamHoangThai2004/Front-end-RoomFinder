@@ -63,8 +63,9 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
 
-    // library for material (edittext)
+    // library for material (UI)
     implementation("com.google.android.material:material")
+//    implementation("com.google.android.material:material:1.9.0")
 
     // libraries for coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")

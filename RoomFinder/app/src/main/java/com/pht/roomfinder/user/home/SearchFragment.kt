@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pht.roomfinder.R
 import com.pht.roomfinder.adapters.SearchAdapter
@@ -48,7 +49,7 @@ class SearchFragment : Fragment() {
         if (homeViewModel.listSearch.value != null && homeViewModel.listSearch.value!!.isNotEmpty()) {
             val adapter = SearchAdapter(homeViewModel.listSearch.value!!)
             bin.recyclerViewSearchList.adapter = adapter
-            bin.recyclerViewSearchList.layoutManager = LinearLayoutManager(requireContext())
+            bin.recyclerViewSearchList.layoutManager = GridLayoutManager(requireContext(), 2)
             homeViewModel.isNull.value = false
         } else {
             homeViewModel.isNull.value = true

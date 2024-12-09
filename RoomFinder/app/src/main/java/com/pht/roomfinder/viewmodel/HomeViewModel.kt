@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pht.roomfinder.model.Post
 import com.pht.roomfinder.repositories.PostRepository
-import com.pht.roomfinder.services.ListGroupData
+import com.pht.roomfinder.response.ListGroupData
 import com.pht.roomfinder.services.PostService
 import kotlinx.coroutines.launch
 

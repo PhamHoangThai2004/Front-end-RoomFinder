@@ -1,7 +1,7 @@
 package com.pht.roomfinder.repositories
 
 import com.pht.roomfinder.model.User
-import com.pht.roomfinder.services.AuthResponse
+import com.pht.roomfinder.response.AuthResponse
 import com.pht.roomfinder.services.UserService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

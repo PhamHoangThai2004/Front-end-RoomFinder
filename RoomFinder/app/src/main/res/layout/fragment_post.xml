@@ -4,7 +4,9 @@
     tools:context=".user.post.PostFragment">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="postViewModel"
             type="com.pht.roomfinder.viewmodel.PostViewModel" />
@@ -15,22 +17,54 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            android:weightSum="10">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:background="@drawable/custom_button_full"
+                android:padding="15dp"
+                android:text="@string/search_filter"
+                android:onClick="@{() -> postViewModel.getFilterValue()}"
+                android:textColor="@color/white"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/button_Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/custom_button_outline"
+                android:drawableStart="@drawable/filter_icon"
+                android:drawableTint="@color/app_color"
+                android:onClick="@{() -> postViewModel.openFilter(true)}"
+                android:padding="10dp"
+                android:text="@string/filter"
+                android:textColor="@color/app_color"
+                tools:ignore="ButtonStyle" />
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_Filter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="@{postViewModel.isNull == false ? View.VISIBLE : View.GONE}"/>
+            android:visibility="@{postViewModel.isNull == false ? View.VISIBLE : View.GONE}" />
 
         <TextView
-            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="@string/no_found"
-            android:textSize="20sp"
-            android:visibility="@{postViewModel.isNull == true ? View.VISIBLE : View.GONE}"
             android:textColor="@color/black"
-            android:gravity="center"/>
+            android:textSize="20sp"
+            android:visibility="@{postViewModel.isNull == true ? View.VISIBLE : View.GONE}" />
     </LinearLayout>
 
 </layout>

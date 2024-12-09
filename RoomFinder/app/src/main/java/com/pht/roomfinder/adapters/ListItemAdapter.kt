@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pht.roomfinder.databinding.ItemListBinding
-import com.pht.roomfinder.services.ListGroupData
+import com.pht.roomfinder.response.ListGroupData
 
 class ListItemAdapter(private val list: List<ListGroupData>) :
     RecyclerView.Adapter<ListItemAdapter.ViewHolder>() {
