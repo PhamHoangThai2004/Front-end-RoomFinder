@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.pht.roomfinder.model.User
 import com.pht.roomfinder.repositories.AuthRepository
 import com.pht.roomfinder.services.UserService
+import com.pht.roomfinder.user.setting.SettingFragment
 import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.utils.DataLocal
 import kotlinx.coroutines.launch
@@ -127,17 +128,22 @@ class UserViewModel : ViewModel() {
     }
 
     fun popBack() {
-        move.value = 0
+        move.value = SettingFragment.OPTION
     }
 
-    fun setUpgrade(b: Boolean) {
-        isUpgrade.value = b
+    fun toFunction(value: Int) {
+        move.value = value
+        isShowBottomNavigation.value = false
+    }
+
+    fun setUpgrade(value: Boolean) {
+        isUpgrade.value = value
         name.value = user.value?.name
         phoneNumber.value = user.value?.phoneNumber
     }
 
     fun cancelChangePassword() {
-        move.value = 0
+        popBack()
         oldPassword.value = ""
         newPassword.value = ""
         confirmPassword.value = ""

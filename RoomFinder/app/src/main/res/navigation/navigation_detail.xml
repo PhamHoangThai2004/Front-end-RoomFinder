@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_detail"
+    app:startDestination="@id/detailFragment">
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.pht.roomfinder.user.detail.DetailFragment"
+        android:label="Chi tiết"
+        android:theme="@style/Theme.RoomFinder"/>
+
+    <fragment
+        android:id="@+id/contactFragment"
+        android:name="com.pht.roomfinder.user.detail.ContactFragment"
+        android:label="Liên lạc"
+        android:theme="@style/Theme.RoomFinder"/>
+
+</navigation>

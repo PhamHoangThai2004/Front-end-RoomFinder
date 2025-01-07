@@ -24,7 +24,8 @@ class ForgotViewModel(private val authRepository: AuthRepository) : ViewModel() 
 
 
     fun confirmEmail() {
-        val user = User(null, null, email.value.toString().trim(), null, null, null, null)
+        val user = User(null, null, email.value.toString().trim(), null,
+            null, null, null, null, null)
 
         errorEmail.value = if (user.checkEmail()) {
             null
@@ -76,7 +77,7 @@ class ForgotViewModel(private val authRepository: AuthRepository) : ViewModel() 
     fun changePassword() {
         val user = User(
             null, null, email.value.toString().trim(),
-            password.value.toString().trim(), null, null, null
+            password.value.toString().trim(), null, null, null, null, null
         )
 
         errorPassword.value = if (user.checkPassword()) {

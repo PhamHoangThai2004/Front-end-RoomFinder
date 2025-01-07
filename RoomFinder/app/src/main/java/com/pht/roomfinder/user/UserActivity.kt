@@ -10,21 +10,19 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.viewpager2.widget.ViewPager2
-import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pht.roomfinder.R
-import com.pht.roomfinder.adapters.BottomNavigationAdapter
 import com.pht.roomfinder.model.User
-import com.pht.roomfinder.viewmodel.PostViewModel
 import com.pht.roomfinder.viewmodel.UserViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class UserActivity : AppCompatActivity() {
-    private lateinit var viewPager: ViewPager2
+    private lateinit var navController: NavController
     private lateinit var bottomNavigationView: BottomNavigationView
-    lateinit var userViewModel: UserViewModel
+    private lateinit var userViewModel: UserViewModel
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     @SuppressLint("SourceLockedOrientationActivity", "ClickableViewAccessibility")
@@ -38,7 +36,10 @@ class UserActivity : AppCompatActivity() {
             insets
         }
 
-        viewPager = findViewById(R.id.view_Pager)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_Container_View) as NavHostFragment
+        navController = navHostFragment.navController
+
         bottomNavigationView = findViewById(R.id.bottom_Navigation_View)
 
         val intent = intent
@@ -57,46 +58,30 @@ class UserActivity : AppCompatActivity() {
     }
 
     private fun setBottomNavigation() {
-        viewPager.adapter = BottomNavigationAdapter(this)
-        viewPager.setCurrentItem(0, false)
-
-
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 (R.id.menu_home) -> {
-                    viewPager.setCurrentItem(0, true)
+                    navController.navigate(R.id.homeFragment)
                     true
                 }
 
                 (R.id.menu_post) -> {
-                    viewPager.setCurrentItem(1, true)
+                    navController.navigate(R.id.postFragment)
                     true
                 }
 
                 (R.id.menu_favorite) -> {
-                    viewPager.setCurrentItem(2, true)
+                    navController.navigate(R.id.favoriteFragment)
                     true
                 }
 
                 else -> {
-                    viewPager.setCurrentItem(3, true)
+                    navController.navigate(R.id.settingFragment)
                     true
                 }
 
             }
         }
-
-        viewPager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                when (position) {
-                    0 -> bottomNavigationView.menu.findItem(R.id.menu_home).setChecked(true)
-                    1 -> bottomNavigationView.menu.findItem(R.id.menu_post).setChecked(true)
-                    2 -> bottomNavigationView.menu.findItem(R.id.menu_favorite).setChecked(true)
-                    else -> bottomNavigationView.menu.findItem(R.id.menu_setting).setChecked(true)
-                }
-            }
-        })
     }
 
     private fun showBottomNavigation(isShow: Boolean) {

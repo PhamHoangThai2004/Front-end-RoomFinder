@@ -16,9 +16,17 @@ class SettingFragment : Fragment() {
     private lateinit var userViewModel: UserViewModel
 
     companion object {
-        const val OPTION_FRAGMENT = 0
-        const val PROFILE_FRAGMENT = 1
-        const val CHANGE_PASSWORD_FRAGMENT = 5
+        const val OPTION = -1
+        const val INFORMATION_ACCOUNT = 0
+        const val AVATAR = 1
+        const val MY_POST = 2
+        const val LOCATION = 3
+        const val SAVE_ACCOUNT = 4
+        const val CHANGE_PASSWORD = 5
+        const val LANGUAGE = 6
+        const val THEME = 7
+        const val CONTACT_SUPPORT = 8
+        const val LOGOUT = 9
     }
 
     override fun onCreateView(
@@ -42,22 +50,16 @@ class SettingFragment : Fragment() {
 
         userViewModel.move.observe(viewLifecycleOwner) {
             when (it) {
-                OPTION_FRAGMENT -> {
+                OPTION -> {
                     navHostFragment.navController.navigate(R.id.optionFragment)
-//                    (activity as UserActivity).showBottomNavigation(true)
-                    userViewModel.isShowBottomNavigation.value = true
                 }
 
-                PROFILE_FRAGMENT -> {
+                INFORMATION_ACCOUNT -> {
                     navHostFragment.navController.navigate(R.id.profileFragment)
-//                    (activity as UserActivity).showBottomNavigation(false)
-                    userViewModel.isShowBottomNavigation.value = false
                 }
 
-                CHANGE_PASSWORD_FRAGMENT -> {
+                CHANGE_PASSWORD -> {
                     navHostFragment.navController.navigate(R.id.changePasswordFragment)
-//                    (activity as UserActivity).showBottomNavigation(false)
-                    userViewModel.isShowBottomNavigation.value = false
                 }
             }
         }

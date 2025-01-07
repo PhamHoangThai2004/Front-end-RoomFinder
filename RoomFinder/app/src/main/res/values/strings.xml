@@ -28,7 +28,8 @@
     <string name="information_account">Thông tin tài khoản</string>
     <string name="my_post">Bài đăng của tôi</string>
     <string name="language">Ngôn ngữ</string>
-    <string name="location">Thiết lập vị trí</string>
+    <string name="set_location">Thiết lập vị trí</string>
+    <string name="location">Vị trí</string>
     <string name="logout">Đăng xuất</string>
     <string name="contact_support">Liên hệ - Hỗ trợ</string>
     <string name="theme">Giao diện</string>
@@ -47,4 +48,19 @@
     <string name="acreage_range">Khoản diện tích</string>
     <string name="area">Khu vực</string>
     <string name="category">Danh mục</string>
+    <string name="avatar">Ảnh đại diện</string>
+    <string name="description_information">Thông tin mô tả</string>
+    <string name="favourite">Yêu thích:</string>
+    <string name="report">Báo cáo</string>
+    <string name="post_features">Đặc điểm bài đăng</string>
+    <string name="contact_information">Thông tin liên hệ</string>
+    <string name="zalo">Nhắn Zalo</string>
+    <string name="note">Lưu ý</string>
+    <string name="big_map">Xem bản đồ lớn</string>
+
+    <string name="note_text_one">\u2022 Chỉ đặt khi cọc xác định được chủ nhà và có thỏa thuận
+        biên nhận rõ ràng. Kiểm tra mọi điều khoản và yêu cầu liệt kê tất cả chi phí hàng tháng vào hợp đồng.</string>
+    <string name="note_text_two">\u2022 Mọi thông tin liên quan đến tin đăng này chỉ mang tính chất tham khảo. Nếu bạn
+        thấy rằng tin đăng này không đúng hoặc có dấu hiệu lừa đảo, hãy phản ánh với chúng tôi.</string>
+    <string name="some_post">• Một số bài đăng khác</string>
 </resources>

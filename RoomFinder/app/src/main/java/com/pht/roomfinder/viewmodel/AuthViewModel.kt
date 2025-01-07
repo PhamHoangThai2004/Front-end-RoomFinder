@@ -57,16 +57,17 @@ class AuthViewModel() : ViewModel() {
     fun login() {
         val user = User(
             null, null, email.value.toString().trim(),
-            password.value.toString().trim(), null, null, null
+            password.value.toString().trim(), null, null, null, null, null
         )
 
         if (checkValid(user)) loginAccount(user)
     }
 
     fun register() {
+        // Bị lỗi đăng ký, cần fix lại sau
         val user = User(
             null, Role(-1, "User"), email.value.toString().trim(), password.value.toString().trim(),
-            name.value.toString().trim(), phoneNumber.value.toString().trim(), null
+            name.value.toString().trim(), null , phoneNumber.value.toString().trim(), null, null
         )
 
         if (checkValid(user)) registerAccount(user)
@@ -169,7 +170,7 @@ class AuthViewModel() : ViewModel() {
             val intent = Intent(App.getContext(), UserActivity::class.java)
             val user = User(
                 user.userId, user.role, user.email,
-                null, user.name, user.phoneNumber, null
+                null, user.name, null, user.phoneNumber, null, null
             )
             val bundle = Bundle()
             bundle.putSerializable("user", user)
@@ -197,7 +198,7 @@ class AuthViewModel() : ViewModel() {
     fun resendOTP() {
         val user = User(
             -1, Role(-1, "User"), email.value.toString().trim(), password.value.toString().trim(),
-            name.value.toString().trim(), phoneNumber.value.toString().trim(), null
+            name.value.toString().trim(), phoneNumber.value.toString().trim(), null, null, null
         )
         registerAccount(user)
     }

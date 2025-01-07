@@ -1,7 +1,10 @@
 package com.pht.roomfinder.repositories
 
+import android.util.Log
 import com.pht.roomfinder.response.PostListResponse
+import com.pht.roomfinder.response.PostResponse
 import com.pht.roomfinder.response.SearchResponse
+import com.pht.roomfinder.response.UserResponse
 import com.pht.roomfinder.services.PostService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -67,9 +70,63 @@ class PostRepository(private val postService: PostService) {
                 if (response.isSuccessful) Result.success(response.body()!!)
                 else Result.failure(
                     Exception(
-                        "List search failed: ${response.errorBody()?.string()}"
+                        "List filter failed: ${response.errorBody()?.string()}"
                     )
                 )
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
+    suspend fun postDetail(postID: Int): Result<PostResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response: Response<PostResponse> = postService.postDetail(postID)
+                if (response.isSuccessful) Result.success(response.body()!!)
+                else {
+                    Result.failure(
+                        Exception(
+                            "Post detail failed: ${response.errorBody()?.string()}"
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
+    suspend fun userDetail(userId: Int): Result<UserResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response: Response<UserResponse> = postService.userDetail(userId)
+                if (response.isSuccessful) Result.success(response.body()!!)
+                else {
+                    Result.failure(
+                        Exception(
+                            "Detail user failed: ${response.errorBody()?.string()}"
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
+    suspend fun likePost(postId: Int, isLiked: Boolean): Result<PostResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response: Response<PostResponse> = postService.likePost(postId, isLiked)
+                if (response.isSuccessful) Result.success(response.body()!!)
+                else {
+                    Result.failure(
+                        Exception(
+                            "Like post failed: ${response.errorBody()?.string()}"
+                        )
+                    )
+                }
             } catch (e: Exception) {
                 Result.failure(e)
             }

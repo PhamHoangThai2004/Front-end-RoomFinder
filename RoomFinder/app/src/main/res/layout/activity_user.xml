@@ -7,11 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".user.UserActivity">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_Pager"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_Container_View"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/card_View" />
+        android:layout_above="@id/card_View"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/navigation_user" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_View"

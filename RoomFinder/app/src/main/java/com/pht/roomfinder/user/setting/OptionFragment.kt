@@ -40,14 +40,13 @@ class OptionFragment : Fragment() {
         bin.lifecycleOwner = viewLifecycleOwner
         bin.userViewModel = userViewModel
 
-
         val adapter = OptionAdapter(setList())
         bin.recyclerViewProfile.adapter = adapter
         bin.recyclerViewProfile.layoutManager = LinearLayoutManager(requireContext())
 
         adapter.onItemClickListener = object : OnItemClickListener {
             override fun onSwitchChange(isChecked: Boolean, position: Int) {
-                if (position == 3) userViewModel.saveAccount(
+                if (position == SettingFragment.SAVE_ACCOUNT) userViewModel.saveAccount(
                     userViewModel.user.value?.email ?: "",
                     DataLocal.getInstance().getString(Const.PASSWORD) ?: "",
                     isChecked
@@ -56,16 +55,16 @@ class OptionFragment : Fragment() {
 
             override fun onImageClick(position: Int) {
                 when (position) {
-                    0 -> {
-                        userViewModel.move.value = 1
+                    SettingFragment.INFORMATION_ACCOUNT -> {
+                        userViewModel.toFunction(position)
                         userViewModel.setUpgrade(false)
                     }
 
-                    4 -> {
-                        userViewModel.move.value = 5
+                    SettingFragment.CHANGE_PASSWORD -> {
+                        userViewModel.toFunction(position)
                     }
 
-                    8 -> {
+                    SettingFragment.LOGOUT -> {
                         userViewModel.logout()
                         requireActivity().startActivity(
                             Intent(
@@ -94,6 +93,7 @@ class OptionFragment : Fragment() {
     private fun setList(): List<FunctionName> {
         val list: List<FunctionName> = listOf(
             ItemImage(R.string.information_account, TYPE_IMAGE_VIEW, R.drawable.name_icon),
+            ItemImage(R.string.avatar, TYPE_IMAGE_VIEW, R.drawable.avatar_icon),
             ItemImage(R.string.my_post, TYPE_IMAGE_VIEW, R.drawable.post_icon),
             ItemImage(R.string.location, TYPE_IMAGE_VIEW, R.drawable.location_icon),
             ItemSwitch(

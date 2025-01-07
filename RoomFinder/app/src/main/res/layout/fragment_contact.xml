@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".user.detail.ContactFragment">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="detailViewModel"
+            type="com.pht.roomfinder.viewmodel.DetailViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@null"
+            android:importantForAccessibility="no"
+            android:onClick="@{() -> detailViewModel.toDetail()}"
+            android:padding="5dp"
+            android:src="@drawable/arrow_back_icon" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_View_Avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/avatar"
+            app:civ_border_color="@color/gray_dark"
+            app:civ_border_width="2dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:text="@{detailViewModel.userDetail.name}"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text='@{"\u2022 Địa chỉ: " + detailViewModel.userDetail.address}'
+            android:textColor="@color/app_color"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text='@{"\u2022 " + String.valueOf(detailViewModel.totalPosts) + " bài đăng"}' />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text='@{"\u2022 Tham gia từ: " + detailViewModel.date}' />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custom_button_full"
+            android:backgroundTint="@color/green"
+            android:drawableStart="@drawable/call_icon"
+            android:drawablePadding="-120dp"
+            android:drawableTint="@color/white"
+            android:onClick="@{() -> detailViewModel.toPhoneCall()}"
+            android:paddingStart="120dp"
+            android:text="@{detailViewModel.userDetail.phoneNumber}"
+            android:textColor="@color/white"
+            tools:ignore="RtlSymmetry" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custom_button_full"
+            android:backgroundTint="@color/blue"
+            android:drawableStart="@drawable/message_icon"
+            android:drawablePadding="-120dp"
+            android:drawableTint="@color/white"
+            android:onClick="@{() -> detailViewModel.toZalo()}"
+            android:paddingStart="120dp"
+            android:text="@string/zalo"
+            android:textColor="@color/white"
+            tools:ignore="RtlSymmetry" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/some_post"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:visibility="@{detailViewModel.listPost.size==0 ? View.GONE : View.VISIBLE}" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_View_List_Post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+
+</layout>

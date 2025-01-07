@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_user"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.pht.roomfinder.user.home.HomeFragment"
+        android:label="@string/home"
+        android:theme="@style/Theme.RoomFinder"/>
+
+    <fragment
+        android:id="@+id/postFragment"
+        android:name="com.pht.roomfinder.user.post.PostFragment"
+        android:label="@string/post"
+        android:theme="@style/Theme.RoomFinder"/>
+
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.pht.roomfinder.user.favorite.FavoriteFragment"
+        android:label="@string/favorite"
+        android:theme="@style/Theme.RoomFinder"/>
+
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.pht.roomfinder.user.setting.SettingFragment"
+        android:label="@string/setting"
+        android:theme="@style/Theme.RoomFinder"/>
+
+</navigation>

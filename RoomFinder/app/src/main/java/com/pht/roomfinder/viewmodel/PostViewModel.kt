@@ -1,6 +1,7 @@
 package com.pht.roomfinder.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,6 +14,10 @@ import com.pht.roomfinder.services.PostService
 import kotlinx.coroutines.launch
 
 class PostViewModel : ViewModel() {
+    private val _selectedPost = MutableLiveData<Int>()
+    val selectedPost: LiveData<Int>
+        get() = _selectedPost
+
     val listCategory = MutableLiveData<MutableList<String>>()
     val listPost = MutableLiveData<List<Post>>()
 
@@ -29,6 +34,10 @@ class PostViewModel : ViewModel() {
         province.value = "Toàn quốc"
         price.value = "Tất cả"
         acreage.value = "Tất cả"
+    }
+
+    fun selectPost(postID: Int) {
+        _selectedPost.value = postID
     }
 
     private val categoryRepository = CategoryRepository(CategoryService.categoryService)
@@ -56,7 +65,14 @@ class PostViewModel : ViewModel() {
     fun getFilterValue() {
         val valuePrices = filterNumber(price.value!!)
         val valueAcreage = filterNumber(acreage.value!!)
-        getPostFilter(category.value!!, province.value!!, valuePrices[0], valuePrices[1], valueAcreage[0], valueAcreage[1])
+        getPostFilter(
+            category.value!!,
+            province.value!!,
+            valuePrices[0],
+            valuePrices[1],
+            valueAcreage[0],
+            valueAcreage[1]
+        )
     }
 
     fun openFilter(isOpen: Boolean) {
@@ -72,28 +88,28 @@ class PostViewModel : ViewModel() {
         maxAcreage: Int
     ) {
         viewModelScope.launch {
-            val result = postRepository.postFilter(categoryName, area, minPrice, maxPrice, minAcreage, maxAcreage)
+            val result = postRepository.postFilter(
+                categoryName,
+                area,
+                minPrice,
+                maxPrice,
+                minAcreage,
+                maxAcreage
+            )
             if (result.isSuccess) {
                 val searchResponse = result.getOrNull()
                 searchResponse?.let {
                     listPost.value = it.data
                 }
-                var count = 0
-                for (item in listPost.value!!) {
-                    count++
-                    Log.d("BBB", item.title.toString())
-                }
-                Log.d("BBB", count.toString())
-            }
-            else {
+            } else {
                 val error = result.exceptionOrNull()
-                Log.d("BBB", "getListSearch: ${error?.message}")
+                Log.d("BBB", "get list filter: ${error?.message}")
             }
 
         }
     }
 
-    private fun filterNumber(value: String) : List<Int> {
+    private fun filterNumber(value: String): List<Int> {
         if (value == "Tất cả") {
             val list = listOf(-1, -1)
             return list
@@ -112,7 +128,8 @@ class PostViewModel : ViewModel() {
         val parts = value.split("-").map { it.trim() }
         val list = listOf(
             parts[0].replace(Regex("[^\\d.]"), "").toInt(),
-            parts[1].replace(Regex("[^\\d.]"), "").toInt())
+            parts[1].replace(Regex("[^\\d.]"), "").toInt()
+        )
 
         return list
     }

@@ -37,4 +37,9 @@ class ChangePasswordFragment : Fragment() {
         return bin.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        userViewModel.isShowBottomNavigation.value = true
+    }
+
 }

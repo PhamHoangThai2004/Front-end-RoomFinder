@@ -2,7 +2,7 @@ package com.pht.roomfinder.model
 
 import java.sql.Timestamp
 
-class Post(
+data class Post(
     val postID: Int?,
     val user: User?,
     val category: Category?,
@@ -11,10 +11,11 @@ class Post(
     val description: String?,
     val price: Double?,
     val acreage: Double?,
-    val address: String?,
-    val tym: Int?,
+    val area: String?,
     val bonus: String?,
-    val createdAt: Timestamp?,
-    val expireAt: Timestamp?,
-    val images: List<Images>?
+    var createdAt: String?, //Reformat lại thành Timestamp
+    val expireAt: String?,
+    val images: List<Images>?,
+    var tym: Int?,
+    var isLiked: Boolean?
 )

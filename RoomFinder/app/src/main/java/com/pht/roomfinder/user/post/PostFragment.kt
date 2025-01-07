@@ -1,19 +1,16 @@
 package com.pht.roomfinder.user.post
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.pht.roomfinder.R
 import com.pht.roomfinder.adapters.SearchAdapter
 import com.pht.roomfinder.databinding.FragmentPostBinding
+import com.pht.roomfinder.user.detail.DetailActivity
 import com.pht.roomfinder.viewmodel.PostViewModel
 
 class PostFragment : Fragment() {
@@ -35,15 +32,19 @@ class PostFragment : Fragment() {
 
         showPostFilter()
 
+        toDetailPost()
+
         return bin.root
     }
 
     private fun showPostFilter() {
         postViewModel.listPost.observe(viewLifecycleOwner) {
             if (postViewModel.listPost.value != null && postViewModel.listPost.value!!.isNotEmpty()) {
-                val adapter = SearchAdapter(postViewModel.listPost.value!!)
+                val adapter = SearchAdapter(postViewModel.listPost.value!!) {
+                    postViewModel.selectPost(it)
+                }
                 bin.recyclerViewFilter.adapter = adapter
-                bin.recyclerViewFilter.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                bin.recyclerViewFilter.layoutManager = GridLayoutManager(requireContext(), 2)
                 postViewModel.isNull.value = false
             } else {
                 postViewModel.isNull.value = true
@@ -63,6 +64,14 @@ class PostFragment : Fragment() {
 
     private fun getListCategory() {
         postViewModel.getListCategory()
+    }
+
+    private fun toDetailPost() {
+        postViewModel.selectedPost.observe(viewLifecycleOwner) {
+            val intent = Intent(requireContext(), DetailActivity::class.java)
+            intent.putExtra("postID", it)
+            startActivity(intent)
+        }
     }
 
 }

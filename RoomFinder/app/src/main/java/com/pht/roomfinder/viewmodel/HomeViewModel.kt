@@ -11,6 +11,8 @@ import com.pht.roomfinder.services.PostService
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
+    val selectedPost = SingLiveData<Int>()
+
     val keySearch = MutableLiveData<String>()
     val tmpSearch = MutableLiveData<String>()
 
@@ -20,7 +22,6 @@ class HomeViewModel : ViewModel() {
 
     val listGroupData = MutableLiveData<List<ListGroupData>>()
     val listSearch = MutableLiveData<List<Post>>()
-
 
     private val postRepository = PostRepository(PostService.postService)
 

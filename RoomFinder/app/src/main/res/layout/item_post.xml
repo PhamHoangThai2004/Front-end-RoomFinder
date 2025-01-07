@@ -27,9 +27,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clipToOutline="true"
+                android:src="@drawable/home_background"
                 android:importantForAccessibility="no"
                 android:scaleType="centerCrop"
-                android:src="@drawable/home_background"
                 tools:ignore="UnusedAttribute" />
 
             <TextView
@@ -52,7 +52,7 @@
                 android:layout_gravity="bottom|start"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="23dp"
-                android:text='@{post.address != null ? post.address : "Chưa có địa chỉ"}'
+                android:text='@{post.area != null ? post.area : "Chưa có địa chỉ"}'
                 android:textColor="@color/white"
                 android:textSize="11sp"
                 tools:ignore="SmallSp" />

@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pht.roomfinder.databinding.ItemListBinding
 import com.pht.roomfinder.response.ListGroupData
 
-class ListItemAdapter(private val list: List<ListGroupData>) :
+class ListItemAdapter(
+    private val list: List<ListGroupData>,
+    private val onItemClick: (Int) -> Unit
+) :
     RecyclerView.Adapter<ListItemAdapter.ViewHolder>() {
 
     inner class ViewHolder(val bin: ItemListBinding) : RecyclerView.ViewHolder(bin.root)
@@ -22,7 +25,7 @@ class ListItemAdapter(private val list: List<ListGroupData>) :
         holder.bin.listGroupData = listGroupData
         holder.bin.executePendingBindings()
 
-        val adapter = PostItemAdapter(listGroupData.listPost)
+        val adapter = PostItemAdapter(listGroupData.listPost, onItemClick)
         holder.bin.recyclerViewList.layoutManager =
             LinearLayoutManager(holder.itemView.context, LinearLayoutManager.HORIZONTAL, false)
         holder.bin.recyclerViewList.adapter = adapter

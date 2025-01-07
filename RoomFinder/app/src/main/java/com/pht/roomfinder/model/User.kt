@@ -10,9 +10,13 @@ class User(
     var email: String?,
     var password: String?,
     var name: String?,
+    var avatar: String?,
     var phoneNumber: String?,
-    val createAt: Timestamp?
+    val address: String?,
+    val createdAt: String?
 ) : Serializable {
+
+    val totalPosts: Int = 0
 
     fun checkEmail(): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email ?: "").matches()
@@ -31,6 +35,6 @@ class User(
     }
 
     override fun toString(): String {
-        return "User(userId=$userId, role=$role, email=$email, password=$password, name=$name, phoneNumber=$phoneNumber, createAt=$createAt)"
+        return "User(userId=$userId, role=$role, email=$email, password=$password, name=$name, phoneNumber=$phoneNumber, createAt=$createdAt)"
     }
 }

@@ -5,7 +5,6 @@ import android.app.Application
 import android.content.Context
 
 class App : Application() {
-
     @SuppressLint("StaticFieldLeak")
     companion object {
         private var context: Context? = null
@@ -20,6 +19,5 @@ class App : Application() {
         context = applicationContext
         DataLocal.init(applicationContext)
     }
-
 
 }
