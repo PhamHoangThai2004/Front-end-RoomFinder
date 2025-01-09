@@ -1,10 +1,15 @@
 package com.pht.roomfinder.viewmodel
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pht.roomfinder.model.Post
 import com.pht.roomfinder.model.User
 import com.pht.roomfinder.repositories.AuthRepository
+import com.pht.roomfinder.repositories.PostRepository
+import com.pht.roomfinder.services.PostService
 import com.pht.roomfinder.services.UserService
 import com.pht.roomfinder.user.setting.SettingFragment
 import com.pht.roomfinder.utils.Const
@@ -12,6 +17,15 @@ import com.pht.roomfinder.utils.DataLocal
 import kotlinx.coroutines.launch
 
 class UserViewModel : ViewModel() {
+    private val authRepository = AuthRepository(UserService.userService)
+    private val postRepository = PostRepository(PostService.postService)
+
+    private val _listPosts = MutableLiveData<List<Post>>()
+    val listPosts: LiveData<List<Post>>
+        get() = _listPosts
+
+    val selectedPost = SingLiveData<Int>()
+
     val user = MutableLiveData<User>()
     val name = MutableLiveData<String?>()
     val phoneNumber = MutableLiveData<String?>()
@@ -23,13 +37,11 @@ class UserViewModel : ViewModel() {
     val message = MutableLiveData<String?>()
     val isUpgrade = MutableLiveData<Boolean>()
     val isToast = MutableLiveData<Boolean>()
+    val listIsNull = MutableLiveData<Boolean>()
     val isShowBottomNavigation = MutableLiveData<Boolean>()
 
-    private val authRepository = AuthRepository(UserService.userService)
-
     fun logout() {
-        DataLocal.getInstance().putString(Const.TOKEN, "")
-        saveAccount("", "", false)
+        DataLocal.getInstance().clear()
     }
 
     fun saveAccount(email: String, password: String, isSave: Boolean) {
@@ -80,6 +92,23 @@ class UserViewModel : ViewModel() {
         isToast.value = false
     }
 
+    fun getListPosts() {
+        viewModelScope.launch {
+            val result = postRepository.listPost()
+            if (result.isSuccess) {
+                val response = result.getOrNull()
+                response?.let {
+                    _listPosts.value = it.data
+                    listIsNull.value = it.data.isEmpty()
+                    Log.d("BBB", "get your post success")
+                }
+            } else {
+                val error = result.exceptionOrNull()
+                Log.d("BBB", "get your post: ${error?.message}")
+            }
+        }
+    }
+
     private fun changePassword(oldPassword: String, newPassword: String) {
         val token = "Bearer ${DataLocal.getInstance().getString(Const.TOKEN)}"
         viewModelScope.launch {
@@ -125,6 +154,10 @@ class UserViewModel : ViewModel() {
             isToast.value = false
             isUpgrade.value = false
         }
+    }
+
+    fun toNewPost() {
+        move.value = SettingFragment.NEW_POST
     }
 
     fun popBack() {

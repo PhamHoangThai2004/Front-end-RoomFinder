@@ -1,15 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".user.favorite.FavoriteFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Favorite"
-        android:textSize="30sp"/>
+    <data>
 
-</FrameLayout>
+        <import type="android.view.View" />
+
+        <variable
+            name="favoriteViewModel"
+            type="com.pht.roomfinder.viewmodel.FavoriteViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/text_View"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/your_favorite"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_View_Favorite_Posts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_View"
+            android:visibility="@{favoriteViewModel.listIsNull == false ? View.VISIBLE : View.GONE}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/no_your_favorite"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            android:visibility="@{favoriteViewModel.listIsNull == true ? View.VISIBLE : View.GONE}" />
+
+    </RelativeLayout>
+
+</layout>

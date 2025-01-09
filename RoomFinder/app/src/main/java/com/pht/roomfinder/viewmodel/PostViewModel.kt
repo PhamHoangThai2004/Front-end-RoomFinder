@@ -14,12 +14,19 @@ import com.pht.roomfinder.services.PostService
 import kotlinx.coroutines.launch
 
 class PostViewModel : ViewModel() {
+    private val categoryRepository = CategoryRepository(CategoryService.categoryService)
+    private val postRepository = PostRepository(PostService.postService)
+
     private val _selectedPost = MutableLiveData<Int>()
     val selectedPost: LiveData<Int>
         get() = _selectedPost
 
+    private val _listPosts = MutableLiveData<List<Post>>()
+    val listPosts: LiveData<List<Post>>
+        get() = _listPosts
+
+
     val listCategory = MutableLiveData<MutableList<String>>()
-    val listPost = MutableLiveData<List<Post>>()
 
     val isNull = MutableLiveData<Boolean>()
     val isOpenFilter = MutableLiveData<Boolean>()
@@ -39,9 +46,6 @@ class PostViewModel : ViewModel() {
     fun selectPost(postID: Int) {
         _selectedPost.value = postID
     }
-
-    private val categoryRepository = CategoryRepository(CategoryService.categoryService)
-    private val postRepository = PostRepository(PostService.postService)
 
     fun getListCategory() {
         viewModelScope.launch {
@@ -99,7 +103,8 @@ class PostViewModel : ViewModel() {
             if (result.isSuccess) {
                 val searchResponse = result.getOrNull()
                 searchResponse?.let {
-                    listPost.value = it.data
+                    _listPosts.value = it.data
+                    isNull.value = it.data.isEmpty()
                 }
             } else {
                 val error = result.exceptionOrNull()

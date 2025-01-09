@@ -26,7 +26,7 @@
     <string name="profile">Thông tin tài khoản</string>
     <string name="change_password">Đổi mật khẩu</string>
     <string name="information_account">Thông tin tài khoản</string>
-    <string name="my_post">Bài đăng của tôi</string>
+    <string name="my_posts">Bài đăng của tôi</string>
     <string name="language">Ngôn ngữ</string>
     <string name="set_location">Thiết lập vị trí</string>
     <string name="location">Vị trí</string>
@@ -57,6 +57,11 @@
     <string name="zalo">Nhắn Zalo</string>
     <string name="note">Lưu ý</string>
     <string name="big_map">Xem bản đồ lớn</string>
+    <string name="your_favorite">Các bài đăng yêu thích</string>
+    <string name="your_posts">Các bài đăng của bạn</string>
+    <string name="no_your_favorite">Không có bài đăng bạn yêu thích</string>
+    <string name="no_your_posts">Bạn không có bài đăng nào</string>
+    <string name="post_add">Thêm bài đăng</string>
 
     <string name="note_text_one">\u2022 Chỉ đặt khi cọc xác định được chủ nhà và có thỏa thuận
         biên nhận rõ ràng. Kiểm tra mọi điều khoản và yêu cầu liệt kê tất cả chi phí hàng tháng vào hợp đồng.</string>

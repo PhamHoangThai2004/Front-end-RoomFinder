@@ -22,5 +22,12 @@
         android:label="@string/change_password"
         android:theme="@style/Theme.RoomFinder"/>
 
+    <fragment
+        android:id="@+id/myPostsFragment"
+        android:name="com.pht.roomfinder.user.setting.MyPostsFragment"
+        android:label="@string/my_posts"
+        android:theme="@style/Theme.RoomFinder"/>
+
+
 
 </navigation>

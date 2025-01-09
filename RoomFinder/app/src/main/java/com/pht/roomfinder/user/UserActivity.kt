@@ -50,6 +50,8 @@ class UserActivity : AppCompatActivity() {
 
         setBottomNavigation()
 
+        setFragment()
+
         userViewModel.isShowBottomNavigation.observe(this) {
             if (it) showBottomNavigation(true)
             else showBottomNavigation(false)
@@ -58,6 +60,24 @@ class UserActivity : AppCompatActivity() {
     }
 
     private fun setBottomNavigation() {
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.homeFragment -> bottomNavigationView.menu.findItem(R.id.menu_home).isChecked =
+                    true
+
+                R.id.postFragment -> bottomNavigationView.menu.findItem(R.id.menu_post).isChecked =
+                    true
+
+                R.id.favoriteFragment -> bottomNavigationView.menu.findItem(R.id.menu_favorite).isChecked =
+                    true
+
+                R.id.settingFragment -> bottomNavigationView.menu.findItem(R.id.menu_setting).isChecked =
+                    true
+            }
+        }
+    }
+
+    private fun setFragment() {
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 (R.id.menu_home) -> {

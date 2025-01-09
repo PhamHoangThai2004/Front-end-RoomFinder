@@ -20,8 +20,9 @@ import retrofit2.http.Query
 interface PostService {
 
     companion object {
-        private val token = DataLocal.getInstance().getString(Const.TOKEN)
+
         private val headerInterceptor = Interceptor { chain ->
+            val token = DataLocal.getInstance().getString(Const.TOKEN)
             val request = chain.request().newBuilder()
                 .addHeader("Authorization", "Bearer $token")
                 .build()
@@ -69,5 +70,11 @@ interface PostService {
         @Query("postId") postId: Int,
         @Query("isLiked") isLiked: Boolean
     ): Response<PostResponse>
+
+    @GET("favorite-post.php")
+    suspend fun favoritePost(): Response<SearchResponse>
+
+    @GET("list-post.php")
+    suspend fun listPost(): Response<SearchResponse>
 
 }

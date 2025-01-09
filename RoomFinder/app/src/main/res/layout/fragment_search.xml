@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:visibility="@{homeViewModel.isNull() == false ? View.VISIBLE : View.GONE}" />
+            android:visibility="@{homeViewModel.isNull == false ? View.VISIBLE : View.GONE}" />
 
         <TextView
             android:layout_width="wrap_content"

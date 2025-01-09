@@ -24,6 +24,11 @@ class DataLocal private constructor() {
         }
     }
 
+
+    fun clear() {
+        sharedPreferences.edit().clear().apply()
+    }
+
     fun putString(key: String, value: String) {
         sharedPreferences.edit().putString(key, value).apply()
     }

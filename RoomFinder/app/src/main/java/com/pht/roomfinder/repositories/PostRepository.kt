@@ -1,6 +1,5 @@
 package com.pht.roomfinder.repositories
 
-import android.util.Log
 import com.pht.roomfinder.response.PostListResponse
 import com.pht.roomfinder.response.PostResponse
 import com.pht.roomfinder.response.SearchResponse
@@ -124,6 +123,42 @@ class PostRepository(private val postService: PostService) {
                     Result.failure(
                         Exception(
                             "Like post failed: ${response.errorBody()?.string()}"
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
+    suspend fun favoritePost(): Result<SearchResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response: Response<SearchResponse> = postService.favoritePost()
+                if (response.isSuccessful) Result.success(response.body()!!)
+                else {
+                    Result.failure(
+                        Exception(
+                            "Favorite post failed: ${response.errorBody()?.string()}"
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
+    suspend fun listPost(): Result<SearchResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response: Response<SearchResponse> = postService.listPost()
+                if (response.isSuccessful) Result.success(response.body()!!)
+                else {
+                    Result.failure(
+                        Exception(
+                            "List posts failed: ${response.errorBody()?.string()}"
                         )
                     )
                 }

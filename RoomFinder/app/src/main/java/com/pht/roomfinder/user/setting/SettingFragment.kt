@@ -1,5 +1,6 @@
 package com.pht.roomfinder.user.setting
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.pht.roomfinder.R
 import com.pht.roomfinder.databinding.FragmentSettingBinding
+import com.pht.roomfinder.user.new_post.NewPostActivity
 import com.pht.roomfinder.viewmodel.UserViewModel
 
 class SettingFragment : Fragment() {
@@ -27,6 +29,7 @@ class SettingFragment : Fragment() {
         const val THEME = 7
         const val CONTACT_SUPPORT = 8
         const val LOGOUT = 9
+        const val NEW_POST = 10
     }
 
     override fun onCreateView(
@@ -58,8 +61,17 @@ class SettingFragment : Fragment() {
                     navHostFragment.navController.navigate(R.id.profileFragment)
                 }
 
+                MY_POST -> {
+                    navHostFragment.navController.navigate(R.id.myPostsFragment)
+                }
+
                 CHANGE_PASSWORD -> {
                     navHostFragment.navController.navigate(R.id.changePasswordFragment)
+                }
+
+                NEW_POST -> {
+                    val intent = Intent(requireContext(), NewPostActivity::class.java)
+                    startActivity(intent)
                 }
             }
         }

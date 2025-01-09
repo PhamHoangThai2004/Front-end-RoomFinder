@@ -42,6 +42,10 @@ class MainActivity : AppCompatActivity() {
         if (token != null) {
             authViewModel.loginByToken(token)
         }
+        else {
+            startActivity(Intent(this, AuthActivity::class.java))
+            finish()
+        }
     }
 
     private fun replaceActivity() {

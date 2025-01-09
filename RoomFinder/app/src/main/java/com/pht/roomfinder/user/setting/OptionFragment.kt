@@ -60,19 +60,16 @@ class OptionFragment : Fragment() {
                         userViewModel.setUpgrade(false)
                     }
 
+                    SettingFragment.MY_POST -> {
+                        userViewModel.toFunction(position)
+                    }
+
                     SettingFragment.CHANGE_PASSWORD -> {
                         userViewModel.toFunction(position)
                     }
 
                     SettingFragment.LOGOUT -> {
-                        userViewModel.logout()
-                        requireActivity().startActivity(
-                            Intent(
-                                requireContext(),
-                                AuthActivity::class.java
-                            )
-                        )
-                        requireActivity().finish()
+                        logOut()
                     }
                 }
             }
@@ -90,11 +87,17 @@ class OptionFragment : Fragment() {
         return bin.root
     }
 
+    private fun logOut() {
+        userViewModel.logout()
+        requireActivity().startActivity(Intent(requireContext(), AuthActivity::class.java))
+        requireActivity().finish()
+    }
+
     private fun setList(): List<FunctionName> {
         val list: List<FunctionName> = listOf(
             ItemImage(R.string.information_account, TYPE_IMAGE_VIEW, R.drawable.name_icon),
             ItemImage(R.string.avatar, TYPE_IMAGE_VIEW, R.drawable.avatar_icon),
-            ItemImage(R.string.my_post, TYPE_IMAGE_VIEW, R.drawable.post_icon),
+            ItemImage(R.string.my_posts, TYPE_IMAGE_VIEW, R.drawable.post_icon),
             ItemImage(R.string.location, TYPE_IMAGE_VIEW, R.drawable.location_icon),
             ItemSwitch(
                 R.string.save_account,

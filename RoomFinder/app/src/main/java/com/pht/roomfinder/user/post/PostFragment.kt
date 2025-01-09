@@ -38,17 +38,12 @@ class PostFragment : Fragment() {
     }
 
     private fun showPostFilter() {
-        postViewModel.listPost.observe(viewLifecycleOwner) {
-            if (postViewModel.listPost.value != null && postViewModel.listPost.value!!.isNotEmpty()) {
-                val adapter = SearchAdapter(postViewModel.listPost.value!!) {
-                    postViewModel.selectPost(it)
-                }
-                bin.recyclerViewFilter.adapter = adapter
-                bin.recyclerViewFilter.layoutManager = GridLayoutManager(requireContext(), 2)
-                postViewModel.isNull.value = false
-            } else {
-                postViewModel.isNull.value = true
+        postViewModel.listPosts.observe(viewLifecycleOwner) { listPosts ->
+            val adapter = SearchAdapter(listPosts) {
+                postViewModel.selectPost(it)
             }
+            bin.recyclerViewFilter.adapter = adapter
+            bin.recyclerViewFilter.layoutManager = GridLayoutManager(requireContext(), 2)
         }
 
     }
