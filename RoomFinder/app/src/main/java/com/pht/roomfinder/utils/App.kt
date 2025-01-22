@@ -3,6 +3,7 @@ package com.pht.roomfinder.utils
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
+import com.pht.roomfinder.R
 
 class App : Application() {
     @SuppressLint("StaticFieldLeak")
@@ -11,6 +12,10 @@ class App : Application() {
 
         fun getContext(): Context? {
             return context
+        }
+
+        fun getKey(id: Int): String {
+            return getContext()!!.getString(id)
         }
     }
 

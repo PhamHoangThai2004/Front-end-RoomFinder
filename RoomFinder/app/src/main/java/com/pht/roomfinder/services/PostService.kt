@@ -1,5 +1,6 @@
 package com.pht.roomfinder.services
 
+import com.pht.roomfinder.model.Post
 import com.pht.roomfinder.response.PostListResponse
 import com.pht.roomfinder.response.PostResponse
 import com.pht.roomfinder.response.SearchResponse
@@ -11,6 +12,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -76,5 +78,8 @@ interface PostService {
 
     @GET("list-post.php")
     suspend fun listPost(): Response<SearchResponse>
+
+    @POST("new-post.php")
+    suspend fun newPost(@Body post: Post): Response<PostResponse>
 
 }

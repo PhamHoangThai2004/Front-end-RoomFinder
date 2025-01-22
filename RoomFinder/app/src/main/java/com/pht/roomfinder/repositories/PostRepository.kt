@@ -1,5 +1,6 @@
 package com.pht.roomfinder.repositories
 
+import com.pht.roomfinder.model.Post
 import com.pht.roomfinder.response.PostListResponse
 import com.pht.roomfinder.response.PostResponse
 import com.pht.roomfinder.response.SearchResponse
@@ -159,6 +160,24 @@ class PostRepository(private val postService: PostService) {
                     Result.failure(
                         Exception(
                             "List posts failed: ${response.errorBody()?.string()}"
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
+    suspend fun newPost(post: Post): Result<PostResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response: Response<PostResponse> = postService.newPost(post)
+                if (response.isSuccessful) Result.success(response.body()!!)
+                else {
+                    Result.failure(
+                        Exception(
+                            "New post failed: ${response.errorBody()?.string()}"
                         )
                     )
                 }

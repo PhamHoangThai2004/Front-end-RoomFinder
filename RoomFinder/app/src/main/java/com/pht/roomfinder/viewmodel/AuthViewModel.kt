@@ -171,7 +171,7 @@ class AuthViewModel() : ViewModel() {
             val intent = Intent(App.getContext(), UserActivity::class.java)
             val user = User(
                 user.userId, user.role, user.email,
-                null, user.name, null, user.phoneNumber, null, null
+                null, user.name, user.avatar, user.phoneNumber, user.address, null
             )
             val bundle = Bundle()
             bundle.putSerializable("user", user)
@@ -204,16 +204,3 @@ class AuthViewModel() : ViewModel() {
         registerAccount(user)
     }
 }
-
-//@Suppress("UNCHECKED_CAST")
-//class AuthViewModelFactory(
-//    private val application: Application,
-//    private val authRepository: AuthRepository
-//) : ViewModelProvider.Factory {
-//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//        if (modelClass.isAssignableFrom(AuthViewModel::class.java)) {
-//            return AuthViewModel(application, authRepository) as T
-//        }
-//        throw IllegalArgumentException("Unknown ViewModel class")
-//    }
-//}

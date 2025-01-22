@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.Gravity
 import android.view.Window
 import android.view.WindowManager
@@ -13,16 +14,27 @@ import com.bumptech.glide.Glide
 import com.pht.roomfinder.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.Address
+import okhttp3.Request
+import okhttp3.OkHttpClient
+import org.json.JSONArray
+import org.json.JSONObject
+import java.net.HttpURLConnection
+import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class Const {
+
     companion object {
         const val HTTP_API = "http://192.168.102.11/roomfinder/"
         const val TOKEN = "token"
         const val PASSWORD = "password"
         const val EMAIL = "email"
         const val SAVE_ACCOUNT = "saveAccount"
+//        val CLOUDINARY_URL = "cloudinary://${App.getContext()!!.getString(R.string.api_key_cloud)}:${apiSecret}@${cloudName}"
+        val CLOUDINARY_URL = "cloudinary://${App.getKey(R.string.api_key_cloud)}:${App.getKey(R.string.api_secret)}@${App.getKey(R.string.cloud_name)}"
+
 
         fun formatDate(timeString: String): String {
             if (timeString != "") {
@@ -104,6 +116,35 @@ class Const {
                         if (type == 0) imageView.setImageResource(R.drawable.home_background)
                         else imageView.setImageResource(R.drawable.avatar)
                     }
+                }
+            }
+        }
+
+        suspend fun getLatLngFromAddress(address: String): Pair<Double, Double>? {
+            val url = "https://nominatim.openstreetmap.org/search?q=$address&format=json&addressdetails=1&limit=1"
+            val client = OkHttpClient()
+            val request = Request.Builder()
+                .url(url)
+                .addHeader("User-Agent", "MyApp")
+                .build()
+
+            return withContext(Dispatchers.IO) {
+                try {
+                    val response = client.newCall(request).execute()
+                    val responseBody = response.body?.string()
+
+                    if (!responseBody.isNullOrEmpty()) {
+                        val jsonArray = JSONArray(responseBody)
+                        if (jsonArray.length() > 0) {
+                            val latitude = jsonArray.getJSONObject(0).getDouble("lat")
+                            val longitude = jsonArray.getJSONObject(0).getDouble("lon")
+                            return@withContext Pair(latitude, longitude)
+                        }
+                    }
+                    null
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    null
                 }
             }
         }

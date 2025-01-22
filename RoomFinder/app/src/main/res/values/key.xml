@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="api_key">AIzaSyAakdJVy10cqaCfTmNqON7KZfFNMIqJVwc</string>
+    <string name="cloud_name">dvzqdq4my</string>
+    <string name="api_key_cloud">465918731246428</string>
+    <string name="api_secret">57aEEmrSIZCM3xindqkoK9XLfYM</string>
 </resources>

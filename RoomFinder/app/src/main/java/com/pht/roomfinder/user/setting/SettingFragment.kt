@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
@@ -71,6 +72,7 @@ class SettingFragment : Fragment() {
 
                 NEW_POST -> {
                     val intent = Intent(requireContext(), NewPostActivity::class.java)
+                    intent.putExtra("user", userViewModel.user.value)
                     startActivity(intent)
                 }
             }

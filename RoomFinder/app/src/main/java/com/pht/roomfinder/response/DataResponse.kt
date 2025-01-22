@@ -24,37 +24,20 @@ class ListGroupData(
     val listPost: List<Post>
 )
 
-//class PostData(
-//    val postID: Int?,
-//    val user: User?,
-//    val category: Category?,
-//     val location: Location?,
-//     val title: String?,
-//     val description: String?,
-//     val price: Double?,
-//     val acreage: Double?,
-//     val area: String?,
-//     val bonus: String?,
-//     var createdAt: String?,
-//     val expireAt: String?,
-//     val images: List<Images>?,
-//    val tym: Int?,
-//    val isLiked: Boolean?)
+class AreaResponse(
+    val exitcode: Int,
+    val data: AreaData,
+    val message: String
+)
 
-//class PostData(
-//    @SerializedName("postID") override val postID: Int?,
-//    @SerializedName("user") override val user: User?,
-//    @SerializedName("category") override val category: Category?,
-//    @SerializedName("location") override val location: Location?,
-//    @SerializedName("title") override val title: String?,
-//    @SerializedName("description") override val description: String?,
-//    @SerializedName("price") override val price: Double?,
-//    @SerializedName("acreage") override val acreage: Double?,
-//    @SerializedName("area") override val area: String?,
-//    @SerializedName("bonus") override val bonus: String?,
-//    @SerializedName("createdAt") override var createdAt: String?,
-//    @SerializedName("expireAt") override val expireAt: String?,
-//    @SerializedName("images") override val images: List<Images>?,
-//    @SerializedName("tym") val tym: Int?,
-//    @SerializedName("isLiked") val isLiked: Boolean?
-//) : Post(postID, user, category, location, title, description, price, acreage, area, bonus, createdAt, expireAt, images)
+class AreaData(
+    val nItems: Int,
+    val nPages: Int,
+    val data: List<Area>
+)
+
+class Area(val name: String, val code: String) {
+    override fun toString(): String {
+        return name
+    }
+}

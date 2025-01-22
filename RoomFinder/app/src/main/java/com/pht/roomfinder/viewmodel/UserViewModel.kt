@@ -29,6 +29,7 @@ class UserViewModel : ViewModel() {
     val user = MutableLiveData<User>()
     val name = MutableLiveData<String?>()
     val phoneNumber = MutableLiveData<String?>()
+    val address = MutableLiveData<String?>()
     val oldPassword = MutableLiveData<String?>()
     val newPassword = MutableLiveData<String?>()
     val confirmPassword = MutableLiveData<String?>()
@@ -60,7 +61,8 @@ class UserViewModel : ViewModel() {
         user?.let {
             it.name = name.value.toString().trim()
             it.phoneNumber = phoneNumber.value.toString().trim()
-            if (it.checkName() && it.checkPhoneNumber()) changeInformation(user)
+            it.address = address.value.toString().trim()
+            if (it.checkName() && it.checkPhoneNumber() && it.checkAddress()) changeInformation(user)
             else {
                 message.value = "Thông tin chỉnh sửa không hợp lệ"
                 isToast.value = true
@@ -100,7 +102,6 @@ class UserViewModel : ViewModel() {
                 response?.let {
                     _listPosts.value = it.data
                     listIsNull.value = it.data.isEmpty()
-                    Log.d("BBB", "get your post success")
                 }
             } else {
                 val error = result.exceptionOrNull()
@@ -173,6 +174,7 @@ class UserViewModel : ViewModel() {
         isUpgrade.value = value
         name.value = user.value?.name
         phoneNumber.value = user.value?.phoneNumber
+        address.value = user.value?.address
     }
 
     fun cancelChangePassword() {

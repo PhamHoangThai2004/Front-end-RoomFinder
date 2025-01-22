@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_View_PhoneNumber"
                 android:layout_marginTop="50dp"
-                android:background="@drawable/custom_edit_text"
+                android:background="@drawable/custom_edit_text_full"
                 android:drawableEnd="@drawable/search_icon"
                 android:drawableTint="@color/gray"
                 android:hint="@string/search"

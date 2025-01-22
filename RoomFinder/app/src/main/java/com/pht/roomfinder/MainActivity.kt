@@ -34,15 +34,13 @@ class MainActivity : AppCompatActivity() {
         loginByToken()
 
         replaceActivity()
-
     }
 
     private fun loginByToken() {
         val token = DataLocal.getInstance().getString(Const.TOKEN)
         if (token != null) {
             authViewModel.loginByToken(token)
-        }
-        else {
+        } else {
             startActivity(Intent(this, AuthActivity::class.java))
             finish()
         }

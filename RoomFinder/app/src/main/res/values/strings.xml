@@ -12,6 +12,7 @@
     <string name="otp">Mã OTP</string>
     <string name="confirm">Xác nhận</string>
     <string name="cancel">Hủy</string>
+    <string name="address">Địa chỉ</string>
     <string name="send_back">Gửi lại mã OTP</string>
     <string name="confirm_email">Xác nhận Email</string>
     <string name="new_password">Mật khẩu mới</string>
@@ -62,10 +63,33 @@
     <string name="no_your_favorite">Không có bài đăng bạn yêu thích</string>
     <string name="no_your_posts">Bạn không có bài đăng nào</string>
     <string name="post_add">Thêm bài đăng</string>
+    <string name="some_post">• Một số bài đăng khác</string>
+    <string name="address_example">Ngõ X, phường Y, xã Z, …</string>
+    <string name="phone_number_example">XXX7442XXX</string>
+    <string name="full_name_example">John Witch</string>
+    <string name="title">Tiêu đề</string>
+    <string name="description">Mô tả</string>
+    <string name="price">Giá cho thuê (triệu VND/tháng)</string>
+    <string name="acreage">Dện tích (m\u00B2)</string>
+    <string name="other_content">Nội dung khác</string>
+    <string name="images">Hình ảnh</string>
+    <string name="choice_images">Chọn ảnh</string>
+    <string name="province">Tỉnh / Thành phố</string>
+    <string name="district">Quận / Huyện</string>
+    <string name="ward">Xã / Phường</string>
+    <string name="village">Ngõ / Thôn / Phố</string>
+    <string name="get_now_location">Lấy vị trí hiện lại</string>
+    <string name="location_not_found">Không tìm thấy vị trí</string>
+    <string name="posting">Đăng bài</string>
 
     <string name="note_text_one">\u2022 Chỉ đặt khi cọc xác định được chủ nhà và có thỏa thuận
         biên nhận rõ ràng. Kiểm tra mọi điều khoản và yêu cầu liệt kê tất cả chi phí hàng tháng vào hợp đồng.</string>
     <string name="note_text_two">\u2022 Mọi thông tin liên quan đến tin đăng này chỉ mang tính chất tham khảo. Nếu bạn
         thấy rằng tin đăng này không đúng hoặc có dấu hiệu lừa đảo, hãy phản ánh với chúng tôi.</string>
-    <string name="some_post">• Một số bài đăng khác</string>
+    <string name="note_text_three">\u2022 Bạn cần chắc chắn tất cả các thông tin của bài đăng là chính xác,
+        tránh đăng tải những thông tin spam, lừa đảo. Chúng tôi sẽ không chịu trách nhiệm về những thông tin bạn đăng tải.</string>
+    <string name="note_text_four">\u2022 Bài đăng sẽ có thời hạn là 30 ngày kể từ ngày đăng, khi hết hạn bài đăng sẽ bị ẩn,
+        bạn có thể tiếp tục ra hạn đăng bài hoặc xóa bài đăng đó.</string>
+
+
 </resources>

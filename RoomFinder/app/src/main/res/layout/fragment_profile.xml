@@ -53,10 +53,41 @@
             android:layout_marginEnd="20dp"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="@string/avatar"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image_View_Avatar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/avatar"
+                app:civ_border_color="@color/gray_dark"
+                app:civ_border_width="2dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/email"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:ignore="UseCompatTextViewDrawableXml" />
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/custom_edit_text_line"
                 android:enabled="false"
                 android:importantForAutofill="no"
@@ -66,28 +97,71 @@
                 android:textCursorDrawable="@drawable/custom_cursor"
                 tools:ignore="LabelFor" />
 
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="@string/full_name"/>
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/custom_edit_text_line"
                 android:enabled="@{userViewModel.isUpgrade()}"
                 android:importantForAutofill="no"
                 android:inputType="text"
+                android:hint="@string/full_name_example"
                 android:text="@={userViewModel.name}"
                 android:textColor="@color/black"
                 android:textCursorDrawable="@drawable/custom_cursor"
                 tools:ignore="LabelFor" />
 
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="@string/phone_number"/>
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/custom_edit_text_line"
                 android:enabled="@{userViewModel.isUpgrade()}"
                 android:importantForAutofill="no"
                 android:inputType="phone"
+                android:hint="@string/phone_number_example"
                 android:text="@={userViewModel.phoneNumber}"
+                android:textColor="@color/black"
+                android:textCursorDrawable="@drawable/custom_cursor"
+                tools:ignore="LabelFor" />
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="@string/address"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_edit_text_line"
+                android:enabled="@{userViewModel.isUpgrade()}"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:text="@={userViewModel.address}"
+                android:hint="@string/address_example"
                 android:textColor="@color/black"
                 android:textCursorDrawable="@drawable/custom_cursor"
                 tools:ignore="LabelFor" />

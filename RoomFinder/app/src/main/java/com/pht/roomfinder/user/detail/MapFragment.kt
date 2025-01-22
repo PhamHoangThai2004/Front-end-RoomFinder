@@ -1,6 +1,7 @@
 package com.pht.roomfinder.user.detail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,7 +40,6 @@ class MapFragment : Fragment() {
     private fun setupMap() {
         val latitude = detailViewModel.postDetail.value?.location?.latitude
         val longitude = detailViewModel.postDetail.value?.location?.longitude
-
         bin.mapViewLocation.getMapAsync {
             if (latitude != null && longitude != null) {
                 val location = LatLng(latitude, longitude)

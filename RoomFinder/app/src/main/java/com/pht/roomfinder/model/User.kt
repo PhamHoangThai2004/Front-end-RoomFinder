@@ -12,7 +12,7 @@ class User(
     var name: String?,
     var avatar: String?,
     var phoneNumber: String?,
-    val address: String?,
+    var address: String?,
     val createdAt: String?
 ) : Serializable {
 
@@ -34,7 +34,13 @@ class User(
         return (name ?: "").length >= 2
     }
 
+    fun checkAddress(): Boolean {
+        return (address ?: "").length >= 5
+    }
+
+
     override fun toString(): String {
-        return "User(userId=$userId, role=$role, email=$email, password=$password, name=$name, phoneNumber=$phoneNumber, createAt=$createdAt)"
+        return "User(userId=$userId, role=$role, email=$email, password=$password, name=$name, avatar=$avatar, phoneNumber=$phoneNumber, address=$address, createdAt=$createdAt)"
+
     }
 }
