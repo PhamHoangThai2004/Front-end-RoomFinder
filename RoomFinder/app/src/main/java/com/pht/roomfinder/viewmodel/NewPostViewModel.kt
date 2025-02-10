@@ -133,7 +133,7 @@ class NewPostViewModel : ViewModel() {
     private fun checkValid(): Boolean {
         if (locationIsNull.value == true) return false
         if (title.value.isNullOrEmpty() || title.value!!.trim().length < 30 || title.value!!.trim().length > 100) return false
-        if (description.value.isNullOrEmpty() || description.value!!.trim().length < 50 || description.value!!.trim().length > 100) return false
+        if (description.value.isNullOrEmpty() || description.value!!.trim().length < 50 || description.value!!.trim().length > 3000) return false
         if (price.value.isNullOrEmpty()) return false
         if (acreage.value.isNullOrEmpty()) return false
         if ((bonus.value?.trim()?.length ?: 0) > 200) return false
@@ -141,13 +141,11 @@ class NewPostViewModel : ViewModel() {
     }
 
     fun posting() {
-        isLoading.value = true
         viewModelScope.launch {
             if (!checkValid()) {
-                Toast.makeText(
-                    App.getContext(), "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(App.getContext(), "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show()
             } else {
+                isLoading.value = true
                 if (images.value.isNullOrEmpty()) listImages.value = listOf()
                 else listImages.value = CloudinaryConfig().uploadMultipleImages(images.value!!)
                 createNewPost()
@@ -157,8 +155,8 @@ class NewPostViewModel : ViewModel() {
 
     private suspend fun createNewPost() {
         Log.d("BBB", "create new post")
-        var area = ""
-        if (address.value == "Hồ Chí Minh") area = "TP. Hồ Chí Minh"
+        var area = province.value
+        if (province.value == "Hồ Chí Minh") area = "TP. Hồ Chí Minh"
         val category = Category(null, categoryName.value)
         val location = Location(null, address.value, longitude.value, latitude.value)
         val post = Post(

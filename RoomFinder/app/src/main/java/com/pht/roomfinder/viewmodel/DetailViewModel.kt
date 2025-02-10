@@ -11,6 +11,7 @@ import com.pht.roomfinder.model.User
 import com.pht.roomfinder.repositories.PostRepository
 import com.pht.roomfinder.services.PostService
 import com.pht.roomfinder.utils.App
+import com.pht.roomfinder.utils.CloudinaryConfig
 import com.pht.roomfinder.utils.Const
 import kotlinx.coroutines.launch
 
@@ -41,6 +42,9 @@ class DetailViewModel : ViewModel() {
     val isNull = MutableLiveData(false)
     val isShowBack = MutableLiveData(false)
     val isShowNext = MutableLiveData(true)
+    val isUserPosting = MutableLiveData(false)
+    val isLoading = MutableLiveData<Boolean>()
+    val isOpenDialog = MutableLiveData(false)
 
     companion object {
         const val DETAIL = 0
@@ -48,6 +52,8 @@ class DetailViewModel : ViewModel() {
         const val CALL = 2
         const val ZALO = 3
         const val GOOGLE_MAP = 4
+        const val BACK = 5
+        const val UPDATE_POST = 6
     }
 
     private val postRepository = PostRepository(PostService.postService)
@@ -62,7 +68,11 @@ class DetailViewModel : ViewModel() {
             if (result.isSuccess) {
                 val postResponse = result.getOrNull()
                 postResponse?.let {
-                    _postDetail.value = it.data
+                    if (it.status) _postDetail.value = it.data
+                    else {
+                        Toast.makeText(App.getContext(), "Có lỗi xảy ra", Toast.LENGTH_SHORT).show()
+                        back()
+                    }
                 }
             } else {
                 val error = result.exceptionOrNull()
@@ -101,7 +111,7 @@ class DetailViewModel : ViewModel() {
                             isLiked = !postDetail.value!!.isLiked!!,
                             tym = if (isLiked) postDetail.value!!.tym!! - 1 else postDetail.value!!.tym!! + 1
                         )
-                    } else Toast.makeText(App.getContext(), "Having error", Toast.LENGTH_SHORT)
+                    } else Toast.makeText(App.getContext(), "Có lỗi xảy ra", Toast.LENGTH_SHORT)
                         .show()
                 }
             } else {
@@ -111,12 +121,52 @@ class DetailViewModel : ViewModel() {
         }
     }
 
-    fun back() {
+    fun confirmDelete() {
+        isOpenDialog.value = true
+    }
+
+    fun deleting() {
+        isOpenDialog.value = false
+        viewModelScope.launch {
+            val publicIds = mutableListOf<String>()
+            postDetail.value?.images?.map {
+                it.publicId?.let { it1 -> publicIds.add(it1) }
+            }
+            isLoading.value = true
+            if (publicIds.isNotEmpty()) {
+                val result = CloudinaryConfig().deleteMultipleImages(publicIds)
+                if (result) deletePost()
+                else {
+                    isLoading.value = false
+                    Toast.makeText(App.getContext(), "Có lỗi xảy ra", Toast.LENGTH_SHORT).show()
+                }
+            } else deletePost()
+        }
+    }
+
+    private suspend fun deletePost() {
+        val result = postRepository.deletePost(postDetail.value?.postID!!)
+        isLoading.value = false
+        if (result.isSuccess) {
+            val postResponse = result.getOrNull()
+            postResponse?.let {
+                if (it.status) {
+                    Toast.makeText(App.getContext(), "Xóa thành công", Toast.LENGTH_SHORT).show()
+                    back()
+                } else Toast.makeText(App.getContext(), "Lỗi khi xóa", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            val error = result.exceptionOrNull()
+            Log.d("BBB", "Error deletePost: ${error?.message}")
+        }
+    }
+
+    fun backImage() {
         currentImage.value = currentImage.value?.minus(1)
         updateArrowStatus()
     }
 
-    fun next() {
+    fun nextImage() {
         currentImage.value = currentImage.value?.plus(1)
         updateArrowStatus()
     }
@@ -144,6 +194,14 @@ class DetailViewModel : ViewModel() {
 
     fun toGoogleMap() {
         changeMove(GOOGLE_MAP)
+    }
+
+    fun back() {
+        changeMove(BACK)
+    }
+
+    fun toUpdatePost() {
+        changeMove(UPDATE_POST)
     }
 
     fun setValue() {

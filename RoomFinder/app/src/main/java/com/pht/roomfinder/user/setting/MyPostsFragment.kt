@@ -1,5 +1,6 @@
 package com.pht.roomfinder.user.setting
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.pht.roomfinder.adapters.SearchAdapter
 import com.pht.roomfinder.databinding.FragmentMyPostsBinding
+import com.pht.roomfinder.model.User
 import com.pht.roomfinder.user.detail.DetailActivity
 import com.pht.roomfinder.viewmodel.UserViewModel
 
@@ -28,7 +30,7 @@ class MyPostsFragment : Fragment() {
         bin.lifecycleOwner = viewLifecycleOwner
         bin.userViewModel = userViewModel
 
-        userViewModel.getListPosts()
+        userViewModel.getList()
 
         setData()
 
@@ -42,15 +44,30 @@ class MyPostsFragment : Fragment() {
             val adapter = SearchAdapter(listPosts) {
                 userViewModel.selectedPost.value = it
             }
-            bin.recyclerViewFavoritePosts.adapter = adapter
-            bin.recyclerViewFavoritePosts.layoutManager = GridLayoutManager(requireContext(), 2)
+            bin.recyclerViewMyPosts.adapter = adapter
+            bin.recyclerViewMyPosts.layoutManager = GridLayoutManager(requireContext(), 2)
+        }
+
+        userViewModel.listExpired.observe(viewLifecycleOwner) { listExpired ->
+            val adapter = SearchAdapter(listExpired) {
+                userViewModel.selectedPost.value = it
+            }
+            bin.recyclerViewExpiredPosts.adapter = adapter
+            bin.recyclerViewExpiredPosts.layoutManager = GridLayoutManager(requireContext(), 2)
         }
     }
 
+    @SuppressLint("NewApi")
     private fun toDetailPost() {
         userViewModel.selectedPost.observe(viewLifecycleOwner) {
+            val user = requireActivity().intent.getSerializableExtra("user", User::class.java)
+
             val intent = Intent(requireContext(), DetailActivity::class.java)
-            intent.putExtra("postID", it)
+            val bundle = Bundle()
+            bundle.putInt("userId", user?.userId ?: -1)
+            bundle.putInt("postId", it)
+            intent.putExtras(bundle)
+
             startActivity(intent)
         }
     }

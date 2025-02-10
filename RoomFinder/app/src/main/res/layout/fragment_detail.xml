@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".user.detail.DetailFragment">
 
@@ -16,9 +17,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <LinearLayout
+            android:id="@+id/linear_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:background="@null"
+                android:importantForAccessibility="no"
+                android:padding="7dp"
+                android:onClick="@{() -> detailViewModel.back()}"
+                android:src="@drawable/arrow_back_icon"
+                app:tint="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="75dp"
+                android:padding="5dp"
+                android:text="@string/post_detail"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/linear_Layout"
             android:background="@color/background">
 
             <LinearLayout
@@ -46,7 +77,7 @@
                             android:layout_height="50dp"
                             android:background="@drawable/custom_transparent"
                             android:importantForAccessibility="no"
-                            android:onClick="@{() -> detailViewModel.back()}"
+                            android:onClick="@{() -> detailViewModel.backImage()}"
                             android:src="@drawable/arrow_back_icon"
                             android:visibility="@{detailViewModel.isShowBack ? View.VISIBLE : View.INVISIBLE}" />
 
@@ -62,7 +93,7 @@
                             android:layout_height="50dp"
                             android:background="@drawable/custom_transparent"
                             android:importantForAccessibility="no"
-                            android:onClick="@{() -> detailViewModel.next()}"
+                            android:onClick="@{() -> detailViewModel.nextImage()}"
                             android:src="@drawable/arrow_forward_icon"
                             android:visibility="@{detailViewModel.isShowNext ? View.VISIBLE : View.INVISIBLE}" />
 
@@ -83,7 +114,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="10dp"
                     android:background="@drawable/custom_shape_image"
                     android:orientation="vertical"
                     android:padding="5dp">
@@ -345,6 +377,38 @@
 
         </androidx.core.widget.NestedScrollView>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="5dp"
+            android:orientation="horizontal"
+            android:visibility="@{detailViewModel.isUserPosting ? View.VISIBLE : View.GONE}">
+
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/custom_button_full"
+                android:text="@string/update_post"
+                android:onClick="@{() -> detailViewModel.toUpdatePost()}"
+                android:textColor="@color/white"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_button_outline"
+                android:onClick="@{() -> detailViewModel.confirmDelete()}"
+                android:text="@string/delete_post"
+                android:textColor="@color/red_light"
+                tools:ignore="ButtonStyle" />
+
+        </LinearLayout>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -356,8 +420,8 @@
             android:padding="7dp"
             android:text="@string/contact_information"
             android:textColor="@color/white"
+            android:visibility="@{detailViewModel.isUserPosting ? View.GONE : View.VISIBLE}"
             tools:ignore="ButtonStyle" />
-
 
     </RelativeLayout>
 

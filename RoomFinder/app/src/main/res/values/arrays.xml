@@ -92,4 +92,11 @@
         <item>150m\u00B2 – 200m\u00B2</item>
         <item>Trên 200m\u00B2</item>
     </string-array>
+
+    <string-array name="post_expire_time">
+        <item>Không gia hạn</item>
+        <item>3 ngày</item>
+        <item>5 ngày</item>
+        <item>7 ngày</item>
+    </string-array>
 </resources>

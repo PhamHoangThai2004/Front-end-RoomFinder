@@ -13,10 +13,13 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface PostService {
@@ -60,7 +63,7 @@ interface PostService {
         @Query("maxAcreage") maxAcreage: Int
     ): Response<SearchResponse>
 
-    @GET("post-detail.php")
+    @GET("posts.php")
     suspend fun postDetail(@Query("postId") postID: Int): Response<PostResponse>
 
     @FormUrlEncoded
@@ -77,9 +80,16 @@ interface PostService {
     suspend fun favoritePost(): Response<SearchResponse>
 
     @GET("list-post.php")
-    suspend fun listPost(): Response<SearchResponse>
+    suspend fun listPost(@Query("isExpired") isExpired: Boolean): Response<SearchResponse>
 
-    @POST("new-post.php")
+    @POST("posts.php")
     suspend fun newPost(@Body post: Post): Response<PostResponse>
+
+    @DELETE("posts.php/{postId}")
+    suspend fun deletePost(@Path("postId") postId: Int): Response<PostResponse>
+
+    @PUT("posts.php")
+    suspend fun updatePost(@Body post: Post): Response<PostResponse>
+
 
 }

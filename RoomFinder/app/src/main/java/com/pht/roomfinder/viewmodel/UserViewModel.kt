@@ -24,6 +24,10 @@ class UserViewModel : ViewModel() {
     val listPosts: LiveData<List<Post>>
         get() = _listPosts
 
+    private val _listExpired = MutableLiveData<List<Post>>()
+    val listExpired: LiveData<List<Post>>
+        get() = _listExpired
+
     val selectedPost = SingLiveData<Int>()
 
     val user = MutableLiveData<User>()
@@ -39,6 +43,7 @@ class UserViewModel : ViewModel() {
     val isUpgrade = MutableLiveData<Boolean>()
     val isToast = MutableLiveData<Boolean>()
     val listIsNull = MutableLiveData<Boolean>()
+    val expiredIsNull = MutableLiveData<Boolean>()
     val isShowBottomNavigation = MutableLiveData<Boolean>()
 
     fun logout() {
@@ -94,14 +99,24 @@ class UserViewModel : ViewModel() {
         isToast.value = false
     }
 
-    fun getListPosts() {
+    fun getList() {
+        getListPosts()
+        getListPosts(true)
+    }
+
+    private fun getListPosts(isExpired: Boolean = false) {
         viewModelScope.launch {
-            val result = postRepository.listPost()
+            val result = postRepository.listPost(isExpired)
             if (result.isSuccess) {
                 val response = result.getOrNull()
                 response?.let {
-                    _listPosts.value = it.data
-                    listIsNull.value = it.data.isEmpty()
+                    if (isExpired) {
+                        _listExpired.value = it.data
+                        expiredIsNull.value = it.data.isEmpty()
+                    } else {
+                        _listPosts.value = it.data
+                        listIsNull.value = it.data.isEmpty()
+                    }
                 }
             } else {
                 val error = result.exceptionOrNull()

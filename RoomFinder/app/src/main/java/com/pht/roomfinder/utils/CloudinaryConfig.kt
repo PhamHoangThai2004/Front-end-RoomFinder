@@ -83,8 +83,8 @@ class CloudinaryConfig {
         }
     }
 
-    suspend fun deleteMultipleImages(publicIds: List<String>) {
-        withContext(Dispatchers.IO) {
+    suspend fun deleteMultipleImages(publicIds: List<String>) : Boolean{
+        return withContext(Dispatchers.IO) {
             try {
                 val cloudinary = Cloudinary(Const.CLOUDINARY_URL)
                 val options = mapOf("invalidate" to true)
@@ -103,8 +103,10 @@ class CloudinaryConfig {
                         Log.d("BBB", "Lỗi khi xóa ảnh ${publicIds[index]}")
                     }
                 }
+                true
             } catch (e: Exception) {
                 Log.d("BBB", "Lỗi xóa ảnh: ${e.message}")
+                false
             }
         }
     }

@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.text.format.DateUtils
-import android.util.Log
 import android.view.Gravity
 import android.view.Window
 import android.view.WindowManager
@@ -14,13 +13,9 @@ import com.bumptech.glide.Glide
 import com.pht.roomfinder.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.Address
-import okhttp3.Request
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import org.json.JSONArray
-import org.json.JSONObject
-import java.net.HttpURLConnection
-import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -32,8 +27,12 @@ class Const {
         const val PASSWORD = "password"
         const val EMAIL = "email"
         const val SAVE_ACCOUNT = "saveAccount"
-//        val CLOUDINARY_URL = "cloudinary://${App.getContext()!!.getString(R.string.api_key_cloud)}:${apiSecret}@${cloudName}"
-        val CLOUDINARY_URL = "cloudinary://${App.getKey(R.string.api_key_cloud)}:${App.getKey(R.string.api_secret)}@${App.getKey(R.string.cloud_name)}"
+
+        //        val CLOUDINARY_URL = "cloudinary://${App.getContext()!!.getString(R.string.api_key_cloud)}:${apiSecret}@${cloudName}"
+        val CLOUDINARY_URL =
+            "cloudinary://${App.getKey(R.string.api_key_cloud)}:${App.getKey(R.string.api_secret)}@${
+                App.getKey(R.string.cloud_name)
+            }"
 
 
         fun formatDate(timeString: String): String {
@@ -121,7 +120,8 @@ class Const {
         }
 
         suspend fun getLatLngFromAddress(address: String): Pair<Double, Double>? {
-            val url = "https://nominatim.openstreetmap.org/search?q=$address&format=json&addressdetails=1&limit=1"
+            val url =
+                "https://nominatim.openstreetmap.org/search?q=$address&format=json&addressdetails=1&limit=1"
             val client = OkHttpClient()
             val request = Request.Builder()
                 .url(url)

@@ -1,5 +1,6 @@
 package com.pht.roomfinder.repositories
 
+import android.util.Log
 import com.pht.roomfinder.model.Post
 import com.pht.roomfinder.response.PostListResponse
 import com.pht.roomfinder.response.PostResponse
@@ -151,10 +152,10 @@ class PostRepository(private val postService: PostService) {
         }
     }
 
-    suspend fun listPost(): Result<SearchResponse> {
+    suspend fun listPost(isExpired: Boolean): Result<SearchResponse> {
         return withContext(Dispatchers.IO) {
             try {
-                val response: Response<SearchResponse> = postService.listPost()
+                val response: Response<SearchResponse> = postService.listPost(isExpired)
                 if (response.isSuccessful) Result.success(response.body()!!)
                 else {
                     Result.failure(
@@ -178,6 +179,42 @@ class PostRepository(private val postService: PostService) {
                     Result.failure(
                         Exception(
                             "New post failed: ${response.errorBody()?.string()}"
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
+    suspend fun deletePost(postId: Int): Result<PostResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response: Response<PostResponse> = postService.deletePost(postId)
+                if (response.isSuccessful) Result.success(response.body()!!)
+                else {
+                    Result.failure(
+                        Exception(
+                            "Delete post failed: ${response.errorBody()?.string()}"
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
+    suspend fun updatePost(post: Post): Result<PostResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response: Response<PostResponse> = postService.updatePost(post)
+                if (response.isSuccessful) Result.success(response.body()!!)
+                else {
+                    Result.failure(
+                        Exception(
+                            "Update post failed: ${response.errorBody()?.string()}"
                         )
                     )
                 }

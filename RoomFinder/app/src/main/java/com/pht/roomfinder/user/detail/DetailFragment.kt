@@ -1,12 +1,20 @@
 package com.pht.roomfinder.user.detail
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.pht.roomfinder.R
 import com.pht.roomfinder.adapters.ImageAdapter
 import com.pht.roomfinder.databinding.FragmentDetailBinding
 import com.pht.roomfinder.viewmodel.DetailViewModel
@@ -27,6 +35,10 @@ class DetailFragment : Fragment() {
         detailViewModel.postDetail.observe(viewLifecycleOwner) {
             setImages()
             detailViewModel.setValue()
+        }
+
+        detailViewModel.isOpenDialog.observe(viewLifecycleOwner) {
+            if (it) openDialog()
         }
 
         changeImages()
@@ -66,5 +78,38 @@ class DetailFragment : Fragment() {
                 detailViewModel.updateArrowStatus()
             }
         })
+    }
+
+    private fun openDialog() {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_delete_confirm)
+        dialog.setCancelable(false)
+
+        val window = dialog.window ?: return
+        window.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+        window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val windowAttribute = window.attributes
+        windowAttribute.gravity = Gravity.CENTER
+        window.attributes = windowAttribute
+
+        val buttonConfirm = dialog.findViewById<Button>(R.id.button_Confirm)
+        val buttonCancel = dialog.findViewById<Button>(R.id.button_Cancel)
+
+        buttonConfirm.setOnClickListener {
+            dialog.dismiss()
+            detailViewModel.deleting()
+        }
+
+        buttonCancel.setOnClickListener {
+            dialog.dismiss()
+            detailViewModel.isOpenDialog.value = false
+        }
+
+        dialog.show()
     }
 }

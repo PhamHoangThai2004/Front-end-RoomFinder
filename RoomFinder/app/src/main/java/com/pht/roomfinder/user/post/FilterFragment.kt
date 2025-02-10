@@ -129,7 +129,6 @@ class FilterFragment : DialogFragment() {
         }
     }
 
-
     override fun onStart() {
         super.onStart()
         dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)

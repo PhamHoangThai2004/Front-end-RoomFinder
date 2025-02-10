@@ -1,5 +1,6 @@
 package com.pht.roomfinder.user.home
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.pht.roomfinder.R
 import com.pht.roomfinder.adapters.SearchAdapter
 import com.pht.roomfinder.databinding.FragmentSearchBinding
+import com.pht.roomfinder.model.User
 import com.pht.roomfinder.user.detail.DetailActivity
 import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.viewmodel.HomeViewModel
@@ -62,10 +64,17 @@ class SearchFragment : Fragment() {
         }
     }
 
+    @SuppressLint("NewApi")
     private fun toDetailPost() {
         homeViewModel.selectedPost.observe(viewLifecycleOwner) {
+            val user = requireActivity().intent.getSerializableExtra("user", User::class.java)
+
             val intent = Intent(requireContext(), DetailActivity::class.java)
-            intent.putExtra("postID", it)
+            val bundle = Bundle()
+            bundle.putInt("userId", user?.userId ?: -1)
+            bundle.putInt("postId", it)
+            intent.putExtras(bundle)
+
             startActivity(intent)
         }
 

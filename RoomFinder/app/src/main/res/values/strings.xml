@@ -90,6 +90,12 @@
         tránh đăng tải những thông tin spam, lừa đảo. Chúng tôi sẽ không chịu trách nhiệm về những thông tin bạn đăng tải.</string>
     <string name="note_text_four">\u2022 Bài đăng sẽ có thời hạn là 30 ngày kể từ ngày đăng, khi hết hạn bài đăng sẽ bị ẩn,
         bạn có thể tiếp tục ra hạn đăng bài hoặc xóa bài đăng đó.</string>
+    <string name="delete_post">Xóa bài đăng</string>
+    <string name="update_post">Sửa bài đăng</string>
+    <string name="delete_post_confirm">Xác nhận xóa bài đăng này?</string>
+    <string name="post_detail">Chi tiết bài đăng</string>
+    <string name="post_expire_time">Gia hạn bài đăng</string>
+    <string name="expired_post">Các bài đăng đã hết hạn</string>
 
 
 </resources>

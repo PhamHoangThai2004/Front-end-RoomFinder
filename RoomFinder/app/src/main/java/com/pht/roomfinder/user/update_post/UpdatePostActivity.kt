@@ -1,46 +1,101 @@
-package com.pht.roomfinder.user.new_post
+package com.pht.roomfinder.user.update_post
 
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.pht.roomfinder.R
-import com.pht.roomfinder.databinding.FragmentDescriptionBinding
-import com.pht.roomfinder.viewmodel.NewPostViewModel
+import com.pht.roomfinder.databinding.ActivityUpdatePostBinding
+import com.pht.roomfinder.model.Post
+import com.pht.roomfinder.utils.Const
+import com.pht.roomfinder.viewmodel.UpdatePostViewModel
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
-class DescriptionFragment : Fragment() {
-    private lateinit var bin: FragmentDescriptionBinding
-    private lateinit var newPostViewModel: NewPostViewModel
+class UpdatePostActivity : AppCompatActivity() {
+    private lateinit var bin: ActivityUpdatePostBinding
+    private lateinit var updatePostVM: UpdatePostViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        bin = FragmentDescriptionBinding.inflate(inflater, container, false)
-        newPostViewModel = ViewModelProvider(requireActivity())[NewPostViewModel::class.java]
-        bin.newPostVM = newPostViewModel
-        bin.lifecycleOwner = viewLifecycleOwner
+    @SuppressLint("SourceLockedOrientationActivity", "NewApi")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        bin = ActivityUpdatePostBinding.inflate(layoutInflater)
+        setContentView(bin.root)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
+        updatePostVM = ViewModelProvider(this)[UpdatePostViewModel::class.java]
+        bin.updatePostVM = updatePostVM
+
+        val intent = intent
+        val post = intent.getSerializableExtra("post", Post::class.java)
 
         setInput()
 
         setSpinner()
 
-        return bin.root
+        if (post != null) setData(post)
+        else finish()
+
+        updatePostVM.isBack.observe(this) {
+            if (it) finish()
+            else {
+                val intentUpdate = Intent()
+                intentUpdate.putExtra("post_id", updatePostVM.postId)
+                setResult(RESULT_OK, intentUpdate)
+                finish()
+            }
+        }
+
+        val dialogLoading = Const.setDialog(R.layout.dialog_loading, this)
+        updatePostVM.isLoading.observe(this) {
+            if (it) dialogLoading.show()
+            else dialogLoading.dismiss()
+        }
+    }
+
+    private fun setData(post: Post) {
+        updatePostVM.postId = post.postID!!
+        updatePostVM.userId = post.user!!.userId!!
+
+        updatePostVM.categoryName.value = post.category!!.categoryName
+        updatePostVM.title.value = post.title
+        updatePostVM.description.value = post.description
+        updatePostVM.price.value = post.price.toString()
+        updatePostVM.acreage.value = post.acreage.toString()
+        updatePostVM.bonus.value = post.bonus
+
+        val format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val date = LocalDateTime.parse(post.expireAt, format)
+        val now = LocalDateTime.now()
+        updatePostVM.isExpired.value = date.isBefore(now)
     }
 
     private fun setSpinner() {
-        newPostViewModel.getListCategories()
-        newPostViewModel.listCategories.observe(viewLifecycleOwner) {
-            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, it)
+        updatePostVM.getListCategories()
+        updatePostVM.listCategories.observe(this) {
+            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, it)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             bin.spinnerCategory.adapter = adapter
+
+            val positionCategory =
+                updatePostVM.listCategories.value!!.indexOf(updatePostVM.categoryName.value)
+            bin.spinnerCategory.setSelection(positionCategory)
         }
 
         bin.spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -50,14 +105,27 @@ class DescriptionFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                newPostViewModel.categoryName.value =
-                    newPostViewModel.listCategories.value!![position]
+                updatePostVM.categoryName.value = updatePostVM.listCategories.value!![position]
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 TODO("Not yet implemented")
             }
+        }
 
+        bin.spinnerExpireTime.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                updatePostVM.expireAt.value = parent?.getItemAtPosition(position).toString()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
         }
     }
 
@@ -118,8 +186,7 @@ class DescriptionFragment : Fragment() {
                 val text = s.toString().trim()
                 if (text.isNotEmpty()) {
                     bin.inputLayoutAcreage.error = null
-                }
-                else {
+                } else {
                     bin.inputLayoutAcreage.error = "Yêu cầu nhập diện tích"
                 }
             }

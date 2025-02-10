@@ -8,16 +8,21 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.pht.roomfinder.R
+import com.pht.roomfinder.user.update_post.UpdatePostActivity
+import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.viewmodel.DetailViewModel
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var detailViewModel: DetailViewModel
+    private lateinit var launcher: ActivityResultLauncher<Intent>
 
     @SuppressLint("SourceLockedOrientationActivity", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,12 +37,27 @@ class DetailActivity : AppCompatActivity() {
         }
         detailViewModel = ViewModelProvider(this)[DetailViewModel::class.java]
         val intent = intent
-        val postID = intent.getIntExtra("postID", -1)
+        val postId = intent.getIntExtra("postId", -1)
+        val userId = intent.getIntExtra("userId", -1)
 
-        if (postID > 0) detailViewModel.getPostDetail(postID)
-        else {
+        launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                val id = it.data?.extras?.getInt("post_id", -1)
+                if ((id ?: -1) > 0) {
+                    detailViewModel.getPostDetail(id!!)
+                }
+            }
+        }
+
+        if (postId > 0) {
+            detailViewModel.getPostDetail(postId)
+        } else {
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
             finish()
+        }
+
+        detailViewModel.postDetail.observe(this) {
+            if (it.user?.userId == userId) detailViewModel.isUserPosting.value = true
         }
 
         detailViewModel.selectedPost.observe(this) {
@@ -45,11 +65,17 @@ class DetailActivity : AppCompatActivity() {
             detailViewModel.getPostDetail(it)
         }
 
-        changeFragment()
+        val dialogLoading = Const.setDialog(R.layout.dialog_loading, this)
+        detailViewModel.isLoading.observe(this) {
+            if (it) dialogLoading.show()
+            else dialogLoading.dismiss()
+        }
+
+        changeUI()
 
     }
 
-    private fun changeFragment() {
+    private fun changeUI() {
         detailViewModel.move.observe(this) {
             when (it) {
                 DetailViewModel.CONTACT -> {
@@ -71,8 +97,24 @@ class DetailActivity : AppCompatActivity() {
                 DetailViewModel.GOOGLE_MAP -> {
                     toGoogleMap()
                 }
+
+                DetailViewModel.BACK -> {
+                    finish()
+                }
+
+                DetailViewModel.UPDATE_POST -> {
+                    toUpdatePost()
+                }
             }
         }
+    }
+
+    private fun toUpdatePost() {
+        val intent = Intent(this, UpdatePostActivity::class.java)
+        val bundle = Bundle()
+        bundle.putSerializable("post", detailViewModel.postDetail.value)
+        intent.putExtras(bundle)
+        launcher.launch(intent)
     }
 
     private fun toGoogleMap() {

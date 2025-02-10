@@ -1,5 +1,6 @@
 package com.pht.roomfinder.model
 
+import java.io.Serializable
 import java.sql.Timestamp
 
 data class Post(
@@ -18,4 +19,8 @@ data class Post(
     val images: List<Images>?,
     var tym: Int?,
     var isLiked: Boolean?
-)
+) : Serializable {
+    override fun toString(): String {
+        return "postId: $postID"
+    }
+}

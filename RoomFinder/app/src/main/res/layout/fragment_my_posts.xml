@@ -37,7 +37,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
+                android:layout_marginStart="85dp"
                 android:padding="5dp"
                 android:text="@string/my_posts"
                 android:textColor="@color/black"
@@ -63,52 +63,86 @@
             android:textColor="@color/white"
             tools:ignore="RtlSymmetry" />
 
-        <TextView
-            android:id="@+id/text_View"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linear_Layout_My_List"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/button_Post_Add"
-            android:layout_margin="10dp"
-            android:text="@string/your_posts"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            android:visibility="@{userViewModel.listIsNull == false ? View.VISIBLE : View.GONE}">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_View_Favorite_Posts"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/your_posts"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_View_My_Posts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_View"
-            android:visibility="@{userViewModel.listIsNull == false ? View.VISIBLE : View.GONE}" />
+            android:layout_below="@id/linear_Layout_My_List"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:visibility="@{userViewModel.expiredIsNull == false ? View.VISIBLE : View.GONE}">
 
-        <TextView
-            android:id="@+id/text_View_No_Post"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/expired_post"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_View_Expired_Posts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="@string/no_your_posts"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="italic"
-            android:visibility="@{userViewModel.listIsNull == true ? View.VISIBLE : View.GONE}" />
+            android:orientation="vertical"
+            android:visibility="@{userViewModel.listIsNull == true ? View.VISIBLE : View.GONE}">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/text_View_No_Post"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="5dp"
-            android:drawableStart="@drawable/post_add_icon"
-            android:drawablePadding="-120dp"
-            android:gravity="center"
-            android:onClick="@{() -> userViewModel.toNewPost()}"
-            android:paddingStart="120dp"
-            android:text="@string/post_add"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:visibility="@{userViewModel.listIsNull == true ? View.VISIBLE : View.GONE}"
-            tools:ignore="RtlSymmetry,UseCompatTextViewDrawableXml" />
+            <TextView
+                android:id="@+id/text_View_No_Post"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/no_your_posts"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:drawableStart="@drawable/post_add_icon"
+                android:drawablePadding="-120dp"
+                android:gravity="center"
+                android:onClick="@{() -> userViewModel.toNewPost()}"
+                android:paddingStart="120dp"
+                android:text="@string/post_add"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                tools:ignore="RtlSymmetry,UseCompatTextViewDrawableXml" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 
