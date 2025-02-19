@@ -65,8 +65,8 @@
     <string name="post_add">Thêm bài đăng</string>
     <string name="some_post">• Một số bài đăng khác</string>
     <string name="address_example">Ngõ X, phường Y, xã Z, …</string>
-    <string name="phone_number_example">XXX7442XXX</string>
-    <string name="full_name_example">John Witch</string>
+    <string name="phone_number_example">XXX 744 2XXX</string>
+    <string name="full_name_example">John Wick</string>
     <string name="title">Tiêu đề</string>
     <string name="description">Mô tả</string>
     <string name="price">Giá cho thuê (triệu VND/tháng)</string>
@@ -81,6 +81,12 @@
     <string name="get_now_location">Lấy vị trí hiện lại</string>
     <string name="location_not_found">Không tìm thấy vị trí</string>
     <string name="posting">Đăng bài</string>
+    <string name="delete_post">Xóa bài đăng</string>
+    <string name="update_post">Sửa bài đăng</string>
+    <string name="delete_post_confirm">Xác nhận xóa bài đăng này?</string>
+    <string name="post_detail">Chi tiết bài đăng</string>
+    <string name="post_expire_time">Gia hạn bài đăng</string>
+    <string name="expired_post">Các bài đăng đã hết hạn</string>
 
     <string name="note_text_one">\u2022 Chỉ đặt khi cọc xác định được chủ nhà và có thỏa thuận
         biên nhận rõ ràng. Kiểm tra mọi điều khoản và yêu cầu liệt kê tất cả chi phí hàng tháng vào hợp đồng.</string>
@@ -90,12 +96,5 @@
         tránh đăng tải những thông tin spam, lừa đảo. Chúng tôi sẽ không chịu trách nhiệm về những thông tin bạn đăng tải.</string>
     <string name="note_text_four">\u2022 Bài đăng sẽ có thời hạn là 30 ngày kể từ ngày đăng, khi hết hạn bài đăng sẽ bị ẩn,
         bạn có thể tiếp tục ra hạn đăng bài hoặc xóa bài đăng đó.</string>
-    <string name="delete_post">Xóa bài đăng</string>
-    <string name="update_post">Sửa bài đăng</string>
-    <string name="delete_post_confirm">Xác nhận xóa bài đăng này?</string>
-    <string name="post_detail">Chi tiết bài đăng</string>
-    <string name="post_expire_time">Gia hạn bài đăng</string>
-    <string name="expired_post">Các bài đăng đã hết hạn</string>
-
 
 </resources>

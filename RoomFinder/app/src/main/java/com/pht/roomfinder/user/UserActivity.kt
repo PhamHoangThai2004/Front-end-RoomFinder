@@ -16,6 +16,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pht.roomfinder.R
 import com.pht.roomfinder.model.User
+import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.viewmodel.UserViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -58,6 +59,11 @@ class UserActivity : AppCompatActivity() {
             else showBottomNavigation(false)
         }
 
+        val dialogLoading = Const.setDialog(R.layout.dialog_loading, this)
+        userViewModel.isLoading.observe(this) {
+            if (it) dialogLoading.show()
+            else dialogLoading.dismiss()
+        }
     }
 
     private fun setBottomNavigation() {

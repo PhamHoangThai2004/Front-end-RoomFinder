@@ -9,7 +9,11 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.pht.roomfinder.databinding.FragmentProfileBinding
+import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.viewmodel.UserViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment() {
     private lateinit var bin: FragmentProfileBinding
@@ -35,6 +39,17 @@ class ProfileFragment : Fragment() {
                 ).show()
             }
         }
+
+        if (userViewModel.avatar.value.isNullOrEmpty().not()) {
+            CoroutineScope(Dispatchers.Main).launch {
+                Const.loadImage(
+                    requireContext(),
+                    userViewModel.user.value?.avatar!!,
+                    bin.imageViewAvatar, 1
+                )
+            }
+        }
+
         return bin.root
     }
 

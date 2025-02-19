@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".user.setting.AvatarFragment">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="userViewModel"
+            type="com.pht.roomfinder.viewmodel.UserViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/custom_transparent"
+                android:importantForAccessibility="no"
+                android:onClick="@{() -> userViewModel.popBack()}"
+                android:padding="7dp"
+                android:src="@drawable/arrow_back_icon"
+                app:tint="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="90dp"
+                android:padding="5dp"
+                android:text="@string/avatar"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_View_Avatar"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/avatar"
+            app:civ_border_color="@color/gray_dark"
+            app:civ_border_width="2dp" />
+
+        <Button
+            android:id="@+id/button_Choice_Avatar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="100dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/custom_button_full"
+            android:text="@string/choice_images"
+            android:textColor="@color/white"
+            android:visibility="@{userViewModel.isUpgrade() ? View.GONE : View.VISIBLE}" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal"
+            android:visibility="@{userViewModel.isUpgrade() ? View.VISIBLE : View.GONE}"
+            android:weightSum="10">
+
+            <Button
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:background="@drawable/custom_button_full"
+                android:onClick="@{() -> userViewModel.uploadImage()}"
+                android:text="@string/upgrade"
+                android:textColor="@color/white"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_weight="5"
+                android:background="@drawable/custom_button_outline"
+                android:onClick="@{() -> userViewModel.setUpgrade(false)}"
+                android:text="@string/cancel"
+                android:textColor="@color/app_color"
+                tools:ignore="ButtonStyle" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

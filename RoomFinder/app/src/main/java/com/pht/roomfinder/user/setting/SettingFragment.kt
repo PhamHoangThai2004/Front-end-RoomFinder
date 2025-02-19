@@ -62,6 +62,10 @@ class SettingFragment : Fragment() {
                     navHostFragment.navController.navigate(R.id.profileFragment)
                 }
 
+                AVATAR -> {
+                    navHostFragment.navController.navigate((R.id.avatarFragment))
+                }
+
                 MY_POST -> {
                     navHostFragment.navController.navigate(R.id.myPostsFragment)
                 }

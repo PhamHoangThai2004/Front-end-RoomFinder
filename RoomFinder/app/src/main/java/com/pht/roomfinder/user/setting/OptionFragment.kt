@@ -60,6 +60,11 @@ class OptionFragment : Fragment() {
                         userViewModel.setUpgrade(false)
                     }
 
+                    SettingFragment.AVATAR -> {
+                        userViewModel.toFunction(position)
+                        userViewModel.setUpgrade(false)
+                    }
+
                     SettingFragment.MY_POST -> {
                         userViewModel.toFunction(position)
                     }

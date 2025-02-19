@@ -1,6 +1,7 @@
 package com.pht.roomfinder.viewmodel
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,8 @@ import com.pht.roomfinder.repositories.PostRepository
 import com.pht.roomfinder.services.PostService
 import com.pht.roomfinder.services.UserService
 import com.pht.roomfinder.user.setting.SettingFragment
+import com.pht.roomfinder.utils.App
+import com.pht.roomfinder.utils.CloudinaryConfig
 import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.utils.DataLocal
 import kotlinx.coroutines.launch
@@ -34,14 +37,17 @@ class UserViewModel : ViewModel() {
     val name = MutableLiveData<String?>()
     val phoneNumber = MutableLiveData<String?>()
     val address = MutableLiveData<String?>()
+    val avatar = MutableLiveData<String?>()
     val oldPassword = MutableLiveData<String?>()
     val newPassword = MutableLiveData<String?>()
     val confirmPassword = MutableLiveData<String?>()
+    val imagePath = MutableLiveData<String>()
 
     val move = MutableLiveData<Int>()
     val message = MutableLiveData<String?>()
     val isUpgrade = MutableLiveData<Boolean>()
     val isToast = MutableLiveData<Boolean>()
+    val isLoading = MutableLiveData(false)
     val listIsNull = MutableLiveData<Boolean>()
     val expiredIsNull = MutableLiveData<Boolean>()
     val isShowBottomNavigation = MutableLiveData<Boolean>()
@@ -102,6 +108,70 @@ class UserViewModel : ViewModel() {
     fun getList() {
         getListPosts()
         getListPosts(true)
+    }
+
+    fun uploadImage() {
+        viewModelScope.launch {
+            if (!imagePath.value.isNullOrEmpty()) {
+                isLoading.value = true
+
+                if (avatar.value != null) {
+                    val image = avatar.value!!.substringAfterLast("/")
+                    val publicId = image.substringBeforeLast(".")
+                    val result = CloudinaryConfig().deleteImage(publicId)
+                    if (result) {
+                        val imageUrl = CloudinaryConfig().uploadImage(imagePath.value!!)
+                        changeAvatar(imageUrl)
+                    } else {
+                        isLoading.value = false
+                        setUpgrade(false)
+                        Toast.makeText(App.getContext(), "Có lỗi xảy ra", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    val imageUrl = CloudinaryConfig().uploadImage(imagePath.value!!)
+                    changeAvatar(imageUrl)
+                }
+            } else {
+                isUpgrade.value = false
+                Toast.makeText(App.getContext(), "Vui lòng chọn ảnh", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private suspend fun changeAvatar(imageUrl: String) {
+        if (imageUrl == "") {
+            Log.d("BBB", "Có lỗi xảy ra")
+            setUpgrade(false)
+            isLoading.value = false
+        } else {
+            val user = user.value
+            user?.avatar = imageUrl
+            val result = authRepository.changeAvatar(imageUrl)
+            if (result.isSuccess) {
+                val authResponse = result.getOrNull()
+                authResponse?.let {
+                    if (it.status) {
+                        Toast.makeText(
+                            App.getContext(),
+                            "Đổi ảnh đại diện thành công",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        this@UserViewModel.user.value = user
+                    } else {
+                        Toast.makeText(
+                            App.getContext(),
+                            "Thay ảnh đại diện thất bại",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } else {
+                val error = result.exceptionOrNull()
+                Log.d("BBB", "change avatar: ${error?.message}")
+            }
+            isLoading.value = false
+            setUpgrade(false)
+        }
     }
 
     private fun getListPosts(isExpired: Boolean = false) {
@@ -187,9 +257,12 @@ class UserViewModel : ViewModel() {
 
     fun setUpgrade(value: Boolean) {
         isUpgrade.value = value
-        name.value = user.value?.name
-        phoneNumber.value = user.value?.phoneNumber
-        address.value = user.value?.address
+        if (!value) {
+            name.value = user.value?.name
+            phoneNumber.value = user.value?.phoneNumber
+            address.value = user.value?.address
+            avatar.value = user.value?.avatar
+        }
     }
 
     fun cancelChangePassword() {

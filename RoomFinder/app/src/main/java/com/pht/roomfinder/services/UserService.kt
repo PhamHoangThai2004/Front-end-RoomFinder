@@ -74,4 +74,11 @@ interface UserService {
         @Field("newPassword") newPassword: String
     ): Response<AuthResponse>
 
+    @FormUrlEncoded
+    @POST("change-avatar.php")
+    suspend fun changeAvatar(
+        @Header("Authorization") token: String,
+        @Field("avatar") avatar: String
+    ): Response<AuthResponse>
+
 }

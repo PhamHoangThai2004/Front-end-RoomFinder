@@ -25,7 +25,7 @@ class PostItemAdapter(private val list: List<Post>, private val onItemClick: (In
 
         init {
             bin.root.setOnClickListener {
-                val post = list[adapterPosition]
+                val post = list[bindingAdapterPosition]
                 if (post.postID == null) {
                     Toast.makeText(bin.root.context, "Có lỗi xảy ra", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener

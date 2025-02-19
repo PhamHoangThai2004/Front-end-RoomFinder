@@ -17,6 +17,12 @@
         android:theme="@style/Theme.RoomFinder"/>
 
     <fragment
+        android:id="@+id/avatarFragment"
+        android:name="com.pht.roomfinder.user.setting.AvatarFragment"
+        android:label="@string/avatar"
+        android:theme="@style/Theme.RoomFinder"/>
+
+    <fragment
         android:id="@+id/changePasswordFragment"
         android:name="com.pht.roomfinder.user.setting.ChangePasswordFragment"
         android:label="@string/change_password"

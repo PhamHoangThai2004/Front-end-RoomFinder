@@ -4,6 +4,8 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
+import android.provider.MediaStore
 import android.text.format.DateUtils
 import android.view.Gravity
 import android.view.Window
@@ -95,6 +97,17 @@ class Const {
             window?.attributes = windowAttribute
 
             return dialog
+        }
+
+        fun changeToPathFile(uri: Uri, context: Context): String? {
+            val projection = arrayOf(MediaStore.Images.ImageColumns.DATA)
+            context.contentResolver.query(uri, projection, null, null, null)?.use {
+                val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.ImageColumns.DATA)
+                if (it.moveToFirst()) {
+                    return it.getString(columnIndex)
+                }
+            }
+            return null
         }
 
         suspend fun loadImage(

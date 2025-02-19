@@ -3,11 +3,14 @@ package com.pht.roomfinder.repositories
 import com.pht.roomfinder.model.User
 import com.pht.roomfinder.response.AuthResponse
 import com.pht.roomfinder.services.UserService
+import com.pht.roomfinder.utils.Const
+import com.pht.roomfinder.utils.DataLocal
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 class AuthRepository(private val userService: UserService) {
+    private val token = "Bearer ${DataLocal.getInstance().getString(Const.TOKEN)}"
 
     suspend fun login(user: User): Result<AuthResponse> {
         return withContext(Dispatchers.IO) {
@@ -162,6 +165,22 @@ class AuthRepository(private val userService: UserService) {
                 } else
                     Result.failure(
                         Exception("Change password failed: ${response.errorBody()?.string()}")
+                    )
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
+    suspend fun changeAvatar(avatar: String): Result<AuthResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response: Response<AuthResponse> = userService.changeAvatar(this@AuthRepository.token, avatar)
+                if (response.isSuccessful) {
+                    Result.success(response.body()!!)
+                } else
+                    Result.failure(
+                        Exception("Change avatar failed: ${response.errorBody()?.string()}")
                     )
             } catch (e: Exception) {
                 Result.failure(e)

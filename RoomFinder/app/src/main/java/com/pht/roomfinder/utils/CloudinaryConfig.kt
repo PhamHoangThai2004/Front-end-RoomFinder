@@ -10,8 +10,9 @@ import kotlinx.coroutines.withContext
 
 class CloudinaryConfig {
 
-    suspend fun uploadImage(filePath: String) {
-        withContext(Dispatchers.IO) {
+    suspend fun uploadImage(filePath: String) : String {
+        return withContext(Dispatchers.IO) {
+            var imageUrl = ""
             try {
                 val cloudinary = Cloudinary(Const.CLOUDINARY_URL)
 
@@ -23,30 +24,34 @@ class CloudinaryConfig {
 
                 val result = cloudinary.uploader().upload(filePath, uploadOptions)
                 Log.d("BBB", "Upload ảnh thành công")
-                val imageUrl = result["secure_url"] as String
+                imageUrl = result["secure_url"] as String
                 val publicId = result["public_id"] as String
                 Log.d("BBB", imageUrl)
                 Log.d("BBB", publicId)
             } catch (e: Exception) {
                 Log.d("BBB", "Lỗi upload ảnh: ${e.message}")
             }
+            imageUrl
         }
     }
 
-    suspend fun deleteImage(publicId: String) {
-        withContext(Dispatchers.IO) {
+    suspend fun deleteImage(publicId: String) : Boolean {
+        return withContext(Dispatchers.IO) {
             try {
                 val cloudinary = Cloudinary(Const.CLOUDINARY_URL)
                 val options = mapOf("invalidate" to true)
 
                 val result = cloudinary.uploader().destroy(publicId, options)
-                if (result["result"] == "ok") {
+                return@withContext if (result["result"] == "ok") {
                     Log.d("BBB", "Xóa ảnh thành công")
+                    true
                 } else {
                     Log.d("BBB", "Xóa ảnh thất bại")
+                    false
                 }
             } catch (e: Exception) {
                 Log.d("BBB", "Lỗi xóa ảnh: ${e.message}")
+                false
             }
         }
 
@@ -95,15 +100,17 @@ class CloudinaryConfig {
                     }
                 }.awaitAll()
 
+                var isSuccess = true
                 results.forEachIndexed { index, result ->
                     val status = result["result"] as String
-                    if (status == "ok") {
+                   if (status == "ok") {
                         Log.d("BBB", "Ảnh ${publicIds[index]} đã xóa thành công")
                     } else {
                         Log.d("BBB", "Lỗi khi xóa ảnh ${publicIds[index]}")
+                       isSuccess = false
                     }
                 }
-                true
+                return@withContext isSuccess
             } catch (e: Exception) {
                 Log.d("BBB", "Lỗi xóa ảnh: ${e.message}")
                 false

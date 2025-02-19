@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.pht.roomfinder.adapters.ChoiceImgAdapter
 import com.pht.roomfinder.databinding.FragmentImagesBinding
+import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.viewmodel.NewPostViewModel
 
 class ImagesFragment : Fragment() {
@@ -30,7 +30,7 @@ class ImagesFragment : Fragment() {
                 val data = result.data
                 val imageUri = data?.data
                 imageUri?.let {
-                    val imagePath = changeToPathFile(it)
+                    val imagePath = Const.changeToPathFile(it, requireContext())
                     if (imagePath != null) {
                         val listImagesPath = newPostViewModel.images.value ?: mutableListOf()
                         listImagesPath.add(imagePath)
@@ -43,8 +43,7 @@ class ImagesFragment : Fragment() {
         }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         bin = FragmentImagesBinding.inflate(inflater, container, false)
         newPostViewModel = ViewModelProvider(requireActivity())[NewPostViewModel::class.java]
@@ -67,17 +66,6 @@ class ImagesFragment : Fragment() {
         adapter = ChoiceImgAdapter(listImages)
         bin.recyclerViewImagesList.layoutManager = GridLayoutManager(requireContext(), 3)
         bin.recyclerViewImagesList.adapter = adapter
-    }
-
-    private fun changeToPathFile(uri: Uri): String? {
-        val projection = arrayOf(MediaStore.Images.ImageColumns.DATA)
-        requireContext().contentResolver.query(uri, projection, null, null, null)?.use {
-            val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.ImageColumns.DATA)
-            if (it.moveToFirst()) {
-                return it.getString(columnIndex)
-            }
-        }
-        return null
     }
 
 }
