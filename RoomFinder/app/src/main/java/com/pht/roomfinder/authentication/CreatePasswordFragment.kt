@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.pht.roomfinder.R
 import com.pht.roomfinder.databinding.FragmentCreatePasswordBinding
@@ -22,7 +23,7 @@ class CreatePasswordFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        forgotViewModel = (activity as ForgotActivity).forgotViewModel
+        forgotViewModel = ViewModelProvider(requireActivity())[ForgotViewModel::class.java]
         bin = FragmentCreatePasswordBinding.inflate(inflater, container, false)
         bin.lifecycleOwner = viewLifecycleOwner
         bin.forgotViewModel = forgotViewModel

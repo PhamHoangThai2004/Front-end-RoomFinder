@@ -37,6 +37,7 @@ class RegisterFragment : Fragment() {
             if (it) openOTPDialog()
         }
 
+
         val dialog = Const.setDialog(R.layout.dialog_loading, requireContext())
         authViewModel.dialogStatus.observe(viewLifecycleOwner) {
             if(it) dialog.show()
@@ -85,6 +86,11 @@ class RegisterFragment : Fragment() {
             }
         }
 
+        authViewModel.otpStatus.observe(viewLifecycleOwner) {
+            if(!it) {
+                dialog.dismiss()
+            }
+        }
         dialog.show()
     }
 }

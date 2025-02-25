@@ -29,6 +29,16 @@ class AuthActivity : AppCompatActivity() {
 
         move()
 
+        loginSuccess()
+    }
+
+    private fun loginSuccess() {
+        authViewModel.intentEvent.observe(this) {
+            if (it != null) {
+                startActivity(it)
+                finish()
+            }
+        }
     }
 
     private fun move() {

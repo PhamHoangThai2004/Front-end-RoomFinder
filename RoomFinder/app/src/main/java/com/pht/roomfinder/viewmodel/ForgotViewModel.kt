@@ -6,9 +6,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.pht.roomfinder.model.User
 import com.pht.roomfinder.repositories.AuthRepository
+import com.pht.roomfinder.services.UserService
 import kotlinx.coroutines.launch
 
-class ForgotViewModel(private val authRepository: AuthRepository) : ViewModel() {
+class ForgotViewModel() : ViewModel() {
+    private  val authRepository = AuthRepository(UserService.userService)
+
     val email = MutableLiveData<String>()
     val password = MutableLiveData<String>()
 
@@ -116,13 +119,13 @@ class ForgotViewModel(private val authRepository: AuthRepository) : ViewModel() 
 
 }
 
-@Suppress("UNCHECKED_CAST")
-class ForgotViewModelFactory(private val authRepository: AuthRepository) :
-    ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ForgotViewModel::class.java)) {
-            return ForgotViewModel(authRepository) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}
+//@Suppress("UNCHECKED_CAST")
+//class ForgotViewModelFactory(private val authRepository: AuthRepository) :
+//    ViewModelProvider.Factory {
+//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//        if (modelClass.isAssignableFrom(ForgotViewModel::class.java)) {
+//            return ForgotViewModel(authRepository) as T
+//        }
+//        throw IllegalArgumentException("Unknown ViewModel class")
+//    }
+//}

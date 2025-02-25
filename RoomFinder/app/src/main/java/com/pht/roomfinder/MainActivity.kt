@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     private fun replaceActivity() {
         authViewModel.intentEvent.observe(this) {
             if (it != null) {
-                startActivity(authViewModel.intentEvent.value)
+                startActivity(it)
                 finish()
             } else {
                 startActivity(Intent(this, AuthActivity::class.java))

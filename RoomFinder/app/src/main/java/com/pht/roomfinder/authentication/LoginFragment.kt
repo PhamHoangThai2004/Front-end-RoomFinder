@@ -27,8 +27,6 @@ class LoginFragment : Fragment() {
         bin.lifecycleOwner = viewLifecycleOwner
         bin.authViewModel = authViewModel
 
-        loginSuccess()
-
         val dialogLoading = Const.setDialog(R.layout.dialog_loading, requireContext())
 
         setDialogStatus(dialogLoading)
@@ -48,15 +46,6 @@ class LoginFragment : Fragment() {
         val token = DataLocal.getInstance().getString(Const.TOKEN)
         if (token != null) {
             authViewModel.loginByToken(token)
-        }
-    }
-
-    private fun loginSuccess() {
-        authViewModel.intentEvent.observe(viewLifecycleOwner) {
-            if (it != null) {
-                startActivity(it)
-                requireActivity().finish()
-            }
         }
     }
 

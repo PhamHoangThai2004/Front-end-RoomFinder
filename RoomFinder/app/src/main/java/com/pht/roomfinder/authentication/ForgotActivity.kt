@@ -19,11 +19,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.pht.roomfinder.R
 import com.pht.roomfinder.databinding.ActivityForgotBinding
-import com.pht.roomfinder.repositories.AuthRepository
-import com.pht.roomfinder.services.UserService
 import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.viewmodel.ForgotViewModel
-import com.pht.roomfinder.viewmodel.ForgotViewModelFactory
 
 class ForgotActivity : AppCompatActivity() {
     private lateinit var bin: ActivityForgotBinding
@@ -42,11 +39,7 @@ class ForgotActivity : AppCompatActivity() {
             insets
         }
 
-        val authRepository = AuthRepository(UserService.userService)
-        forgotViewModel = ViewModelProvider(
-            this,
-            ForgotViewModelFactory(authRepository)
-        )[ForgotViewModel::class.java]
+        forgotViewModel = ViewModelProvider(this)[ForgotViewModel::class.java]
         bin.forgotViewModel = forgotViewModel
         bin.lifecycleOwner = this
 
