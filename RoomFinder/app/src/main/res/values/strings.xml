@@ -1,11 +1,11 @@
 <resources>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="app_name">Room Finder</string>
-    <string name="email">Email</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="app_name" translatable="false">Room Finder</string>
+    <string name="email" translatable="false">Email</string>
     <string name="password">Mật khẩu</string>
     <string name="login">Đăng nhập</string>
     <string name="register">Đăng ký</string>
-    <string name="loading">Loading …</string>
+    <string name="loading">Đang tải ...</string>
     <string name="phone_number">Số điện thoại</string>
     <string name="full_name">Họ và tên</string>
     <string name="forgot_password">Quên mật khẩu</string>
@@ -17,16 +17,16 @@
     <string name="confirm_email">Xác nhận Email</string>
     <string name="new_password">Mật khẩu mới</string>
     <string name="success">Thành công!</string>
-    <string name="welcome">WELCOME!</string>
+    <string name="welcome" translatable="false">WELCOME!</string>
     <string name="create_password">Tạo mật khẩu mới</string>
     <string name="home">Trang chủ</string>
     <string name="post">Bài đăng</string>
+    <string name="posts">bài đăng</string>
     <string name="search">Tìm kiếm …</string>
     <string name="search_filter">Tìm kiếm</string>
     <string name="favorite">Yêu thích</string>
     <string name="profile">Thông tin tài khoản</string>
     <string name="change_password">Đổi mật khẩu</string>
-    <string name="information_account">Thông tin tài khoản</string>
     <string name="my_posts">Bài đăng của tôi</string>
     <string name="language">Ngôn ngữ</string>
     <string name="set_location">Thiết lập vị trí</string>
@@ -70,7 +70,7 @@
     <string name="title">Tiêu đề</string>
     <string name="description">Mô tả</string>
     <string name="price">Giá cho thuê (triệu VND/tháng)</string>
-    <string name="acreage">Dện tích (m\u00B2)</string>
+    <string name="acreage">Diện tích (m\\u00B2)</string>
     <string name="other_content">Nội dung khác</string>
     <string name="images">Hình ảnh</string>
     <string name="choice_images">Chọn ảnh</string>
@@ -87,14 +87,37 @@
     <string name="post_detail">Chi tiết bài đăng</string>
     <string name="post_expire_time">Gia hạn bài đăng</string>
     <string name="expired_post">Các bài đăng đã hết hạn</string>
+    <string name="post_id">Mã bài đăng</string>
+    <string name="contact">Liên hệ</string>
+    <string name="just_now">Vừa xong</string>
+    <string name="minutes_ago">phút trước</string>
+    <string name="hours_ago">giờ trước</string>"
+    <string name="days_ago">ngày trước</string>
+    <string name="weeks_ago">tuần trước</string>
+    <string name="posted">Đã đăng</string>
+    <string name="million_month">triệu/tháng</string>
+    <string name="rental_price">Giá thuê</string>
+    <string name="total_acreage">Diện tích</string>
+    <string name="posting_at">Ngày đăng</string>
+    <string name="expired_at">Ngày hết hạn</string>
+    <string name="join_from">Tham gia từ</string>
+    <string name="invalid_email">Email không đúng định dạng</string>
+    <string name="invalid_password">Mật khẩu phải có tối thiểu 8 ký tự</string>
+    <string name="invalid_phone_number">Số điện thoại không đúng định dạng</string>
+    <string name="invalid_name">Tên phải có ít nhất 2 ký tự</string>
+    <string name="error">Có lỗi xảy ra</string>
+    <string name="error_otp">Mã OTP không chính xác</string>
+    <string name="error_email">Email không tồn tại</string>
+    <string name="error_account">Email hoặc mật khẩu không chính xác</string>
+    <string name="email_used">Tên email này đã được sử dụng</string>
+    <string name="not_result">Không tìm thấy kết quả cho</string>
+    <string name="notification">Thông báo</string>
+    <string name="clear_all">Xoá tất cả</string>
+    <string name="no_notification">Không có thông báo nào</string>
 
-    <string name="note_text_one">\u2022 Chỉ đặt khi cọc xác định được chủ nhà và có thỏa thuận
-        biên nhận rõ ràng. Kiểm tra mọi điều khoản và yêu cầu liệt kê tất cả chi phí hàng tháng vào hợp đồng.</string>
-    <string name="note_text_two">\u2022 Mọi thông tin liên quan đến tin đăng này chỉ mang tính chất tham khảo. Nếu bạn
-        thấy rằng tin đăng này không đúng hoặc có dấu hiệu lừa đảo, hãy phản ánh với chúng tôi.</string>
-    <string name="note_text_three">\u2022 Bạn cần chắc chắn tất cả các thông tin của bài đăng là chính xác,
-        tránh đăng tải những thông tin spam, lừa đảo. Chúng tôi sẽ không chịu trách nhiệm về những thông tin bạn đăng tải.</string>
-    <string name="note_text_four">\u2022 Bài đăng sẽ có thời hạn là 30 ngày kể từ ngày đăng, khi hết hạn bài đăng sẽ bị ẩn,
-        bạn có thể tiếp tục ra hạn đăng bài hoặc xóa bài đăng đó.</string>
+    <string name="note_text_one">\u2022 Chỉ đặt khi cọc xác định được chủ nhà và có thỏa thuận biên nhận rõ ràng. Kiểm tra mọi điều khoản và yêu cầu liệt kê tất cả chi phí hàng tháng vào hợp đồng.</string>
+    <string name="note_text_two">\u2022 Mọi thông tin liên quan đến tin đăng này chỉ mang tính chất tham khảo. Nếu bạn thấy rằng tin đăng này không đúng hoặc có dấu hiệu lừa đảo, hãy phản ánh với chúng tôi.</string>
+    <string name="note_text_three">\u2022 Bạn cần chắc chắn tất cả các thông tin của bài đăng là chính xác, tránh đăng tải những thông tin spam, lừa đảo. Chúng tôi sẽ không chịu trách nhiệm về những thông tin bạn đăng tải.</string>
+    <string name="note_text_four">\u2022 Bài đăng sẽ có thời hạn là 30 ngày kể từ ngày đăng, khi hết hạn bài đăng sẽ bị ẩn, bạn có thể tiếp tục ra hạn đăng bài hoặc xóa bài đăng đó.</string>
 
 </resources>

@@ -1,12 +1,13 @@
 package com.pht.roomfinder.viewmodel
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pht.roomfinder.R
 import com.pht.roomfinder.model.Role
 import com.pht.roomfinder.model.User
 import com.pht.roomfinder.repositories.AuthRepository
@@ -18,7 +19,11 @@ import com.pht.roomfinder.utils.DataLocal
 import kotlinx.coroutines.launch
 
 @Suppress("NAME_SHADOWING")
-class AuthViewModel() : ViewModel() {
+@SuppressLint("StaticFieldLeak")
+class AuthViewModel : ViewModel() {
+    private val authRepository = AuthRepository(UserService.userService)
+    val context = App.getContext()!!
+
     val errorEmail = MutableLiveData<String>()
     val errorPassword = MutableLiveData<String>()
     val errorName = MutableLiveData<String>()
@@ -37,11 +42,12 @@ class AuthViewModel() : ViewModel() {
     val dialogStatus = MutableLiveData<Boolean>()
 
     init {
-        email.value = DataLocal.getInstance().getString(Const.EMAIL)
-        password.value = DataLocal.getInstance().getString(Const.PASSWORD)
+        val isSave = DataLocal.getInstance().getBoolean(Const.SAVE_ACCOUNT)
+        if (isSave) {
+            email.value = DataLocal.getInstance().getString(Const.EMAIL)
+            password.value = DataLocal.getInstance().getString(Const.PASSWORD)
+        }
     }
-
-    private val authRepository = AuthRepository(UserService.userService)
 
     fun moveLogin() {
         move.value = 0
@@ -66,7 +72,7 @@ class AuthViewModel() : ViewModel() {
     fun register() {
         val user = User(
             null, Role(-1, "User"), email.value.toString().trim(), password.value.toString().trim(),
-            name.value.toString().trim(), null , phoneNumber.value.toString().trim(), null, null
+            name.value.toString().trim(), null, phoneNumber.value.toString().trim(), null, null
         )
         if (checkValid(user)) registerAccount(user)
     }
@@ -75,26 +81,26 @@ class AuthViewModel() : ViewModel() {
         errorEmail.value = if (user.checkEmail()) {
             null
         } else {
-            "Email không đúng định dạng"
+            context.getString(R.string.invalid_email)
         }
 
         errorPassword.value = if (user.checkPassword()) {
             null
         } else {
-            "Mật khẩu phải có tối thiểu 8 ký tự"
+            context.getString(R.string.invalid_password)
         }
 
         if (move.value == 1) {
             errorPhone.value = if (user.checkPhoneNumber()) {
                 null
             } else {
-                "Số điện thoại không đúng định dạng"
+                context.getString(R.string.invalid_phone_number)
             }
 
             errorName.value = if (user.checkName()) {
                 null
             } else {
-                "Tên phải có ít nhất 2 ký tự"
+                context.getString(R.string.invalid_name)
             }
         }
         return errorEmail.value.isNullOrEmpty() && errorPassword.value.isNullOrEmpty()
@@ -116,12 +122,11 @@ class AuthViewModel() : ViewModel() {
                             .putString(Const.PASSWORD, password.value.toString().trim())
                         errorMessage.value = null
                     } else {
-                        errorMessage.value = it.message
+                        errorMessage.value = context.getString(R.string.error_account)
                     }
                 }
             } else {
-                val error = result.exceptionOrNull()
-                errorMessage.value = "Có lỗi xảy ra"
+                errorMessage.value = context.getString(R.string.error)
             }
 
         }
@@ -140,13 +145,13 @@ class AuthViewModel() : ViewModel() {
                         otpStatus.value = true
                         errorMessage.value = null
                     } else {
-                        errorMessage.value = it.message
+                        errorMessage.value = context.getString(R.string.email_used)
                     }
                 }
             } else {
                 val error = result.exceptionOrNull()
                 Log.d("BBB", "registerAccount: ${error?.message}")
-                errorMessage.value = "Có lỗi xảy ra"
+                errorMessage.value = context.getString(R.string.error)
             }
         }
     }
@@ -177,7 +182,6 @@ class AuthViewModel() : ViewModel() {
             val bundle = Bundle()
             bundle.putSerializable("user", user)
             intent.putExtras(bundle)
-
             intentEvent.postValue(intent)
         }
     }
@@ -192,7 +196,7 @@ class AuthViewModel() : ViewModel() {
                         otpStatus.value = false
                         DataLocal.getInstance().putString(Const.TOKEN, it.token)
                         loginByToken(it.token)
-                    } else errorOTP.value = it.message
+                    } else errorOTP.value = context.getString(R.string.error_otp)
                 }
             }
         }

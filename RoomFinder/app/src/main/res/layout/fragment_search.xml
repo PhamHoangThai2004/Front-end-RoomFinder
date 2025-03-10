@@ -42,8 +42,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text='@{homeViewModel.tmpSearch != null ? "Không tìm thấy kết quả cho \"" + homeViewModel.tmpSearch + "\"" : "Không tìm thấy kết quả"}'
             android:textColor="@color/black"
+            app:formatType="@{6}"
+            app:formatValue="@{homeViewModel.tmpSearch}"
             android:textSize="20sp"
             android:visibility="@{homeViewModel.isNull == true ? View.VISIBLE : View.GONE}" />
 

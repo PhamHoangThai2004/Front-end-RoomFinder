@@ -8,6 +8,8 @@
 
         <import type="android.view.View" />
 
+        <import type="com.pht.roomfinder.R" />
+
         <variable
             name="detailViewModel"
             type="com.pht.roomfinder.viewmodel.DetailViewModel" />
@@ -28,8 +30,8 @@
                 android:layout_marginStart="5dp"
                 android:background="@null"
                 android:importantForAccessibility="no"
-                android:padding="7dp"
                 android:onClick="@{() -> detailViewModel.back()}"
+                android:padding="7dp"
                 android:src="@drawable/arrow_back_icon"
                 app:tint="@color/black" />
 
@@ -42,7 +44,6 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-
 
         </LinearLayout>
 
@@ -141,15 +142,17 @@
                         <TextView
                             android:layout_width="165dp"
                             android:layout_height="wrap_content"
-                            android:text='@{"\u2022 Mã bài đăng: #" + String.valueOf(detailViewModel.postDetail.postID)}'
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            app:formatType="@{3}"
+                            app:formatValue="@{detailViewModel.postDetail.postID}" />
 
                         <TextView
                             android:layout_width="170dp"
                             android:layout_height="wrap_content"
                             android:gravity="end"
-                            android:text='@{"\u2022 Đã đăng: " + detailViewModel.formatTime}'
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            app:formatText="@{R.string.posted}"
+                            app:formatValue="@{detailViewModel.formatTime}" />
 
                     </LinearLayout>
 
@@ -165,19 +168,23 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:gravity="center"
-                            android:text='@{"Giá thuê: " + String.valueOf(detailViewModel.postDetail.price) + " triệu/tháng"}'
                             android:textColor="@color/red"
                             android:textSize="17sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            app:formatText="@{R.string.rental_price}"
+                            app:formatType="@{4}"
+                            app:formatValue="@{detailViewModel.postDetail.price}" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="5dp"
-                            android:text='@{"Diện tích: " + String.valueOf(detailViewModel.postDetail.acreage) + " m\u00B2"}'
                             android:textColor="@color/app_color"
-                            android:textSize="17sp" />
+                            android:textSize="17sp"
+                            app:formatText="@{R.string.total_acreage}"
+                            app:formatType="@{5}"
+                            app:formatValue="@{detailViewModel.postDetail.acreage}" />
 
                         <View
                             android:layout_width="match_parent"
@@ -255,10 +262,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text='@{"\u2022 Khu vực: " + detailViewModel.postDetail.area}'
                             android:textColor="@color/app_dark"
                             android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            app:formatText="@{R.string.area}"
+                            app:formatValue="@{detailViewModel.postDetail.area}" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -309,26 +317,29 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text='@{"\u2022 Mã bài đăng: " + String.valueOf(detailViewModel.postDetail.postID)}'
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            app:formatText="@{R.string.post_id}"
+                            app:formatValue="@{detailViewModel.postDetail.postID}" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text='@{"\u2022 Ngày đăng:     " + detailViewModel.createdAt}'
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            app:formatText="@{R.string.posting_at}"
+                            app:formatValue="@{detailViewModel.createdAt}" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
-                            android:text='@{"\u2022 Ngày hết hạn: " + detailViewModel.expireAt}'
                             android:textColor="@color/black"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            app:formatText="@{R.string.expired_at}"
+                            app:formatValue="@{detailViewModel.expireAt}" />
 
                     </LinearLayout>
 
@@ -391,8 +402,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/custom_button_full"
-                android:text="@string/update_post"
                 android:onClick="@{() -> detailViewModel.toUpdatePost()}"
+                android:text="@string/update_post"
                 android:textColor="@color/white"
                 tools:ignore="ButtonStyle" />
 

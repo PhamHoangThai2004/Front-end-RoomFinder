@@ -2,14 +2,15 @@ package com.pht.roomfinder.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.pht.roomfinder.R
 import com.pht.roomfinder.model.User
 import com.pht.roomfinder.repositories.AuthRepository
 import com.pht.roomfinder.services.UserService
+import com.pht.roomfinder.utils.App
 import kotlinx.coroutines.launch
 
-class ForgotViewModel() : ViewModel() {
+class ForgotViewModel : ViewModel() {
     private  val authRepository = AuthRepository(UserService.userService)
 
     val email = MutableLiveData<String>()
@@ -33,7 +34,7 @@ class ForgotViewModel() : ViewModel() {
         errorEmail.value = if (user.checkEmail()) {
             null
         } else {
-            "Email không đúng định dạng"
+            App.getContext()!!.getString(R.string.invalid_email)
         }
 
         if (errorEmail.value == null) {
@@ -53,11 +54,11 @@ class ForgotViewModel() : ViewModel() {
                         otpStatus.value = true
                         errorMessage.value = null
                     } else {
-                        errorMessage.value = it.message
+                        errorMessage.value = App.getContext()!!.getString(R.string.error_email)
                     }
                 }
             } else {
-                errorMessage.value = "Có lỗi xảy ra"
+                errorMessage.value = App.getContext()!!.getString(R.string.error)
             }
         }
     }
@@ -71,7 +72,7 @@ class ForgotViewModel() : ViewModel() {
                     if (it.status) {
                         otpStatus.value = false
                         move.value = 2
-                    } else errorOTP.value = it.message
+                    } else errorOTP.value = App.getContext()!!.getString(R.string.error_otp)
                 }
             }
         }
@@ -86,7 +87,7 @@ class ForgotViewModel() : ViewModel() {
         errorPassword.value = if (user.checkPassword()) {
             null
         } else {
-            "Mật khẩu phải có ít nhất 8 ký tự"
+            App.getContext()!!.getString(R.string.invalid_password)
         }
 
         if (errorPassword.value == null) {
@@ -102,7 +103,7 @@ class ForgotViewModel() : ViewModel() {
                 authResponse?.let {
                     if (it.status) {
                         success.value = true
-                    } else errorMessage.value = it.message
+                    } else errorMessage.value = App.getContext()!!.getString(R.string.error)
                 }
             }
         }
@@ -118,14 +119,3 @@ class ForgotViewModel() : ViewModel() {
     }
 
 }
-
-//@Suppress("UNCHECKED_CAST")
-//class ForgotViewModelFactory(private val authRepository: AuthRepository) :
-//    ViewModelProvider.Factory {
-//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//        if (modelClass.isAssignableFrom(ForgotViewModel::class.java)) {
-//            return ForgotViewModel(authRepository) as T
-//        }
-//        throw IllegalArgumentException("Unknown ViewModel class")
-//    }
-//}

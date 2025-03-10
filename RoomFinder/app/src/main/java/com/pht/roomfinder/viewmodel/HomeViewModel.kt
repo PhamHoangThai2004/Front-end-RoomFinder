@@ -1,6 +1,7 @@
 package com.pht.roomfinder.viewmodel
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,6 +9,8 @@ import com.pht.roomfinder.model.Post
 import com.pht.roomfinder.repositories.PostRepository
 import com.pht.roomfinder.response.ListGroupData
 import com.pht.roomfinder.services.PostService
+import com.pht.roomfinder.utils.App
+import com.pht.roomfinder.utils.DataLocal
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
@@ -15,10 +18,12 @@ class HomeViewModel : ViewModel() {
 
     val keySearch = MutableLiveData<String>()
     val tmpSearch = MutableLiveData<String>()
+    val notificationCount = MutableLiveData(0)
 
     val status = MutableLiveData<Boolean>()
     val isNull = MutableLiveData<Boolean>()
     val isLoad = MutableLiveData<Boolean>()
+    val isNotificationVisible = MutableLiveData<Boolean>()
 
     val listGroupData = MutableLiveData<List<ListGroupData>>()
     val listSearch = MutableLiveData<List<Post>>()
@@ -71,6 +76,15 @@ class HomeViewModel : ViewModel() {
                 Log.d("BBB", "getListSearch: ${error?.message}")
             }
         }
+    }
+
+    fun clearNotification() {
+        DataLocal.getInstance().putInt("notification", 0)
+        notificationCount.value = 0
+    }
+
+    fun  setNotificationView(value: Boolean) {
+        isNotificationVisible.value = value
     }
 
 }

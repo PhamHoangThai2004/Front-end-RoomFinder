@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.messaging.FirebaseMessaging
 import com.pht.roomfinder.authentication.AuthActivity
 import com.pht.roomfinder.utils.Const
 import com.pht.roomfinder.utils.DataLocal
@@ -27,6 +29,16 @@ class MainActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        FirebaseMessaging.getInstance().subscribeToTopic("all")
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d("BBB", "Đã đăng ký nhận thông báo!")
+                }
+            }
+        FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
+            Log.d("BBB", "Token của thiết bị: $token")
         }
 
         authViewModel = ViewModelProvider(this)[AuthViewModel::class.java]

@@ -8,6 +8,8 @@
 
         <import type="android.view.View" />
 
+        <import type="com.pht.roomfinder.R" />
+
         <variable
             name="detailViewModel"
             type="com.pht.roomfinder.viewmodel.DetailViewModel" />
@@ -54,9 +56,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text='@{"\u2022 Địa chỉ: " + detailViewModel.userDetail.address}'
             android:textColor="@color/app_color"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:formatText="@{R.string.address}"
+            app:formatValue="@{detailViewModel.userDetail.address}" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,7 +73,8 @@
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text='@{"\u2022 " + String.valueOf(detailViewModel.totalPosts) + " bài đăng"}' />
+                app:formatType="@{0}"
+                app:formatValue="@{detailViewModel.totalPosts}" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -78,7 +82,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text='@{"\u2022 Tham gia từ: " + detailViewModel.date}' />
+                app:formatText="@{R.string.join_from}"
+                app:formatValue="@{detailViewModel.date}" />
 
         </LinearLayout>
 

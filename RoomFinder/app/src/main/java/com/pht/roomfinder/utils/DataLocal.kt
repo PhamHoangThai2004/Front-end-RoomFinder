@@ -1,7 +1,7 @@
-package com.pht.roomfinder.utils;
+package com.pht.roomfinder.utils
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Context
+import android.content.SharedPreferences
 
 class DataLocal private constructor() {
     private lateinit var sharedPreferences: SharedPreferences
@@ -34,6 +34,12 @@ class DataLocal private constructor() {
     }
 
     fun getString(key: String) = sharedPreferences.getString(key, null)
+
+    fun putInt(key: String, value: Int) {
+        sharedPreferences.edit().putInt(key, value).apply()
+    }
+
+    fun getInt(key: String) = sharedPreferences.getInt(key, 0)
 
     fun putBoolean(key: String, value: Boolean) {
         sharedPreferences.edit().putBoolean(key, value).apply()

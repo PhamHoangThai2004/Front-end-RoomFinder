@@ -30,12 +30,10 @@ class Const {
         const val EMAIL = "email"
         const val SAVE_ACCOUNT = "saveAccount"
 
-        //        val CLOUDINARY_URL = "cloudinary://${App.getContext()!!.getString(R.string.api_key_cloud)}:${apiSecret}@${cloudName}"
         val CLOUDINARY_URL =
             "cloudinary://${App.getKey(R.string.api_key_cloud)}:${App.getKey(R.string.api_secret)}@${
                 App.getKey(R.string.cloud_name)
             }"
-
 
         fun formatDate(timeString: String): String {
             if (timeString != "") {
@@ -66,13 +64,14 @@ class Const {
 
                 val currentTime = System.currentTimeMillis()
                 val time = currentTime - date!!.time
+                val context = App.getContext()
 
                 val formattedText = when {
-                    time < DateUtils.MINUTE_IN_MILLIS -> "Vừa xong"
-                    time < DateUtils.HOUR_IN_MILLIS -> "${time / DateUtils.MINUTE_IN_MILLIS} phút trước"
-                    time < DateUtils.DAY_IN_MILLIS -> "${time / DateUtils.HOUR_IN_MILLIS} giờ trước"
-                    time < DateUtils.WEEK_IN_MILLIS -> "${time / DateUtils.DAY_IN_MILLIS} ngày trước"
-                    else -> "${time / DateUtils.WEEK_IN_MILLIS} tuần trước"
+                    time < DateUtils.MINUTE_IN_MILLIS -> context!!.getString(R.string.just_now)
+                    time < DateUtils.HOUR_IN_MILLIS -> "${time / DateUtils.MINUTE_IN_MILLIS} " + context!!.getString(R.string.minutes_ago)
+                    time < DateUtils.DAY_IN_MILLIS -> "${time / DateUtils.HOUR_IN_MILLIS} " + context!!.getString(R.string.hours_ago)
+                    time < DateUtils.WEEK_IN_MILLIS -> "${time / DateUtils.DAY_IN_MILLIS} " + context!!.getString(R.string.days_ago)
+                    else -> "${time / DateUtils.WEEK_IN_MILLIS} " + context!!.getString(R.string.weeks_ago)
                 }
                 return formattedText
             }
@@ -161,5 +160,7 @@ class Const {
                 }
             }
         }
+
+
     }
 }

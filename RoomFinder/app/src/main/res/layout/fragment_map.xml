@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="com.pht.roomfinder.R" />
+
         <variable
             name="detailViewModel"
             type="com.pht.roomfinder.viewmodel.DetailViewModel" />
@@ -43,7 +45,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:text='@{"Địa chỉ: " + detailViewModel.postDetail.location.address}'
+                app:formatText="@{R.string.address}"
+                app:formatValue="@{detailViewModel.postDetail.location.address}"
+                app:formatType="@{2}"
                 android:textSize="16sp" />
 
         </LinearLayout>

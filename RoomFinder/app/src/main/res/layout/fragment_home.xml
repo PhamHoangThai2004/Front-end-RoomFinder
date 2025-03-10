@@ -6,6 +6,10 @@
 
     <data>
 
+        <import type="com.pht.roomfinder.R" />
+
+        <import type="android.view.View" />
+
         <variable
             name="userViewModel"
             type="com.pht.roomfinder.viewmodel.UserViewModel" />
@@ -15,80 +19,183 @@
             type="com.pht.roomfinder.viewmodel.HomeViewModel" />
     </data>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/home_background"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:paddingStart="20dp"
-            android:paddingTop="50dp"
-            android:paddingEnd="20dp"
-            tools:ignore="UselessParent">
-
-            <TextView
-                android:id="@+id/text_View_Name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{userViewModel.user.name}"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                tools:ignore="RelativeOverlap" />
-
-            <TextView
-                android:id="@+id/text_View_PhoneNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/text_View_Name"
-                android:layout_marginTop="10dp"
-                android:text='@{"Liên hệ: " + userViewModel.user.phoneNumber}'
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:background="@drawable/custom_transparent"
-                android:importantForAccessibility="no"
-                android:onClick="@{() -> homeViewModel.search()}"
-                android:padding="10dp"
-                android:src="@drawable/notification_icon"
-                app:tint="@color/white" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/text_View_PhoneNumber"
-                android:layout_marginTop="50dp"
-                android:background="@drawable/custom_edit_text_full"
-                android:drawableEnd="@drawable/search_icon"
-                android:drawableTint="@color/gray"
-                android:hint="@string/search"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:maxLines="1"
-                android:padding="15dp"
-                android:text="@={homeViewModel.keySearch}"
-                android:textCursorDrawable="@drawable/custom_cursor"
-                app:onDrawableEndClick="@{() -> homeViewModel.search()}"
-                tools:ignore="LabelFor,TextFields" />
-
-        </RelativeLayout>
-
-        <fragment
-            android:id="@+id/fragment_Container_View"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/navigation_home"
-            tools:ignore="FragmentTagUsage" />
+            android:background="@drawable/home_background"
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
 
-    </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:paddingStart="20dp"
+                android:paddingTop="50dp"
+                android:paddingEnd="20dp"
+                tools:ignore="UselessParent">
+
+                <TextView
+                    android:id="@+id/text_View_Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{userViewModel.user.name}"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:ignore="RelativeOverlap" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true">
+
+                    <ImageButton
+                        android:id="@+id/image_Button_Notification"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/custom_transparent"
+                        android:importantForAccessibility="no"
+                        android:onClick="@{() -> homeViewModel.setNotificationView(true)}"
+                        android:padding="10dp"
+                        android:src="@drawable/notification_icon"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="end"
+                        android:background="@drawable/custom_notification_badge"
+                        android:gravity="center"
+                        android:padding="3dp"
+                        android:text="@{'+' + String.valueOf(homeViewModel.notificationCount)}"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        android:visibility="@{homeViewModel.notificationCount > 0 ? View.VISIBLE : View.GONE}"
+                        tools:ignore="SmallSp" />
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/text_View_PhoneNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text_View_Name"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:formatText="@{R.string.contact}"
+                    app:formatType="@{2}"
+                    app:formatValue="@{userViewModel.user.phoneNumber}" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text_View_PhoneNumber"
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/custom_edit_text_full"
+                    android:drawableEnd="@drawable/search_icon"
+                    android:drawableTint="@color/gray"
+                    android:hint="@string/search"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:text="@={homeViewModel.keySearch}"
+                    android:textCursorDrawable="@drawable/custom_cursor"
+                    app:onDrawableEndClick="@{() -> homeViewModel.search()}"
+                    tools:ignore="LabelFor,TextFields" />
+
+            </RelativeLayout>
+
+            <fragment
+                android:id="@+id/fragment_Container_View"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/navigation_home"
+                tools:ignore="FragmentTagUsage" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/custom_notification_view"
+            android:clickable="true"
+            android:elevation="8dp"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:visibility="@{homeViewModel.isNotificationVisible() ? View.VISIBLE : View.GONE}">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:background="@null"
+                    android:importantForAccessibility="no"
+                    android:onClick="@{() -> homeViewModel.setNotificationView(false)}"
+                    android:padding="7dp"
+                    android:src="@drawable/arrow_back_icon"
+                    app:tint="@color/black" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:text="@string/notification"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="@{homeViewModel.notificationCount > 0 ? 1f : 0.5f}"
+                android:enabled="@{homeViewModel.notificationCount > 0 ? true : false}"
+                android:gravity="end"
+                android:onClick="@{() -> homeViewModel.clearNotification()}"
+                android:paddingEnd="10dp"
+                android:text="@string/clear_all"
+                android:textColor="@color/blue"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/no_notification"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:visibility="@{homeViewModel.notificationCount > 0 ? View.GONE : View.VISIBLE}" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_View_List_Notification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
+
+        </LinearLayout>
+
+    </FrameLayout>
 
 </layout>

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -86,5 +87,11 @@ dependencies {
 
     // library for cloudinary
     implementation("com.cloudinary:cloudinary-android:3.0.2")
+
+    // library for firebase
+    implementation("com.google.firebase:firebase-messaging-ktx:23.3.1")
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+    implementation("me.leolin:ShortcutBadger:1.1.22")
+
 
 }

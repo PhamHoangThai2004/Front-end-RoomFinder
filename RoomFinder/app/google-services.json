@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "324810071195",
+    "project_id": "room-finder-2984d",
+    "storage_bucket": "room-finder-2984d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324810071195:android:41b3028405f3ce12da3a3e",
+        "android_client_info": {
+          "package_name": "com.pht.roomfinder"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUu-tGA9HkcXidNjNQmMKSGAhaVcWOhWA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

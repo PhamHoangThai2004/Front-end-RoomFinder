@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.pht.roomfinder.MainActivity
 import com.pht.roomfinder.R
 import com.pht.roomfinder.databinding.FragmentLoginBinding
 import com.pht.roomfinder.utils.Const
