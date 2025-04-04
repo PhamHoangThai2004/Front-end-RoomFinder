@@ -63,7 +63,8 @@ class UserViewModel : ViewModel() {
 
     fun logout() {
         Secure.clear(context)
-        DataLocal.getInstance().clear()
+        DataLocal.getInstance().remove(Const.TOKEN)
+        DataLocal.getInstance().remove(Const.SAVE_ACCOUNT)
     }
 
     fun saveAccount(email: String?, password: String?, isSave: Boolean) {

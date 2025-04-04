@@ -29,6 +29,10 @@ class DataLocal private constructor() {
         sharedPreferences.edit().clear().apply()
     }
 
+    fun remove(key: String) {
+        sharedPreferences.edit().remove(key).apply()
+    }
+
     fun putString(key: String, value: String) {
         sharedPreferences.edit().putString(key, value).apply()
     }
