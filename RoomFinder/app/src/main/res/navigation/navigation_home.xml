@@ -2,18 +2,36 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation_home"
-    app:startDestination="@id/listFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/listFragment"
-        android:name="com.pht.roomfinder.user.home.ListFragment"
+        android:id="@+id/homeFragment"
+        android:name="com.pht.roomfinder.view.home.HomeFragment"
         android:label="Danh sách"
-        android:theme="@style/Theme.RoomFinder"/>
+        android:theme="@style/Theme.RoomFinder" />
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.pht.roomfinder.user.home.SearchFragment"
+        android:name="com.pht.roomfinder.view.home.SearchFragment"
         android:label="Tìm kiếm"
-        android:theme="@style/Theme.RoomFinder"/>
+        android:theme="@style/Theme.RoomFinder" />
+
+    <fragment
+        android:id="@+id/postFragment"
+        android:name="com.pht.roomfinder.view.home.PostFragment"
+        android:label="Lọc"
+        android:theme="@style/Theme.RoomFinder" />
+
+    <fragment
+        android:id="@+id/bonusFragment"
+        android:name="com.pht.roomfinder.view.home.BonusFragment"
+        android:label="@string/bonus"
+        android:theme="@style/Theme.RoomFinder" />
+
+    <fragment
+        android:id="@+id/roommateFragment"
+        android:name="com.pht.roomfinder.view.home.RoommateFragment"
+        android:label="@string/find_roommates"
+        android:theme="@style/Theme.RoomFinder" />
 
 </navigation>

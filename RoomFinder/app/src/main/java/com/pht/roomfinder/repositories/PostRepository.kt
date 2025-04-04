@@ -1,6 +1,5 @@
 package com.pht.roomfinder.repositories
 
-import android.util.Log
 import com.pht.roomfinder.model.Post
 import com.pht.roomfinder.response.PostListResponse
 import com.pht.roomfinder.response.PostResponse
@@ -218,6 +217,24 @@ class PostRepository(private val postService: PostService) {
                         )
                     )
                 }
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+    }
+
+    suspend fun getListRandom(typeSearch: Int, area: String): Result<SearchResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response: Response<SearchResponse> = postService.listRandom(typeSearch, area)
+                if (response.isSuccessful) Result.success(response.body()!!)
+                else Result.failure(
+                    Exception(
+                        "Lists failed: ${
+                            response.errorBody()?.string()
+                        }"
+                    )
+                )
             } catch (e: Exception) {
                 Result.failure(e)
             }

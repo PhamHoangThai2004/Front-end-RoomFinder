@@ -27,7 +27,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="@string/login"
-            android:textColor="@color/background"
+            android:textColor="@color/app_background"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -40,17 +40,17 @@
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeColor="@color/background"
+            app:boxStrokeColor="@color/app_background"
             app:boxStrokeWidth="2dp"
-            app:cursorColor="@color/background"
+            app:cursorColor="@color/app_background"
             app:endIconMode="clear_text"
-            app:endIconTint="@color/background"
-            app:error="@{authViewModel.errorEmail}"
+            app:endIconTint="@color/app_background"
+            app:error="@{authViewModel.authState.errEmail}"
             app:errorEnabled="true"
-            app:errorTextColor="@color/red_light"
-            app:hintTextColor="@color/background"
+            app:errorTextColor="@color/light_red"
+            app:hintTextColor="@color/app_background"
             app:startIconDrawable="@drawable/username_icon"
-            app:startIconTint="@color/background">
+            app:startIconTint="@color/app_background">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -59,8 +59,8 @@
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:padding="15dp"
-                android:text="@={authViewModel.email}"
-                android:textColor="@color/background" />
+                android:text="@={authViewModel.authState.email}"
+                android:textColor="@color/app_background" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,17 +73,17 @@
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeColor="@color/background"
+            app:boxStrokeColor="@color/app_background"
             app:boxStrokeWidth="2dp"
-            app:cursorColor="@color/background"
+            app:cursorColor="@color/app_background"
             app:endIconMode="password_toggle"
-            app:endIconTint="@color/background"
-            app:error="@{authViewModel.errorPassword}"
+            app:endIconTint="@color/app_background"
+            app:error="@{authViewModel.authState.errPassword}"
             app:errorEnabled="true"
-            app:errorTextColor="@color/red_light"
-            app:hintTextColor="@color/background"
+            app:errorTextColor="@color/light_red"
+            app:hintTextColor="@color/app_background"
             app:startIconDrawable="@drawable/password_icon"
-            app:startIconTint="@color/background">
+            app:startIconTint="@color/app_background">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -92,8 +92,8 @@
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:padding="15dp"
-                android:text="@={authViewModel.password}"
-                android:textColor="@color/background" />
+                android:text="@={authViewModel.authState.password}"
+                android:textColor="@color/app_background" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -101,21 +101,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
             android:gravity="end"
-            android:onClick="@{() -> authViewModel.moveForgotPassword()}"
+            android:onClick="@{() -> authViewModel.toForgotPassword()}"
             android:text="@string/forgot_password"
             android:textColor="@color/custom_text_view"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="15sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="10dp"
-            android:text="@{authViewModel.errorMessage}"
-            android:textColor="@color/red_light"
+            android:text="@{authViewModel.authState.message}"
+            android:textColor="@color/light_red"
             android:textSize="15sp"
-            android:visibility="@{authViewModel.errorMessage != null ? View.VISIBLE : View.INVISIBLE}" />
+            android:visibility="@{authViewModel.authState.message != null ? View.VISIBLE : View.INVISIBLE}" />
 
         <Button
             android:layout_width="match_parent"
@@ -131,9 +132,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/custom_button_outline"
-            android:onClick="@{() -> authViewModel.moveRegister()}"
+            android:onClick="@{() -> authViewModel.toRegister()}"
             android:text="@string/register"
-            android:textColor="@color/app_dark" />
+            android:textColor="@color/dark_green" />
 
     </LinearLayout>
 

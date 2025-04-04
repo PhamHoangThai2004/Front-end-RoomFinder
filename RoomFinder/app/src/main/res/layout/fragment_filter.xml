@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".user.post.FilterFragment">
+    tools:context=".view.home.FilterFragment">
 
     <data>
 
         <variable
-            name="postViewModel"
-            type="com.pht.roomfinder.viewmodel.PostViewModel" />
+            name="homeViewModel"
+            type="com.pht.roomfinder.viewmodel.HomeViewModel" />
     </data>
 
     <LinearLayout
@@ -66,7 +66,7 @@
             android:textSize="25sp" />
 
         <Spinner
-            android:id="@+id/spinner_Province"
+            android:id="@+id/spinner_Area"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"

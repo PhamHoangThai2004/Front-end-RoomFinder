@@ -6,24 +6,14 @@
 
     <fragment
         android:id="@+id/confirmEmailFragment"
-        android:name="com.pht.roomfinder.authentication.ConfirmEmailFragment"
+        android:name="com.pht.roomfinder.view.authentication.ConfirmEmailFragment"
         android:label="@string/confirm_email"
-        android:theme="@style/Theme.RoomFinder">
-        <action
-            android:id="@+id/confirm_email_to_create_password"
-            app:destination="@id/createPasswordFragment" />
-
-    </fragment>
+        android:theme="@style/Theme.RoomFinder" />
 
     <fragment
         android:id="@+id/createPasswordFragment"
-        android:name="com.pht.roomfinder.authentication.CreatePasswordFragment"
+        android:name="com.pht.roomfinder.view.authentication.CreatePasswordFragment"
         android:label="@string/create_password"
-        android:theme="@style/Theme.RoomFinder">
-        <action
-            android:id="@+id/create_password_to_confirm_email"
-            app:destination="@id/confirmEmailFragment" />
-
-    </fragment>
+        android:theme="@style/Theme.RoomFinder" />
 
 </navigation>

@@ -5,6 +5,7 @@
     <data>
 
         <import type="android.view.View" />
+
         <variable
             name="forgotViewModel"
             type="com.pht.roomfinder.viewmodel.ForgotViewModel" />
@@ -37,16 +38,17 @@
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeColor="@color/background"
+            app:boxStrokeColor="@color/app_background"
             app:boxStrokeWidth="2dp"
-            app:cursorColor="@color/background"
+            app:cursorColor="@color/app_background"
             app:endIconMode="clear_text"
-            app:endIconTint="@color/background"
-            app:error="@{forgotViewModel.errorEmail}"
+            app:endIconTint="@color/app_background"
+            app:error="@{forgotViewModel.authState.errEmail}"
             app:errorEnabled="true"
-            app:hintTextColor="@color/background"
+            app:errorTextColor="@color/light_red"
+            app:hintTextColor="@color/app_background"
             app:startIconDrawable="@drawable/username_icon"
-            app:startIconTint="@color/background">
+            app:startIconTint="@color/app_background">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -55,7 +57,7 @@
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:padding="15dp"
-                android:text="@={forgotViewModel.email}"
+                android:text="@={forgotViewModel.authState.email}"
                 android:textColor="@color/white" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -63,11 +65,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:text="@{forgotViewModel.errorMessage}"
-            android:textColor="@color/red_light"
+            android:text="@{forgotViewModel.authState.message}"
+            android:textColor="@color/light_red"
             android:textSize="15sp"
-            android:visibility="@{forgotViewModel.errorMessage != null ? View.VISIBLE : View.INVISIBLE}" />
+            android:visibility="@{forgotViewModel.authState.message != null ? View.VISIBLE : View.INVISIBLE}" />
 
         <Button
             android:layout_width="match_parent"

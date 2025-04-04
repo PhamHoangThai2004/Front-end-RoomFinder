@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="forgotViewModel"
             type="com.pht.roomfinder.viewmodel.ForgotViewModel" />
@@ -15,15 +16,15 @@
         android:background="@drawable/background">
 
         <ImageButton
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:importantForAccessibility="no"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/custom_transparent"
-            android:onClick="@{() -> forgotViewModel.move()}"
-            android:src="@drawable/back"
-            android:padding="3dp"/>
+            android:importantForAccessibility="no"
+            android:onClick="@{() -> forgotViewModel.popBackStack()}"
+            android:padding="3dp"
+            android:src="@drawable/back" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image_View_Logo"
@@ -32,17 +33,17 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
             android:importantForAccessibility="no"
-            android:src="@drawable/app_logo"/>
+            android:src="@drawable/app_logo" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_Container_View"
             android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="200dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="200dp"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/navigation_forgot"/>
+            app:navGraph="@navigation/navigation_forgot" />
 
     </RelativeLayout>
 

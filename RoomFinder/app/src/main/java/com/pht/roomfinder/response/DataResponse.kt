@@ -1,9 +1,5 @@
 package com.pht.roomfinder.response
 
-import com.google.gson.annotations.SerializedName
-import com.pht.roomfinder.model.Category
-import com.pht.roomfinder.model.Images
-import com.pht.roomfinder.model.Location
 import com.pht.roomfinder.model.Post
 import com.pht.roomfinder.model.User
 

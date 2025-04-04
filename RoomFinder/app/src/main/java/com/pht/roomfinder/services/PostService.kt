@@ -1,12 +1,12 @@
 package com.pht.roomfinder.services
 
+import com.pht.roomfinder.helper.DataLocal
 import com.pht.roomfinder.model.Post
 import com.pht.roomfinder.response.PostListResponse
 import com.pht.roomfinder.response.PostResponse
 import com.pht.roomfinder.response.SearchResponse
 import com.pht.roomfinder.response.UserResponse
 import com.pht.roomfinder.utils.Const
-import com.pht.roomfinder.utils.DataLocal
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Response
@@ -63,7 +63,7 @@ interface PostService {
         @Query("maxAcreage") maxAcreage: Int
     ): Response<SearchResponse>
 
-    @GET("posts.php")
+    @GET("post.php")
     suspend fun postDetail(@Query("postId") postID: Int): Response<PostResponse>
 
     @FormUrlEncoded
@@ -82,14 +82,19 @@ interface PostService {
     @GET("list-post.php")
     suspend fun listPost(@Query("isExpired") isExpired: Boolean): Response<SearchResponse>
 
-    @POST("posts.php")
+    @POST("post.php")
     suspend fun newPost(@Body post: Post): Response<PostResponse>
 
-    @DELETE("posts.php/{postId}")
+    @DELETE("post.php/{postId}")
     suspend fun deletePost(@Path("postId") postId: Int): Response<PostResponse>
 
-    @PUT("posts.php")
+    @PUT("post.php")
     suspend fun updatePost(@Body post: Post): Response<PostResponse>
 
+    @GET("lists.php")
+    suspend fun listRandom(
+        @Query("typeSearch") typeSearch: Int,
+        @Query("area") area: String
+    ): Response<SearchResponse>
 
 }

@@ -1,8 +1,16 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
     id("com.google.gms.google-services")
+}
+
+val localProperties = Properties()
+val localFile = rootProject.file("local.properties")
+if (localFile.exists()) {
+    localFile.inputStream().use { localProperties.load(it) }
 }
 
 android {
@@ -11,6 +19,7 @@ android {
 
     buildFeatures {
         dataBinding = true
+        buildConfig = true
     }
 
     defaultConfig {
@@ -21,6 +30,25 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        resValue("string", "api_key", localProperties.getProperty("API_KEY_GG"))
+
+        buildConfigField(
+            "String",
+            "CLOUD_NAME",
+            "\"${localProperties.getProperty("CLOUD_NAME")}\""
+        )
+
+        buildConfigField(
+            "String",
+            "API_KEY_CLOUD",
+            "\"${localProperties.getProperty("API_KEY_CLOUD")}\""
+        )
+        buildConfigField(
+            "String",
+            "API_SECRET",
+            "\"${localProperties.getProperty("API_SECRET")}\""
+        )
     }
 
     buildTypes {
@@ -58,7 +86,6 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
-    //    implementation("com.squareup.retrofit2:adapter-coroutines:2.11.0")
 
     // library for avatar
     implementation("de.hdodenhof:circleimageview:3.1.0")
@@ -74,7 +101,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
     //library for viewmodel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
 
     // libraries for navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
@@ -93,5 +122,6 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:2.9.0")
     implementation("me.leolin:ShortcutBadger:1.1.22")
 
-
+    // library for security
+    implementation("androidx.security:security-crypto:1.0.0")
 }

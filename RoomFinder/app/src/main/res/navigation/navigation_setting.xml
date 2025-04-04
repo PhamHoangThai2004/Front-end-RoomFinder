@@ -6,34 +6,27 @@
 
     <fragment
         android:id="@+id/optionFragment"
-        android:name="com.pht.roomfinder.user.setting.OptionFragment"
+        android:name="com.pht.roomfinder.view.setting.OptionFragment"
         android:label="@string/setting"
-        android:theme="@style/Theme.RoomFinder"/>
+        android:theme="@style/Theme.RoomFinder" />
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.pht.roomfinder.user.setting.ProfileFragment"
+        android:name="com.pht.roomfinder.view.setting.ProfileFragment"
         android:label="@string/profile"
-        android:theme="@style/Theme.RoomFinder"/>
+        android:theme="@style/Theme.RoomFinder" />
 
     <fragment
         android:id="@+id/avatarFragment"
-        android:name="com.pht.roomfinder.user.setting.AvatarFragment"
+        android:name="com.pht.roomfinder.view.setting.AvatarFragment"
         android:label="@string/avatar"
-        android:theme="@style/Theme.RoomFinder"/>
+        android:theme="@style/Theme.RoomFinder" />
 
     <fragment
         android:id="@+id/changePasswordFragment"
-        android:name="com.pht.roomfinder.user.setting.ChangePasswordFragment"
+        android:name="com.pht.roomfinder.view.setting.ChangePasswordFragment"
         android:label="@string/change_password"
-        android:theme="@style/Theme.RoomFinder"/>
-
-    <fragment
-        android:id="@+id/myPostsFragment"
-        android:name="com.pht.roomfinder.user.setting.MyPostsFragment"
-        android:label="@string/my_posts"
-        android:theme="@style/Theme.RoomFinder"/>
-
+        android:theme="@style/Theme.RoomFinder" />
 
 
 </navigation>

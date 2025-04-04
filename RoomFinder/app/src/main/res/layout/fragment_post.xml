@@ -1,21 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".user.post.PostFragment">
+    tools:context=".view.home.PostFragment">
 
     <data>
 
         <import type="android.view.View" />
 
         <variable
-            name="postViewModel"
-            type="com.pht.roomfinder.viewmodel.PostViewModel" />
+            name="homeViewModel"
+            type="com.pht.roomfinder.viewmodel.HomeViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/custom_transparent"
+                android:importantForAccessibility="no"
+                android:onClick="@{() -> homeViewModel.popBack()}"
+                android:padding="7dp"
+                android:src="@drawable/arrow_back_icon"
+                app:tint="@color/black" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/advanced_search"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,9 +58,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
                 android:background="@drawable/custom_button_full"
+                android:onClick="@{() -> homeViewModel.getFilterValue()}"
                 android:padding="15dp"
                 android:text="@string/search_filter"
-                android:onClick="@{() -> postViewModel.getFilterValue()}"
                 android:textColor="@color/white"
                 tools:ignore="ButtonStyle" />
 
@@ -43,7 +72,7 @@
                 android:background="@drawable/custom_button_outline"
                 android:drawableStart="@drawable/filter_icon"
                 android:drawableTint="@color/app_color"
-                android:onClick="@{() -> postViewModel.openFilter(true)}"
+                android:onClick="@{() -> homeViewModel.openFilter(true)}"
                 android:padding="10dp"
                 android:text="@string/filter"
                 android:textColor="@color/app_color"
@@ -55,16 +84,17 @@
             android:id="@+id/recyclerView_Filter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="@{postViewModel.isNull == false ? View.VISIBLE : View.GONE}" />
+            android:visibility="@{homeViewModel.listSearch.isEmpty() == false ? View.VISIBLE : View.GONE}" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:text="@string/no_found"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:visibility="@{postViewModel.isNull == true ? View.VISIBLE : View.GONE}" />
+            android:visibility="@{homeViewModel.listSearch.isEmpty() == true ? View.VISIBLE : View.GONE}" />
     </LinearLayout>
 
 </layout>

@@ -8,125 +8,131 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pht.roomfinder.R
+import com.pht.roomfinder.helper.AuthState
+import com.pht.roomfinder.helper.DataLocal
+import com.pht.roomfinder.helper.Secure
 import com.pht.roomfinder.model.Role
 import com.pht.roomfinder.model.User
 import com.pht.roomfinder.repositories.AuthRepository
 import com.pht.roomfinder.services.UserService
-import com.pht.roomfinder.user.UserActivity
 import com.pht.roomfinder.utils.App
 import com.pht.roomfinder.utils.Const
-import com.pht.roomfinder.utils.DataLocal
+import com.pht.roomfinder.view.UserActivity
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-@Suppress("NAME_SHADOWING")
-@SuppressLint("StaticFieldLeak")
 class AuthViewModel : ViewModel() {
     private val authRepository = AuthRepository(UserService.userService)
-    val context = App.getContext()!!
 
-    val errorEmail = MutableLiveData<String>()
-    val errorPassword = MutableLiveData<String>()
-    val errorName = MutableLiveData<String>()
-    val errorPhone = MutableLiveData<String>()
-    val errorMessage = MutableLiveData<String?>()
+    @SuppressLint("StaticFieldLeak")
+    private val context = App.getContext()!!
 
-    val email = MutableLiveData<String>()
-    val password = MutableLiveData<String>()
-    val phoneNumber = MutableLiveData<String>()
-    val name = MutableLiveData<String>()
-
-    val move = MutableLiveData<Int>()
+    val authState = MutableStateFlow(AuthState())
+    val toLayout = MutableLiveData<Int>()
     val intentEvent = MutableLiveData<Intent?>()
-    val otpStatus = MutableLiveData<Boolean>()
-    val errorOTP = MutableLiveData<String>()
-    val dialogStatus = MutableLiveData<Boolean>()
+
+    companion object {
+        const val LOGIN = 0
+        const val REGISTER = 1
+        const val FORGOT_PASSWORD = 2
+    }
 
     init {
         val isSave = DataLocal.getInstance().getBoolean(Const.SAVE_ACCOUNT)
         if (isSave) {
-            email.value = DataLocal.getInstance().getString(Const.EMAIL)
-            password.value = DataLocal.getInstance().getString(Const.PASSWORD)
+            val account = Secure.get(context)
+            val email = account.first
+            val password = account.second
+            authState.value = authState.value.copy(email = email, password = password)
         }
     }
 
-    fun moveLogin() {
-        move.value = 0
+    fun toLogin() {
+        toLayout.value = LOGIN
     }
 
-    fun moveRegister() {
-        move.value = 1
+    fun toRegister() {
+        toLayout.value = REGISTER
     }
 
-    fun moveForgotPassword() {
-        move.value = 3
+    fun toForgotPassword() {
+        toLayout.value = FORGOT_PASSWORD
     }
 
     fun login() {
         val user = User(
-            null, null, email.value.toString().trim(),
-            password.value.toString().trim(), null, null, null, null, null
+            null, null, authState.value.email?.trim(),
+            authState.value.password?.trim(), null, null, null, null, null
         )
         if (checkValid(user)) loginAccount(user)
     }
 
     fun register() {
         val user = User(
-            null, Role(-1, "User"), email.value.toString().trim(), password.value.toString().trim(),
-            name.value.toString().trim(), null, phoneNumber.value.toString().trim(), null, null
+            null,
+            Role(-1, "User"),
+            authState.value.email?.trim(),
+            authState.value.password?.trim(),
+            authState.value.name?.trim(),
+            null,
+            authState.value.phone?.trim(),
+            null,
+            null
         )
         if (checkValid(user)) registerAccount(user)
     }
 
     private fun checkValid(user: User): Boolean {
-        errorEmail.value = if (user.checkEmail()) {
-            null
-        } else {
-            context.getString(R.string.invalid_email)
-        }
+        if (user.checkEmail()) authState.value = authState.value.copy(errEmail = null)
+        else authState.value =
+            authState.value.copy(errEmail = context.getString(R.string.invalid_email))
 
-        errorPassword.value = if (user.checkPassword()) {
-            null
-        } else {
-            context.getString(R.string.invalid_password)
-        }
+        if (user.checkPassword()) authState.value = authState.value.copy(errPassword = null)
+        else authState.value =
+            authState.value.copy(errPassword = context.getString(R.string.invalid_password))
 
-        if (move.value == 1) {
-            errorPhone.value = if (user.checkPhoneNumber()) {
-                null
-            } else {
-                context.getString(R.string.invalid_phone_number)
-            }
+        if (toLayout.value == REGISTER) {
+            if (user.checkName()) authState.value = authState.value.copy(errName = null)
+            else authState.value =
+                authState.value.copy(errName = context.getString(R.string.invalid_name))
 
-            errorName.value = if (user.checkName()) {
-                null
-            } else {
-                context.getString(R.string.invalid_name)
-            }
+            if (user.checkPhoneNumber()) authState.value = authState.value.copy(errPhone = null)
+            else authState.value =
+                authState.value.copy(errPhone = context.getString(R.string.invalid_phone_number))
         }
-        return errorEmail.value.isNullOrEmpty() && errorPassword.value.isNullOrEmpty()
-                && errorPhone.value.isNullOrEmpty() && errorName.value.isNullOrEmpty()
+        return authState.value.errEmail.isNullOrEmpty() && authState.value.errPassword.isNullOrEmpty()
+                && authState.value.errName.isNullOrEmpty() && authState.value.errPhone.isNullOrEmpty()
+    }
+
+    private fun setLoading(isLoading: Boolean) {
+        authState.value = authState.value.copy(isLoading = isLoading)
+    }
+
+    fun setOTPStatus(isOpenOTP: Boolean) {
+        authState.value = authState.value.copy(isOpenOTP = isOpenOTP)
+        authState.value = authState.value.copy(errOTP = null)
     }
 
     private fun loginAccount(user: User) {
         viewModelScope.launch {
-            dialogStatus.value = true
+            setLoading(true)
             val result = authRepository.login(user)
-            dialogStatus.value = false
+            setLoading(false)
             if (result.isSuccess) {
                 val authResponse = result.getOrNull()
                 authResponse?.let {
                     if (it.status) {
                         DataLocal.getInstance().putString(Const.TOKEN, it.token)
                         loginByToken(it.token)
-                        DataLocal.getInstance()
-                            .putString(Const.PASSWORD, password.value.toString().trim())
-                        errorMessage.value = null
+                        Secure.encryptPassword(context, user.password!!)
+                        authState.value = authState.value.copy(message = null)
                     } else {
-                        errorMessage.value = context.getString(R.string.error_account)
+                        authState.value =
+                            authState.value.copy(message = context.getString(R.string.error_account))
                     }
                 }
             } else {
-                errorMessage.value = context.getString(R.string.error)
+                authState.value = authState.value.copy(message = context.getString(R.string.error))
             }
 
         }
@@ -134,24 +140,24 @@ class AuthViewModel : ViewModel() {
 
     private fun registerAccount(user: User) {
         viewModelScope.launch {
-            dialogStatus.value = true
+            setLoading(true)
             val result = authRepository.register(user)
-            dialogStatus.value = false
-
+            setLoading(false)
             if (result.isSuccess) {
                 val authResponse = result.getOrNull()
                 authResponse?.let {
                     if (it.status) {
-                        otpStatus.value = true
-                        errorMessage.value = null
+                        setOTPStatus(true)
+                        authState.value = authState.value.copy(message = null)
                     } else {
-                        errorMessage.value = context.getString(R.string.email_used)
+                        authState.value =
+                            authState.value.copy(message = context.getString(R.string.email_used))
                     }
                 }
             } else {
                 val error = result.exceptionOrNull()
                 Log.d("BBB", "registerAccount: ${error?.message}")
-                errorMessage.value = context.getString(R.string.error)
+                authState.value = authState.value.copy(message = context.getString(R.string.error))
             }
         }
     }
@@ -162,16 +168,13 @@ class AuthViewModel : ViewModel() {
             if (result.isSuccess) {
                 val authResponse = result.getOrNull()
                 authResponse?.let {
-                    if (it.status) {
-                        checkRole(it.data.user)
-                    }
+                    if (it.status) checkRole(it.data.user)
                 }
-            } else {
-                intentEvent.postValue(null)
-            }
+            } else intentEvent.postValue(null)
         }
     }
 
+    @Suppress("NAME_SHADOWING")
     private fun checkRole(user: User) {
         if (user.role?.roleName == "User") {
             val intent = Intent(App.getContext(), UserActivity::class.java)
@@ -188,15 +191,16 @@ class AuthViewModel : ViewModel() {
 
     fun checkOTP(otp: String) {
         viewModelScope.launch {
-            val result = authRepository.checkOTP(email.value.toString().trim(), otp)
+            val result = authRepository.checkOTP(authState.value.email.toString().trim(), otp)
             if (result.isSuccess) {
                 val authResponse = result.getOrNull()
                 authResponse?.let {
                     if (it.status) {
-                        otpStatus.value = false
+                        setOTPStatus(false)
                         DataLocal.getInstance().putString(Const.TOKEN, it.token)
                         loginByToken(it.token)
-                    } else errorOTP.value = context.getString(R.string.error_otp)
+                    } else authState.value =
+                        authState.value.copy(errOTP = context.getString(R.string.error_otp))
                 }
             }
         }
@@ -204,8 +208,15 @@ class AuthViewModel : ViewModel() {
 
     fun resendOTP() {
         val user = User(
-            -1, Role(-1, "User"), email.value.toString().trim(), password.value.toString().trim(),
-            name.value.toString().trim(), null, phoneNumber.value.toString().trim(), null, null
+            -1,
+            Role(-1, "User"),
+            authState.value.email?.trim(),
+            authState.value.password?.trim(),
+            authState.value.name?.trim(),
+            null,
+            authState.value.phone?.trim(),
+            null,
+            null
         )
         registerAccount(user)
     }

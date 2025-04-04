@@ -2,7 +2,6 @@ package com.pht.roomfinder.model
 
 import android.util.Patterns
 import java.io.Serializable
-import java.sql.Timestamp
 
 class User(
     val userId: Int?,

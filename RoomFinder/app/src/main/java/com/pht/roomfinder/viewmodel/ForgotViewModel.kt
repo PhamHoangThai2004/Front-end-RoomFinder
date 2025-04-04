@@ -1,121 +1,147 @@
 package com.pht.roomfinder.viewmodel
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pht.roomfinder.R
+import com.pht.roomfinder.helper.AuthState
 import com.pht.roomfinder.model.User
 import com.pht.roomfinder.repositories.AuthRepository
 import com.pht.roomfinder.services.UserService
 import com.pht.roomfinder.utils.App
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class ForgotViewModel : ViewModel() {
-    private  val authRepository = AuthRepository(UserService.userService)
+    private val authRepository = AuthRepository(UserService.userService)
 
-    val email = MutableLiveData<String>()
-    val password = MutableLiveData<String>()
+    @SuppressLint("StaticFieldLeak")
+    private val context = App.getContext()
 
-    val errorEmail = MutableLiveData<String>()
-    val errorPassword = MutableLiveData<String>()
-    val errorMessage = MutableLiveData<String?>()
-    val errorOTP = MutableLiveData<String>()
-    val success = MutableLiveData<Boolean>()
+    companion object {
+        const val LOGIN = 0
+        const val CONFIRM_EMAIL = 1
+        const val CREATE_PASSWORD = 2
+    }
 
-    val move = MutableLiveData<Int>()
-    val dialogStatus = MutableLiveData<Boolean>()
-    val otpStatus = MutableLiveData<Boolean>()
+    val authState = MutableStateFlow(AuthState())
+    val toLayout = MutableLiveData(CONFIRM_EMAIL)
 
+    private fun setLoading(isLoading: Boolean) {
+        authState.value = authState.value.copy(isLoading = isLoading)
+    }
+
+    fun toLayout(toLayout: Int) {
+        this.toLayout.value = toLayout
+    }
+
+    fun popBackStack() {
+        if (toLayout.value == CREATE_PASSWORD) toLayout(CONFIRM_EMAIL)
+        else toLayout(LOGIN)
+    }
+
+    fun setOTPStatus(isOpenOTP: Boolean) {
+        authState.value = authState.value.copy(isOpenOTP = isOpenOTP)
+        authState.value = authState.value.copy(errOTP = null)
+    }
 
     fun confirmEmail() {
-        val user = User(null, null, email.value.toString().trim(), null,
-            null, null, null, null, null)
+        val email = authState.value.email?.trim() ?: ""
+        val user = User(
+            null, null, email, null,
+            null, null, null, null, null
+        )
 
-        errorEmail.value = if (user.checkEmail()) {
+        val error = if (user.checkEmail()) {
             null
         } else {
             App.getContext()!!.getString(R.string.invalid_email)
         }
+        authState.value = authState.value.copy(errEmail = error)
 
-        if (errorEmail.value == null) {
-            sendEmail(email.value.toString().trim())
-        }
+        if (authState.value.errEmail == null) sendEmail(email)
     }
 
     private fun sendEmail(email: String) {
         viewModelScope.launch {
-            dialogStatus.value = true
+            setLoading(true)
             val result = authRepository.forgotPassword(email)
-            dialogStatus.value = false
+            setLoading(false)
             if (result.isSuccess) {
                 val authResponse = result.getOrNull()
                 authResponse?.let {
+                    var message: String? = context!!.getString(R.string.error_email)
                     if (it.status) {
-                        otpStatus.value = true
-                        errorMessage.value = null
-                    } else {
-                        errorMessage.value = App.getContext()!!.getString(R.string.error_email)
+                        setOTPStatus(true)
+                        message = null
                     }
+                    authState.value = authState.value.copy(message = message)
                 }
             } else {
-                errorMessage.value = App.getContext()!!.getString(R.string.error)
+                authState.value =
+                    authState.value.copy(message = App.getContext()!!.getString(R.string.error))
             }
         }
     }
 
     fun checkOTP(otp: String) {
+        val email = authState.value.email?.trim()
         viewModelScope.launch {
-            val result = authRepository.confirmEmail(email.value.toString().trim(), otp)
+            val result = authRepository.confirmEmail(email!!, otp)
             if (result.isSuccess) {
                 val authResponse = result.getOrNull()
                 authResponse?.let {
                     if (it.status) {
-                        otpStatus.value = false
-                        move.value = 2
-                    } else errorOTP.value = App.getContext()!!.getString(R.string.error_otp)
+                        setOTPStatus(false)
+                        toLayout(CREATE_PASSWORD)
+                    } else authState.value =
+                        authState.value.copy(errOTP = context!!.getString(R.string.error_otp))
                 }
             }
         }
     }
 
     fun changePassword() {
+        val email = authState.value.email!!.trim()
+        val password = authState.value.password ?: ""
         val user = User(
-            null, null, email.value.toString().trim(),
-            password.value.toString().trim(), null, null, null, null, null
+            null, null, email,
+            password, null, null, null, null, null
         )
 
-        errorPassword.value = if (user.checkPassword()) {
+        val error = if (user.checkPassword()) {
             null
         } else {
-            App.getContext()!!.getString(R.string.invalid_password)
+            context!!.getString(R.string.invalid_password)
         }
 
-        if (errorPassword.value == null) {
-            createPassword(email.value.toString().trim(), password.value.toString().trim())
+        authState.value = authState.value.copy(errPassword = error)
+
+        if (authState.value.errPassword == null) {
+            createPassword(email, password)
         }
     }
 
     private fun createPassword(email: String, newPassword: String) {
         viewModelScope.launch {
+            setLoading(true)
             val result = authRepository.createPassword(email, newPassword)
+            setLoading(false)
             if (result.isSuccess) {
                 val authResponse = result.getOrNull()
                 authResponse?.let {
                     if (it.status) {
-                        success.value = true
-                    } else errorMessage.value = App.getContext()!!.getString(R.string.error)
+                        authState.value = authState.value.copy(isSuccess = true)
+                    } else authState.value =
+                        authState.value.copy(message = context!!.getString(R.string.error))
                 }
             }
         }
     }
 
     fun resendOTP() {
-        sendEmail(email.value.toString().trim())
-    }
-
-    fun move() {
-        if (move.value == 1 || move.value == null) move.value = 0
-        else if (move.value == 2) move.value = 1
+        sendEmail(authState.value.email!!.trim())
     }
 
 }

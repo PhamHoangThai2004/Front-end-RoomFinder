@@ -55,7 +55,7 @@
     <string name="zalo">Send Zalo</string>
     <string name="note">Note</string>
     <string name="big_map">Big map</string>
-    <string name="your_favorite">Your favorite</string>
+    <string name="my_posts_favorite">My posts favorite</string>
     <string name="your_posts">Your posts</string>
     <string name="no_your_favorite">You don\'t have posts favorite</string>
     <string name="no_your_posts">You don\'t have posts</string>
@@ -86,6 +86,15 @@
     <string name="expired_post">Expired posts</string>
     <string name="post_id">Post Id</string>
     <string name="contact">Contact</string>
+    <string name="select_photo">Please select a photo</string>
+    <string name="change_avatar_successfully">Change avatar successfully</string>
+    <string name="change_avatar_failed">Change avatar failed</string>
+    <string name="password_changed_successfully">Password changed successfully</string>
+    <string name="password_change_failed">Password change failed</string>
+    <string name="change_infor_successfully">Change information successfully</string>
+    <string name="change_infor_failed">Change information failed</string>
+    <string name="full_information_required">Please fill in all information</string>
+    <string name="password_not_match">Confirm password does not match</string>
 
     <string name="million_month">million/month</string>
     <string name="total_acreage">Acreage</string>
@@ -95,6 +104,10 @@
     <string name="invalid_password">Password must be at least 8 characters</string>
     <string name="invalid_phone_number">Phone number is not in correct format</string>
     <string name="error">An error occurred</string>
+    <string name="delete_failed">Error while deleting</string>
+    <string name="posting_success">Posting successful</string>
+    <string name="posting_failed">Posting failed</string>
+    <string name="edit_post_success">Edit post successfully</string>
     <string name="note_text_one">- Only place a deposit when the landlord is identified and there is a clear receipt agreement. Check all terms and request that all monthly costs be listed in the contract.</string>
     <string name="note_text_two">- All information related to this post is for reference only. If you find this information posted is incorrect or fraudulent, please respond to them.</string>
     <string name="note_text_three">- You need to make sure all the information in the post is correct, and avoid posting spam, or scam information. We will not be responsible for the information you post.</string>
@@ -115,5 +128,20 @@
     <string name="not_result">No results found for</string>
     <string name="notification">Notification</string>
     <string name="clear_all">Clear All</string>
+    <string name="delete">Delete</string>
     <string name="no_notification">No nofitication</string>
+    <string name="new_post">New post</string>
+    <string name="bonus">Bonus</string>
+    <string name="advanced_search">Advanced search</string>
+    <string name="find_roommates">Find roommates</string>
+    <string name="delete_success">Delete successful</string>
+    <string name="not_zalo">Zalo application is not installed on the device</string>
+    <string name="edit_post_failed">Edit failed post</string>
+    <string name="error_title">Title must be at least 30 characters and at most 100 characters</string>
+    <string name="error_description">Minimum 50 characters and maximum 3000 characters</string>
+    <string name="error_price">Rental price required</string>
+    <string name="error_acreage">Area required</string>
+    <string name="error_bonus">Maximum 200 characters</string>
+    <string name="invalid_information">Invalid edit information</string>
+    <string name="not_gmail">Gmail app not found</string>
 </resources>

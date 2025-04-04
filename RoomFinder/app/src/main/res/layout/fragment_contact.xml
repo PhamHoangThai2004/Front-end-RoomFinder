@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".user.detail.ContactFragment">
+    tools:context=".view.detail.ContactFragment">
 
     <data>
 
@@ -39,7 +39,7 @@
             android:layout_marginTop="40dp"
             android:importantForAccessibility="no"
             android:src="@drawable/avatar"
-            app:civ_border_color="@color/gray_dark"
+            app:civ_border_color="@color/dark_gray"
             app:civ_border_width="2dp" />
 
         <TextView

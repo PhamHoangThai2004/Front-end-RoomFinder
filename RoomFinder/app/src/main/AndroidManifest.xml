@@ -26,29 +26,30 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".user.update_post.UpdatePostActivity"
+            android:name=".view.update_post.UpdatePostActivity"
             android:exported="false" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/api_key" />
+
         <activity
-            android:name=".user.new_post.NewPostActivity"
+            android:name=".view.new_post.NewPostActivity"
             android:exported="false" />
         <activity
-            android:name=".user.detail.DetailActivity"
+            android:name=".view.detail.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".authentication.AuthActivity"
+            android:name=".view.authentication.AuthActivity"
             android:exported="false" />
         <activity
-            android:name=".authentication.ForgotActivity"
+            android:name=".view.authentication.ForgotActivity"
             android:exported="false" />
         <activity
-            android:name=".user.UserActivity"
+            android:name=".view.UserActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -56,7 +57,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".services.MyFirebase"
+
+        <service
+            android:name=".services.MyFirebase"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

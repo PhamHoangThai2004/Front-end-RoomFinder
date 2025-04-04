@@ -5,138 +5,71 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pht.roomfinder.model.Category
+import com.pht.roomfinder.helper.UIState
 import com.pht.roomfinder.model.Post
-import com.pht.roomfinder.repositories.CategoryRepository
 import com.pht.roomfinder.repositories.PostRepository
-import com.pht.roomfinder.services.CategoryService
 import com.pht.roomfinder.services.PostService
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class PostViewModel : ViewModel() {
-    private val categoryRepository = CategoryRepository(CategoryService.categoryService)
     private val postRepository = PostRepository(PostService.postService)
 
-    private val _selectedPost = MutableLiveData<Int>()
-    val selectedPost: LiveData<Int>
-        get() = _selectedPost
+    val uiState = MutableStateFlow(UIState())
 
     private val _listPosts = MutableLiveData<List<Post>>()
     val listPosts: LiveData<List<Post>>
         get() = _listPosts
 
+    private val _listExpired = MutableLiveData<List<Post>>()
+    val listExpired: LiveData<List<Post>>
+        get() = _listExpired
 
-    val listCategory = MutableLiveData<MutableList<String>>()
+    private val _selectedPost = MutableLiveData<Int>()
+    val selectedPost: LiveData<Int>
+        get() = _selectedPost
 
-    val isNull = MutableLiveData<Boolean>()
-    val isOpenFilter = MutableLiveData<Boolean>()
+    val listIsEmpty = MutableLiveData<Boolean>()
 
-    val category = MutableLiveData<String>()
-    val province = MutableLiveData<String>()
-    val price = MutableLiveData<String>()
-    val acreage = MutableLiveData<String>()
-
-    init {
-        category.value = "Tất cả"
-        province.value = "Toàn quốc"
-        price.value = "Tất cả"
-        acreage.value = "Tất cả"
+    fun setSelectedPost(postId: Int) {
+        _selectedPost.value = postId
     }
 
-    fun selectPost(postID: Int) {
-        _selectedPost.value = postID
+    fun toNewPost(value: Boolean) {
+        uiState.value = uiState.value.copy(isOpen = value)
     }
 
-    fun getListCategory() {
+    fun getLists() {
+        getListPosts()
+        getListPosts(true)
+    }
+
+    private fun setLoading(isLoading: Boolean) {
+        uiState.value = uiState.value.copy(isLoading = isLoading)
+    }
+
+    private fun getListPosts(isExpired: Boolean = false) {
         viewModelScope.launch {
-            val result = categoryRepository.listCategory()
+            setLoading(true)
+            val result = postRepository.listPost(isExpired)
+            setLoading(false)
             if (result.isSuccess) {
                 val response = result.getOrNull()
-                var list = listOf<Category>()
                 response?.let {
-                    list = it.data
-                }
-                listCategory.value = mutableListOf("Tất cả")
-                for (item in list) {
-                    listCategory.value?.add(item.categoryName!!)
-                }
-            } else {
-                isNull.value = true
-            }
-        }
-    }
+                    if (isExpired) {
+                        _listExpired.value = it.data
+                    } else {
+                        _listPosts.value = it.data
 
-    fun getFilterValue() {
-        val valuePrices = filterNumber(price.value!!)
-        val valueAcreage = filterNumber(acreage.value!!)
-        getPostFilter(
-            category.value!!,
-            province.value!!,
-            valuePrices[0],
-            valuePrices[1],
-            valueAcreage[0],
-            valueAcreage[1]
-        )
-    }
-
-    fun openFilter(isOpen: Boolean) {
-        isOpenFilter.value = isOpen
-    }
-
-    private fun getPostFilter(
-        categoryName: String,
-        area: String,
-        minPrice: Int,
-        maxPrice: Int,
-        minAcreage: Int,
-        maxAcreage: Int
-    ) {
-        viewModelScope.launch {
-            val result = postRepository.postFilter(
-                categoryName,
-                area,
-                minPrice,
-                maxPrice,
-                minAcreage,
-                maxAcreage
-            )
-            if (result.isSuccess) {
-                val searchResponse = result.getOrNull()
-                searchResponse?.let {
-                    _listPosts.value = it.data
-                    isNull.value = it.data.isEmpty()
+                    }
                 }
             } else {
                 val error = result.exceptionOrNull()
-                Log.d("BBB", "get list filter: ${error?.message}")
+                Log.d("BBB", "get your post: ${error?.message}")
             }
-
+            if (listPosts.value?.isEmpty() == false || listExpired.value?.isEmpty() == false) listIsEmpty.value =
+                false
+            else listIsEmpty.value = true
         }
     }
-
-    private fun filterNumber(value: String): List<Int> {
-        if (value == "Tất cả") {
-            val list = listOf(-1, -1)
-            return list
-        }
-
-        if (value.indexOf("Dưới") != -1) {
-            val list = listOf(value.replace(Regex("[^\\d.]"), "").toInt(), -1)
-            return list
-        }
-
-        if (value.indexOf("Trên") != -1) {
-            val list = listOf(-1, value.replace(Regex("[^\\d.]"), "").toInt())
-            return list
-        }
-
-        val parts = value.split("-").map { it.trim() }
-        val list = listOf(
-            parts[0].replace(Regex("[^\\d.]"), "").toInt(),
-            parts[1].replace(Regex("[^\\d.]"), "").toInt()
-        )
-
-        return list
-    }
-
 }

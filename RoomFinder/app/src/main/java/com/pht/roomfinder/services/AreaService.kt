@@ -1,7 +1,6 @@
 package com.pht.roomfinder.services
 
 import com.pht.roomfinder.response.AreaResponse
-import com.pht.roomfinder.utils.Const
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -25,10 +24,16 @@ interface AreaService {
     suspend fun getProvinces(@Query("limit") limit: Int): AreaResponse
 
     @GET("districts/getByProvince")
-    suspend fun getDistricts(@Query("provinceCode") provinceCode: String, @Query("limit") limit: Int): AreaResponse
+    suspend fun getDistricts(
+        @Query("provinceCode") provinceCode: String,
+        @Query("limit") limit: Int
+    ): AreaResponse
 
     @GET("wards/getByDistrict")
-    suspend fun getWards(@Query("districtCode") districtCode: String, @Query("limit") limit: Int): AreaResponse
+    suspend fun getWards(
+        @Query("districtCode") districtCode: String,
+        @Query("limit") limit: Int
+    ): AreaResponse
 
 
 }

@@ -5,5 +5,4 @@ class AuthResponse(
     val message: String,
     val token: String,
     val data: TokenData,
-//    val dataUser: User
 )

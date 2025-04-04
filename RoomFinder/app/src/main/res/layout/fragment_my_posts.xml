@@ -2,62 +2,44 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".user.setting.MyPostsFragment">
+    tools:context=".view.post.MyPostsFragment">
 
     <data>
 
         <import type="android.view.View" />
 
         <variable
-            name="userViewModel"
-            type="com.pht.roomfinder.viewmodel.UserViewModel" />
+            name="postViewModel"
+            type="com.pht.roomfinder.viewmodel.PostViewModel" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/linear_Layout"
+        <TextView
+            android:id="@+id/text_View"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/custom_transparent"
-                android:importantForAccessibility="no"
-                android:onClick="@{() -> userViewModel.popBack()}"
-                android:padding="7dp"
-                android:src="@drawable/arrow_back_icon"
-                app:tint="@color/black" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="85dp"
-                android:padding="5dp"
-                android:text="@string/my_posts"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/my_posts"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
 
         <Button
             android:id="@+id/button_Post_Add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/linear_Layout"
+            android:layout_below="@id/text_View"
             android:layout_margin="10dp"
             android:background="@drawable/custom_button_full"
             android:drawableStart="@drawable/post_add_icon"
             android:drawablePadding="-100dp"
             android:drawableTint="@color/white"
-            android:onClick="@{() -> userViewModel.toNewPost()}"
+            android:onClick="@{() -> postViewModel.toNewPost(true)}"
             android:paddingStart="100dp"
             android:text="@string/post_add"
             android:textColor="@color/white"
@@ -69,10 +51,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/button_Post_Add"
             android:orientation="vertical"
-            android:visibility="@{userViewModel.listIsNull == false ? View.VISIBLE : View.GONE}">
+            android:visibility="@{postViewModel.listPosts.isEmpty() == false ? View.VISIBLE : View.GONE}">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="@string/your_posts"
@@ -93,10 +75,10 @@
             android:layout_below="@id/linear_Layout_My_List"
             android:layout_marginTop="10dp"
             android:orientation="vertical"
-            android:visibility="@{userViewModel.expiredIsNull == false ? View.VISIBLE : View.GONE}">
+            android:visibility="@{postViewModel.listExpired.isEmpty() == false ? View.VISIBLE : View.GONE}">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="@string/expired_post"
@@ -116,7 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:orientation="vertical"
-            android:visibility="@{userViewModel.listIsNull == true ? View.VISIBLE : View.GONE}">
+            android:visibility="@{postViewModel.listIsEmpty == true ? View.VISIBLE : View.GONE}">
 
             <TextView
                 android:id="@+id/text_View_No_Post"
@@ -135,7 +117,7 @@
                 android:drawableStart="@drawable/post_add_icon"
                 android:drawablePadding="-120dp"
                 android:gravity="center"
-                android:onClick="@{() -> userViewModel.toNewPost()}"
+                android:onClick="@{() -> postViewModel.toNewPost(true)}"
                 android:paddingStart="120dp"
                 android:text="@string/post_add"
                 android:textColor="@color/black"
@@ -145,6 +127,5 @@
         </LinearLayout>
 
     </RelativeLayout>
-
 
 </layout>

@@ -2,30 +2,30 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation_user"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/containFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.pht.roomfinder.user.home.HomeFragment"
+        android:id="@+id/containFragment"
+        android:name="com.pht.roomfinder.view.home.ContainFragment"
         android:label="@string/home"
-        android:theme="@style/Theme.RoomFinder"/>
+        android:theme="@style/Theme.RoomFinder" />
 
     <fragment
-        android:id="@+id/postFragment"
-        android:name="com.pht.roomfinder.user.post.PostFragment"
+        android:id="@+id/myPostsFragment"
+        android:name="com.pht.roomfinder.view.post.MyPostsFragment"
         android:label="@string/post"
-        android:theme="@style/Theme.RoomFinder"/>
+        android:theme="@style/Theme.RoomFinder" />
 
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.pht.roomfinder.user.favorite.FavoriteFragment"
+        android:name="com.pht.roomfinder.view.favorite.FavoriteFragment"
         android:label="@string/favorite"
-        android:theme="@style/Theme.RoomFinder"/>
+        android:theme="@style/Theme.RoomFinder" />
 
     <fragment
         android:id="@+id/settingFragment"
-        android:name="com.pht.roomfinder.user.setting.SettingFragment"
+        android:name="com.pht.roomfinder.view.setting.SettingFragment"
         android:label="@string/setting"
-        android:theme="@style/Theme.RoomFinder"/>
+        android:theme="@style/Theme.RoomFinder" />
 
 </navigation>

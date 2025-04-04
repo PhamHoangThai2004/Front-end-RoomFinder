@@ -12,8 +12,11 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.pht.roomfinder.MainActivity
 import com.pht.roomfinder.R
+import com.pht.roomfinder.view.MainActivity
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @SuppressLint("MissingFirebaseInstanceTokenRefresh")
 class MyFirebase : FirebaseMessagingService() {
@@ -22,12 +25,20 @@ class MyFirebase : FirebaseMessagingService() {
             message.data.let {
                 val title = it["title"] ?: "Thông báo"
                 val messageBody = it["message"] ?: "No message"
+                val postId = it["postId"]?.toInt()
                 if (it["action"] == "send_notification") {
                     updateNotification()
                 }
                 sendNotification(title, messageBody)
+                insertNotification(title, messageBody, postId)
             }
         }
+    }
+
+    private fun insertNotification(title: String, messageBody: String, postId: Int?) {
+        val currentTime = getCurrentTime()
+        val db = SQLiteService(this)
+        val result = db.insertNotification(title, messageBody, postId ?: 0, currentTime)
     }
 
     private fun updateNotification() {
@@ -66,5 +77,10 @@ class MyFirebase : FirebaseMessagingService() {
             .setAutoCancel(true).build()
 
         notificationManager.notify(notificationId, notification)
+    }
+
+    private fun getCurrentTime(): String {
+        val time = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        return time.format(Date())
     }
 }

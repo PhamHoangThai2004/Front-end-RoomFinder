@@ -1,10 +1,10 @@
 package com.pht.roomfinder.repositories
 
+import com.pht.roomfinder.helper.DataLocal
 import com.pht.roomfinder.model.User
 import com.pht.roomfinder.response.AuthResponse
 import com.pht.roomfinder.services.UserService
 import com.pht.roomfinder.utils.Const
-import com.pht.roomfinder.utils.DataLocal
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -175,7 +175,8 @@ class AuthRepository(private val userService: UserService) {
     suspend fun changeAvatar(avatar: String): Result<AuthResponse> {
         return withContext(Dispatchers.IO) {
             try {
-                val response: Response<AuthResponse> = userService.changeAvatar(this@AuthRepository.token, avatar)
+                val response: Response<AuthResponse> =
+                    userService.changeAvatar(this@AuthRepository.token, avatar)
                 if (response.isSuccessful) {
                     Result.success(response.body()!!)
                 } else

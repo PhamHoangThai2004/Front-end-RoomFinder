@@ -1,8 +1,8 @@
 package com.pht.roomfinder.services
 
+import com.pht.roomfinder.helper.DataLocal
 import com.pht.roomfinder.response.CategoryResponse
 import com.pht.roomfinder.utils.Const
-import com.pht.roomfinder.utils.DataLocal
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Response

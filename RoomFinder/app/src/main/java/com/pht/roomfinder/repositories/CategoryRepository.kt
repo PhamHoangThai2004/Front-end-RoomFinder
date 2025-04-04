@@ -14,7 +14,8 @@ class CategoryRepository(private val categoryService: CategoryService) {
                 val response: Response<CategoryResponse> = categoryService.listCategory()
                 if (response.isSuccessful) Result.success(response.body()!!)
                 else Result.failure(
-                    Exception("List category failed: ${response.errorBody()?.string()}"))
+                    Exception("List category failed: ${response.errorBody()?.string()}")
+                )
             } catch (e: Exception) {
                 Result.failure(e)
             }

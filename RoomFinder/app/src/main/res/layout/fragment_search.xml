@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".user.home.SearchFragment">
+    tools:context=".view.home.SearchFragment">
 
     <data>
 
@@ -16,37 +16,104 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/custom_shape_background"
         android:orientation="vertical">
 
-        <ImageButton
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/custom_transparent"
+                android:importantForAccessibility="no"
+                android:onClick="@{() -> homeViewModel.popBack()}"
+                android:padding="7dp"
+                android:src="@drawable/arrow_back_icon"
+                app:tint="@color/black" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/search_filter"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/custom_transparent"
-            android:importantForAccessibility="no"
-            android:onClick="@{() -> homeViewModel.popBack()}"
-            android:padding="3dp"
-            android:src="@drawable/arrow_back_icon"
-            app:tint="@color/black" />
+            android:layout_marginHorizontal="15dp">
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/custom_edit_text_outline"
+                android:hint="@string/search"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:maxLines="1"
+                android:padding="12dp"
+                android:text="@={homeViewModel.keySearch}"
+                android:textCursorDrawable="@drawable/custom_cursor" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_image_background"
+                android:importantForAccessibility="no"
+                android:onClick="@{() -> homeViewModel.search()}"
+                android:padding="12dp"
+                android:src="@drawable/search_icon"
+                app:tint="@color/white" />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/list_View_Search_History"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="@{() -> homeViewModel.clearSearchHistory()}"
+            android:padding="5dp"
+            android:text="@string/clear_all"
+            android:visibility="@{homeViewModel.listSearchHistory.isEmpty() == true ? View.GONE : View.VISIBLE}" />
+
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_View_Search_List"
+            android:id="@+id/recycler_View_Search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:visibility="@{homeViewModel.isNull == false ? View.VISIBLE : View.GONE}" />
+            android:visibility="@{homeViewModel.listSearch.isEmpty() == false ? View.VISIBLE : View.GONE}" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             android:textColor="@color/black"
-            app:formatType="@{6}"
-            app:formatValue="@{homeViewModel.tmpSearch}"
             android:textSize="20sp"
-            android:visibility="@{homeViewModel.isNull == true ? View.VISIBLE : View.GONE}" />
+            android:visibility="@{homeViewModel.listSearch.isEmpty() == true ? View.VISIBLE : View.GONE}"
+            app:formatType="@{6}"
+            app:formatValue="@{homeViewModel.tmpSearch}" />
 
     </LinearLayout>
 

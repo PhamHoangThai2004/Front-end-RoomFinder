@@ -10,18 +10,18 @@ import com.pht.roomfinder.repositories.PostRepository
 import com.pht.roomfinder.services.PostService
 import kotlinx.coroutines.launch
 
-class FavoriteViewModel  : ViewModel() {
+class FavoriteViewModel : ViewModel() {
     private val postRepository = PostRepository(PostService.postService)
 
-    private val _favoritePosts = MutableLiveData<List<Post>>()
-    val favoritePosts : LiveData<List<Post>>
-        get() = _favoritePosts
+    private val _listFavorite = MutableLiveData<List<Post>>()
+    val listFavorite: LiveData<List<Post>>
+        get() = _listFavorite
 
     private val _selectedPost = MutableLiveData<Int>()
-    val selectedPost : LiveData<Int>
+    val selectedPost: LiveData<Int>
         get() = _selectedPost
 
-    val listIsNull = MutableLiveData<Boolean>()
+    val isLoading = MutableLiveData(false)
 
     fun selectPost(postID: Int) {
         _selectedPost.value = postID
@@ -29,12 +29,13 @@ class FavoriteViewModel  : ViewModel() {
 
     fun getFavoritePosts() {
         viewModelScope.launch {
+            isLoading.value = true
             val result = postRepository.favoritePost()
+            isLoading.value = false
             if (result.isSuccess) {
                 val response = result.getOrNull()
                 response?.let {
-                    _favoritePosts.value = it.data
-                    listIsNull.value = it.data.isEmpty()
+                    _listFavorite.value = it.data
                 }
             } else {
                 val error = result.exceptionOrNull()

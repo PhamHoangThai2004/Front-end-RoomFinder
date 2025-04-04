@@ -1,10 +1,14 @@
 package com.pht.roomfinder.viewmodel
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pht.roomfinder.R
+import com.pht.roomfinder.helper.CloudinaryConfig
+import com.pht.roomfinder.helper.PostState
 import com.pht.roomfinder.model.Category
 import com.pht.roomfinder.model.Images
 import com.pht.roomfinder.model.Location
@@ -17,48 +21,35 @@ import com.pht.roomfinder.services.AreaService
 import com.pht.roomfinder.services.CategoryService
 import com.pht.roomfinder.services.PostService
 import com.pht.roomfinder.utils.App
-import com.pht.roomfinder.utils.CloudinaryConfig
 import com.pht.roomfinder.utils.Const
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
+@SuppressLint("StaticFieldLeak")
 class NewPostViewModel : ViewModel() {
     private val categoryRepository = CategoryRepository(CategoryService.categoryService)
     private val postRepository = PostRepository(PostService.postService)
+    val context = App.getContext()!!
+
+    val postState = MutableStateFlow(PostState())
 
     val listCategories = MutableLiveData<MutableList<String>>()
     val listProvinces = MutableLiveData<List<Area>>()
     val listDistricts = MutableLiveData<List<Area>>()
     val listWards = MutableLiveData<List<Area>>()
-    val isSuccess = MutableLiveData<Boolean>()
-    val isLoading = MutableLiveData<Boolean>()
 
-    var province = MutableLiveData<String>()
-    val district = MutableLiveData<String>()
-    val ward = MutableLiveData<String>()
-    val village = MutableLiveData<String>()
+    var user: User? = null
+    val province = MutableLiveData<String?>()
+    val district = MutableLiveData<String?>()
+    val ward = MutableLiveData<String?>()
+    val village = MutableLiveData<String?>()
 
-    // user
-    val user = MutableLiveData<User>()
-
-    //category
-    val categoryName = MutableLiveData<String>()
-
-    // location
-    val address = MutableLiveData<String>()
-    val latitude = MutableLiveData<Double>()
-    val longitude = MutableLiveData<Double>()
-    val locationIsNull = MutableLiveData<Boolean>()
-
-    // post
-    val title = MutableLiveData<String>()
-    val description = MutableLiveData<String>()
-    val price = MutableLiveData<String>()
-    val acreage = MutableLiveData<String>()
-    val bonus = MutableLiveData<String>()
-
-    //images
     val images = MutableLiveData<MutableList<String>>()
     private val listImages = MutableLiveData<List<Images>>()
+
+    private fun setLoading(isLoading: Boolean) {
+        postState.value = postState.value.copy(isLoading = isLoading)
+    }
 
     fun getListCategories() {
         viewModelScope.launch {
@@ -113,39 +104,53 @@ class NewPostViewModel : ViewModel() {
     }
 
     fun getLocation() {
-        address.value = ""
-        if (!village.value.isNullOrEmpty()) address.value = village.value!! + ", "
-        address.value += ward.value + ", " + district.value + ", " + province.value
+        var address = ""
+        if (!village.value.isNullOrEmpty()) address = village.value + ", "
+        address += ward.value + ", " + district.value + ", " + province.value
+
+        postState.value = postState.value.copy(address = address)
 
         viewModelScope.launch {
-            val result = Const.getLatLngFromAddress(address.value!!)
+            val result = Const.getLatLngFromAddress(address)
             if (result != null) {
                 val (latitude, longitude) = result
-                this@NewPostViewModel.latitude.value = latitude
-                this@NewPostViewModel.longitude.value = longitude
-                locationIsNull.value = false
+                postState.value = postState.value.copy(
+                    latitude = latitude,
+                    longitude = longitude,
+                    locationIsNull = false
+                )
             } else {
-                locationIsNull.value = true
+                postState.value = postState.value.copy(locationIsNull = true)
             }
         }
     }
 
     private fun checkValid(): Boolean {
-        if (locationIsNull.value == true) return false
-        if (title.value.isNullOrEmpty() || title.value!!.trim().length < 30 || title.value!!.trim().length > 100) return false
-        if (description.value.isNullOrEmpty() || description.value!!.trim().length < 50 || description.value!!.trim().length > 3000) return false
-        if (price.value.isNullOrEmpty()) return false
-        if (acreage.value.isNullOrEmpty()) return false
-        if ((bonus.value?.trim()?.length ?: 0) > 200) return false
+        val title = postState.value.title
+        val description = postState.value.description
+        val price = postState.value.price
+        val acreage = postState.value.acreage
+        val bonus = postState.value.bonus
+
+        if (postState.value.locationIsNull) return false
+        if (title.isNullOrEmpty() || title.trim().length < 30 || title.trim().length > 100) return false
+        if (description.isNullOrEmpty() || description.trim().length < 50 || description.trim().length > 3000) return false
+        if (price.isNullOrEmpty()) return false
+        if (acreage.isNullOrEmpty()) return false
+        if ((bonus?.trim()?.length ?: 0) > 200) return false
         return true
     }
 
     fun posting() {
         viewModelScope.launch {
             if (!checkValid()) {
-                Toast.makeText(App.getContext(), "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    App.getContext(),
+                    context.getString(R.string.full_information_required),
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
-                isLoading.value = true
+                setLoading(true)
                 if (images.value.isNullOrEmpty()) listImages.value = listOf()
                 else listImages.value = CloudinaryConfig().uploadMultipleImages(images.value!!)
                 createNewPost()
@@ -154,37 +159,53 @@ class NewPostViewModel : ViewModel() {
     }
 
     private suspend fun createNewPost() {
-        Log.d("BBB", "create new post")
         var area = province.value
         if (province.value == "Hồ Chí Minh") area = "TP. Hồ Chí Minh"
-        val category = Category(null, categoryName.value)
-        val location = Location(null, address.value, longitude.value, latitude.value)
+        val category = Category(null, postState.value.categoryName)
+        val location = Location(
+            null,
+            postState.value.address,
+            postState.value.longitude,
+            postState.value.latitude
+        )
         val post = Post(
-            null, null, category, location, title.value!!.trim(), description.value!!.trim(),
-            price.value?.toDouble(), acreage.value?.toDouble(), area, bonus.value?.trim() ?: "",
+            null, null, category, location,
+            postState.value.title?.trim(),
+            postState.value.description?.trim(),
+            postState.value.price?.toDouble(),
+            postState.value.acreage?.toDouble(),
+            area, postState.value.bonus?.trim() ?: "",
             null, null, listImages.value, null, null
         )
         try {
             val result = postRepository.newPost(post)
-            isLoading.value = false
+            setLoading(false)
             if (result.isSuccess) {
                 val response = result.getOrNull()
                 response?.let {
                     if (it.status) {
-                        Toast.makeText(App.getContext(), "Đăng bài thành công", Toast.LENGTH_SHORT)
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.posting_success),
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
                     } else {
-                        Toast.makeText(App.getContext(), "Đăng bài thất bại", Toast.LENGTH_SHORT)
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.posting_failed),
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
                     }
-                    isSuccess.value = it.status
+                    postState.value = postState.value.copy(isSuccess = it.status)
                 }
             } else {
                 val error = result.exceptionOrNull()
                 Log.d("BBB", "create new post: ${error?.message}")
             }
         } catch (e: Exception) {
-            isLoading.value = false
+            setLoading(false)
             Log.d("BBB", "create new post: ${e.message}")
         }
     }

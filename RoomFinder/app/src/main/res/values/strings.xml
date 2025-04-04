@@ -5,7 +5,7 @@
     <string name="password">Mật khẩu</string>
     <string name="login">Đăng nhập</string>
     <string name="register">Đăng ký</string>
-    <string name="loading">Đang tải ...</string>
+    <string name="loading">Đang tải …</string>
     <string name="phone_number">Số điện thoại</string>
     <string name="full_name">Họ và tên</string>
     <string name="forgot_password">Quên mật khẩu</string>
@@ -43,7 +43,7 @@
     <string name="old_password">Mật khẩu hiện tại</string>
     <string name="confirm_password">Xác nhận mật khẩu</string>
     <string name="no_found">Không tìm thấy kết quả</string>
-    <string name="filter">Bộ lọc</string>
+    <string name="filter">Lọc</string>
     <string name="application">Áp dụng</string>
     <string name="price_range">Khoản giá</string>
     <string name="acreage_range">Khoản diện tích</string>
@@ -58,7 +58,7 @@
     <string name="zalo">Nhắn Zalo</string>
     <string name="note">Lưu ý</string>
     <string name="big_map">Xem bản đồ lớn</string>
-    <string name="your_favorite">Các bài đăng yêu thích</string>
+    <string name="my_posts_favorite">Các bài đăng yêu thích</string>
     <string name="your_posts">Các bài đăng của bạn</string>
     <string name="no_your_favorite">Không có bài đăng bạn yêu thích</string>
     <string name="no_your_posts">Bạn không có bài đăng nào</string>
@@ -113,11 +113,38 @@
     <string name="not_result">Không tìm thấy kết quả cho</string>
     <string name="notification">Thông báo</string>
     <string name="clear_all">Xoá tất cả</string>
+    <string name="delete">Xoá</string>
     <string name="no_notification">Không có thông báo nào</string>
+    <string name="new_post">Bài đăng mới</string>
+    <string name="bonus">Có ưu đãi</string>
+    <string name="advanced_search">Tìm kiếm nâng cao</string>
+    <string name="find_roommates">Tìm người ở ghép</string>
+    <string name="select_photo">Vui lòng chọn ảnh</string>
+    <string name="change_avatar_successfully">Đổi ảnh đại diện thành công</string>
+    <string name="change_avatar_failed">Thay ảnh đại diện thất bại</string>
+    <string name="password_changed_successfully">Thay đổi mật khẩu thành công</string>
+    <string name="password_change_failed">Đổi mật khẩu thất bại</string>
+    <string name="change_infor_successfully">Thay đổi thông tin thành công</string>
+    <string name="change_infor_failed">Thay đổi thông tin thất bại</string>
+    <string name="full_information_required">Yêu cầu điền đầy đủ thông tin</string>
+    <string name="password_not_match">Xác nhận mật khẩu không trùng khớp</string>
+    <string name="delete_success">Xoá thành công</string>
+    <string name="delete_failed">Lỗi khi xoá</string>
+    <string name="not_zalo">Ứng dụng Zalo chưa được cài đặt trên thiết bị</string>
+    <string name="not_gmail">Không tìm thấy ứng dụng Gmail</string>
+    <string name="posting_success">Đăng bài thành công</string>
+    <string name="posting_failed">Đăng bài thất bại</string>
+    <string name="edit_post_success">Sửa bài đăng thành công</string>
+    <string name="edit_post_failed">Sửa bài đăng thất bại</string>
+    <string name="error_title">Tiêu đề phải tối thiểu 30 ký tự và tối đa 100 ký tự</string>
+    <string name="error_description">Tối thiểu 50 ký tự và tối đa 3000 ký tự</string>
+    <string name="error_price">Yêu cầu nhập giá cho thuê</string>
+    <string name="error_acreage">Yêu cầu nhập diện tích</string>
+    <string name="error_bonus">Tối đa 200 ký tự</string>
+    <string name="invalid_information">Thông tin chỉnh sửa không hợp lệ</string>
 
     <string name="note_text_one">\u2022 Chỉ đặt khi cọc xác định được chủ nhà và có thỏa thuận biên nhận rõ ràng. Kiểm tra mọi điều khoản và yêu cầu liệt kê tất cả chi phí hàng tháng vào hợp đồng.</string>
     <string name="note_text_two">\u2022 Mọi thông tin liên quan đến tin đăng này chỉ mang tính chất tham khảo. Nếu bạn thấy rằng tin đăng này không đúng hoặc có dấu hiệu lừa đảo, hãy phản ánh với chúng tôi.</string>
     <string name="note_text_three">\u2022 Bạn cần chắc chắn tất cả các thông tin của bài đăng là chính xác, tránh đăng tải những thông tin spam, lừa đảo. Chúng tôi sẽ không chịu trách nhiệm về những thông tin bạn đăng tải.</string>
     <string name="note_text_four">\u2022 Bài đăng sẽ có thời hạn là 30 ngày kể từ ngày đăng, khi hết hạn bài đăng sẽ bị ẩn, bạn có thể tiếp tục ra hạn đăng bài hoặc xóa bài đăng đó.</string>
-
 </resources>

@@ -2,11 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".user.home.HomeFragment">
+    tools:context=".view.home.HomeFragment">
 
     <data>
 
         <import type="com.pht.roomfinder.R" />
+
+        <import type="com.pht.roomfinder.viewmodel.HomeViewModel" />
 
         <import type="android.view.View" />
 
@@ -26,15 +28,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/home_background"
             android:orientation="vertical"
             tools:ignore="UselessParent">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="180dp"
+                android:background="@drawable/custom_shape_background"
                 android:paddingStart="20dp"
-                android:paddingTop="50dp"
+                android:paddingTop="15dp"
                 android:paddingEnd="20dp"
                 tools:ignore="UselessParent">
 
@@ -54,7 +56,6 @@
                     android:layout_alignParentEnd="true">
 
                     <ImageButton
-                        android:id="@+id/image_Button_Notification"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
@@ -96,37 +97,155 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/text_View_PhoneNumber"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="15dp"
                     android:background="@drawable/custom_edit_text_full"
                     android:drawableEnd="@drawable/search_icon"
                     android:drawableTint="@color/gray"
+                    android:focusable="false"
                     android:hint="@string/search"
                     android:importantForAutofill="no"
                     android:inputType="text"
                     android:maxLines="1"
-                    android:padding="15dp"
-                    android:text="@={homeViewModel.keySearch}"
-                    android:textCursorDrawable="@drawable/custom_cursor"
-                    app:onDrawableEndClick="@{() -> homeViewModel.search()}"
-                    tools:ignore="LabelFor,TextFields" />
-
+                    android:onClick="@{() -> homeViewModel.toLayout(HomeViewModel.SEARCH)}"
+                    android:padding="15dp" />
             </RelativeLayout>
 
-            <fragment
-                android:id="@+id/fragment_Container_View"
-                android:name="androidx.navigation.fragment.NavHostFragment"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:defaultNavHost="true"
-                app:navGraph="@navigation/navigation_home"
-                tools:ignore="FragmentTagUsage" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:weightSum="4">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    tools:ignore="UseCompoundDrawables">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_background_item"
+                        android:importantForAccessibility="no"
+                        android:onClick="@{() -> userViewModel.toNewPost()}"
+                        android:padding="7dp"
+                        android:src="@drawable/new_post_40_icon"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/new_post"
+                        android:textColor="@color/dark_blue"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    tools:ignore="UseCompoundDrawables">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_background_item"
+                        android:importantForAccessibility="no"
+                        android:onClick="@{() -> homeViewModel.toLayout(HomeViewModel.FILTER)}"
+                        android:padding="7dp"
+                        android:src="@drawable/filter_40_icon"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/filter"
+                        android:textColor="@color/dark_blue"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    tools:ignore="UseCompoundDrawables">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_background_item"
+                        android:importantForAccessibility="no"
+                        android:onClick="@{() -> homeViewModel.toLayout(HomeViewModel.BONUS)}"
+                        android:padding="7dp"
+                        android:src="@drawable/sale_40_icon"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/bonus"
+                        android:textColor="@color/dark_blue"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    tools:ignore="UseCompoundDrawables">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_background_item"
+                        android:importantForAccessibility="no"
+                        android:onClick="@{() -> homeViewModel.toLayout(HomeViewModel.FIND_ROOMMATES)}"
+                        android:padding="7dp"
+                        android:src="@drawable/roommate_40_icon"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/find_roommates"
+                        android:textColor="@color/dark_blue"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_View_Parent_List"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="300dp"
+            android:layout_width="350dp"
             android:layout_height="match_parent"
-            android:layout_gravity="end"
+            android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/custom_notification_view"
@@ -134,16 +253,15 @@
             android:elevation="8dp"
             android:orientation="vertical"
             android:padding="5dp"
-            android:visibility="@{homeViewModel.isNotificationVisible() ? View.VISIBLE : View.GONE}">
+            android:visibility="@{homeViewModel.uiStateLiveData.isNotificationVisible ? View.VISIBLE : View.GONE}">
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
                     android:background="@null"
                     android:importantForAccessibility="no"
                     android:onClick="@{() -> homeViewModel.setNotificationView(false)}"
@@ -154,6 +272,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:gravity="center"
                     android:padding="2dp"
                     android:text="@string/notification"
@@ -161,7 +280,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-            </LinearLayout>
+            </FrameLayout>
 
             <TextView
                 android:layout_width="match_parent"

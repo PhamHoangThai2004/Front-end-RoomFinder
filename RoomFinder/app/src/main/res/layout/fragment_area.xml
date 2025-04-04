@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".user.new_post.AreaFragment">
+    tools:context=".view.new_post.AreaFragment">
 
     <data>
 
@@ -117,9 +117,9 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:text="@string/location_not_found"
-            android:textColor="@color/red"
+            android:textColor="@color/light_red"
             android:textSize="15sp"
-            android:visibility="@{newPostVM.locationIsNull ? View.VISIBLE : View.INVISIBLE}" />
+            android:visibility="@{newPostVM.postState.locationIsNull ? View.VISIBLE : View.INVISIBLE}" />
 
         <com.google.android.gms.maps.MapView
             android:id="@+id/map_View_Location"

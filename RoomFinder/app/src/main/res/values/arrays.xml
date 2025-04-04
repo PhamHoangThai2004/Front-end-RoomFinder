@@ -80,16 +80,16 @@
         <item>15 triệu - 20 triệu</item>
         <item>Trên 20 triệu</item> <!-- price >= 20 -->
     </string-array>
-    
+
     <string-array name="acreage_range">
         <item>Tất cả</item>
         <item>Dưới 20m\u00B2</item>
-        <item>20m\u00B2 – 30m\u00B2</item>
-        <item>30m\u00B2 – 50m\u00B2</item>
-        <item>50m\u00B2 – 75m\u00B2</item>
-        <item>75m\u00B2 – 100m\u00B2</item>
-        <item>100m\u00B2 – 150m\u00B2</item>
-        <item>150m\u00B2 – 200m\u00B2</item>
+        <item>20m\u00B2 - 30m\u00B2</item>
+        <item>30m\u00B2 - 50m\u00B2</item>
+        <item>50m\u00B2 - 75m\u00B2</item>
+        <item>75m\u00B2 - 100m\u00B2</item>
+        <item>100m\u00B2 - 150m\u00B2</item>
+        <item>150m\u00B2 - 200m\u00B2</item>
         <item>Trên 200m\u00B2</item>
     </string-array>
 

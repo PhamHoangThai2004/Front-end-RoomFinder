@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.pht.roomfinder.authentication.LoginFragment"
+        android:name="com.pht.roomfinder.view.authentication.LoginFragment"
         android:label="@string/login"
         android:theme="@style/Theme.RoomFinder">
 
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.pht.roomfinder.authentication.RegisterFragment"
+        android:name="com.pht.roomfinder.view.authentication.RegisterFragment"
         android:label="@string/register"
         android:theme="@style/Theme.RoomFinder">
 

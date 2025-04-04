@@ -27,9 +27,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clipToOutline="true"
-                android:src="@drawable/home_background"
                 android:importantForAccessibility="no"
                 android:scaleType="centerCrop"
+                android:src="@drawable/home_background"
                 tools:ignore="UnusedAttribute" />
 
             <TextView
@@ -38,10 +38,10 @@
                 android:layout_gravity="bottom|start"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="40dp"
+                android:ellipsize="marquee"
+                android:maxLines="1"
                 android:text='@{post.title != null ? post.title : "Chưa có tiêu đề"}'
                 android:textColor="@color/white"
-                android:maxLines="1"
-                android:ellipsize="marquee"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 tools:ignore="SmallSp" />

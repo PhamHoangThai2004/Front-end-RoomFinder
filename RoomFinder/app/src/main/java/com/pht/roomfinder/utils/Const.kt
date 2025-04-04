@@ -26,14 +26,7 @@ class Const {
     companion object {
         const val HTTP_API = "http://192.168.102.11/roomfinder/"
         const val TOKEN = "token"
-        const val PASSWORD = "password"
-        const val EMAIL = "email"
         const val SAVE_ACCOUNT = "saveAccount"
-
-        val CLOUDINARY_URL =
-            "cloudinary://${App.getKey(R.string.api_key_cloud)}:${App.getKey(R.string.api_secret)}@${
-                App.getKey(R.string.cloud_name)
-            }"
 
         fun formatDate(timeString: String): String {
             if (timeString != "") {
@@ -68,9 +61,18 @@ class Const {
 
                 val formattedText = when {
                     time < DateUtils.MINUTE_IN_MILLIS -> context!!.getString(R.string.just_now)
-                    time < DateUtils.HOUR_IN_MILLIS -> "${time / DateUtils.MINUTE_IN_MILLIS} " + context!!.getString(R.string.minutes_ago)
-                    time < DateUtils.DAY_IN_MILLIS -> "${time / DateUtils.HOUR_IN_MILLIS} " + context!!.getString(R.string.hours_ago)
-                    time < DateUtils.WEEK_IN_MILLIS -> "${time / DateUtils.DAY_IN_MILLIS} " + context!!.getString(R.string.days_ago)
+                    time < DateUtils.HOUR_IN_MILLIS -> "${time / DateUtils.MINUTE_IN_MILLIS} " + context!!.getString(
+                        R.string.minutes_ago
+                    )
+
+                    time < DateUtils.DAY_IN_MILLIS -> "${time / DateUtils.HOUR_IN_MILLIS} " + context!!.getString(
+                        R.string.hours_ago
+                    )
+
+                    time < DateUtils.WEEK_IN_MILLIS -> "${time / DateUtils.DAY_IN_MILLIS} " + context!!.getString(
+                        R.string.days_ago
+                    )
+
                     else -> "${time / DateUtils.WEEK_IN_MILLIS} " + context!!.getString(R.string.weeks_ago)
                 }
                 return formattedText

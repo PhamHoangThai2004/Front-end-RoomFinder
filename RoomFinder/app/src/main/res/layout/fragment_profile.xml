@@ -2,11 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".user.setting.SettingFragment">
+    tools:context=".view.setting.SettingFragment">
 
     <data>
-
-        <import type="com.pht.roomfinder.user.setting.SettingFragment" />
 
         <import type="android.view.View" />
 
@@ -20,7 +18,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -37,16 +35,16 @@
                 app:tint="@color/black" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
+                android:gravity="center"
                 android:padding="5dp"
                 android:text="@string/profile"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-        </LinearLayout>
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,9 +69,9 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:importantForAccessibility="no"
-                android:onClick="@{() -> userViewModel.toFunction(SettingFragment.AVATAR)}"
+                android:onClick="@{() -> userViewModel.toAvatar()}"
                 android:src="@drawable/avatar"
-                app:civ_border_color="@color/gray_dark"
+                app:civ_border_color="@color/dark_gray"
                 app:civ_border_width="2dp" />
 
             <TextView
@@ -114,11 +112,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/custom_edit_text_line"
-                android:enabled="@{userViewModel.isUpgrade()}"
+                android:enabled="@{userViewModel.uiState.update}"
                 android:hint="@string/full_name_example"
                 android:importantForAutofill="no"
                 android:inputType="text"
-                android:text="@={userViewModel.name}"
+                android:text="@={userViewModel.userState.name}"
                 android:textColor="@color/black"
                 android:textCursorDrawable="@drawable/custom_cursor"
                 tools:ignore="LabelFor" />
@@ -137,11 +135,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/custom_edit_text_line"
-                android:enabled="@{userViewModel.isUpgrade()}"
+                android:enabled="@{userViewModel.uiState.update}"
                 android:hint="@string/phone_number_example"
                 android:importantForAutofill="no"
                 android:inputType="phone"
-                android:text="@={userViewModel.phoneNumber}"
+                android:text="@={userViewModel.userState.phone}"
                 android:textColor="@color/black"
                 android:textCursorDrawable="@drawable/custom_cursor"
                 tools:ignore="LabelFor" />
@@ -160,11 +158,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/custom_edit_text_line"
-                android:enabled="@{userViewModel.isUpgrade()}"
+                android:enabled="@{userViewModel.uiState.update}"
                 android:hint="@string/address_example"
                 android:importantForAutofill="no"
                 android:inputType="text"
-                android:text="@={userViewModel.address}"
+                android:text="@={userViewModel.userState.address}"
                 android:textColor="@color/black"
                 android:textCursorDrawable="@drawable/custom_cursor"
                 tools:ignore="LabelFor" />
@@ -174,10 +172,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/custom_button_full"
-                android:onClick="@{() -> userViewModel.setUpgrade(true)}"
+                android:onClick="@{() -> userViewModel.setUpdate(true)}"
                 android:text="@string/change_infor"
                 android:textColor="@color/white"
-                android:visibility="@{userViewModel.isUpgrade() ? View.GONE : View.VISIBLE}" />
+                android:visibility="@{userViewModel.uiState.update ? View.GONE : View.VISIBLE}" />
 
         </LinearLayout>
 
@@ -188,13 +186,15 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:orientation="horizontal"
-            android:visibility="@{userViewModel.isUpgrade() ? View.VISIBLE : View.GONE}"
+            android:visibility="@{userViewModel.uiState.update ? View.VISIBLE : View.GONE}"
             android:weightSum="10">
 
             <Button
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
+
+
                 android:background="@drawable/custom_button_full"
                 android:onClick="@{() -> userViewModel.checkInformation()}"
                 android:text="@string/upgrade"
@@ -207,7 +207,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_weight="5"
                 android:background="@drawable/custom_button_outline"
-                android:onClick="@{() -> userViewModel.setUpgrade(false)}"
+                android:onClick="@{() -> userViewModel.setUpdate(false)}"
                 android:text="@string/cancel"
                 android:textColor="@color/app_color"
                 tools:ignore="ButtonStyle" />

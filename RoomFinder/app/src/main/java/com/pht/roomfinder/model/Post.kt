@@ -1,7 +1,6 @@
 package com.pht.roomfinder.model
 
 import java.io.Serializable
-import java.sql.Timestamp
 
 data class Post(
     val postID: Int?,

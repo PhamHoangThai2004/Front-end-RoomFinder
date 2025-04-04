@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    tools:context=".user.update_post.UpdatePostActivity">
+    tools:context=".view.update_post.UpdatePostActivity">
 
     <data>
 
@@ -100,7 +100,7 @@
                     app:cursorColor="@color/gray"
                     app:endIconMode="clear_text"
                     app:errorEnabled="true"
-                    app:errorTextColor="@color/red_light">
+                    app:errorTextColor="@color/light_red">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_Text_Title"
@@ -110,7 +110,7 @@
                         android:gravity="top|start"
                         android:inputType="textMultiLine"
                         android:padding="15dp"
-                        android:text="@={updatePostVM.title}"
+                        android:text="@={updatePostVM.postState.title}"
                         android:textColor="@color/black" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -141,7 +141,7 @@
                     app:cursorColor="@color/gray"
                     app:endIconMode="clear_text"
                     app:errorEnabled="true"
-                    app:errorTextColor="@color/red_light">
+                    app:errorTextColor="@color/light_red">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_Text_Description"
@@ -151,7 +151,7 @@
                         android:gravity="top|start"
                         android:inputType="textMultiLine"
                         android:padding="15dp"
-                        android:text="@={updatePostVM.description}"
+                        android:text="@={updatePostVM.postState.description}"
                         android:textColor="@color/black" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -182,7 +182,7 @@
                     app:cursorColor="@color/gray"
                     app:endIconMode="clear_text"
                     app:errorEnabled="true"
-                    app:errorTextColor="@color/red_light">
+                    app:errorTextColor="@color/light_red">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_Text_Price"
@@ -191,7 +191,7 @@
                         android:background="@null"
                         android:inputType="numberDecimal"
                         android:padding="15dp"
-                        android:text="@={updatePostVM.price}"
+                        android:text="@={updatePostVM.postState.price}"
                         android:textColor="@color/black" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -222,7 +222,7 @@
                     app:cursorColor="@color/gray"
                     app:endIconMode="clear_text"
                     app:errorEnabled="true"
-                    app:errorTextColor="@color/red_light">
+                    app:errorTextColor="@color/light_red">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_Text_Acreage"
@@ -231,7 +231,7 @@
                         android:background="@null"
                         android:inputType="numberDecimal"
                         android:padding="15dp"
-                        android:text="@={updatePostVM.acreage}"
+                        android:text="@={updatePostVM.postState.acreage}"
                         android:textColor="@color/black" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -262,7 +262,7 @@
                     app:cursorColor="@color/gray"
                     app:endIconMode="clear_text"
                     app:errorEnabled="true"
-                    app:errorTextColor="@color/red_light">
+                    app:errorTextColor="@color/light_red">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edit_Text_Bonus"
@@ -272,7 +272,7 @@
                         android:gravity="top|start"
                         android:inputType="textMultiLine"
                         android:padding="15dp"
-                        android:text="@={updatePostVM.bonus}"
+                        android:text="@={updatePostVM.postState.bonus}"
                         android:textColor="@color/black" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -281,7 +281,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="@{updatePostVM.isExpired() ? View.VISIBLE : View.GONE}">
+                    android:visibility="@{updatePostVM.postState.isExpired ? View.VISIBLE : View.GONE}">
 
                     <TextView
                         android:layout_width="match_parent"
